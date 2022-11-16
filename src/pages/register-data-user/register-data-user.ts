@@ -23,6 +23,7 @@ import { MenuPage } from '../menu/menu';
   templateUrl: 'register-data-user.html',
 })
 export class RegisterDataUserPage {
+	isEditing: boolean = false;
   //Declarando dependencias
   data: Observable<any>;
   //Datos generales
@@ -1890,6 +1891,10 @@ export class RegisterDataUserPage {
 	    month: '1990-02-19',
 	    timeStarts: '07:43',
 	    timeEnds: '1990-02-20'
+  }
+
+  editFields(){
+	this.isEditing = !this.isEditing
   }
 
   postRequestUpdate(){

@@ -59,7 +59,7 @@
 	  </ion-item>
 	  <ion-item *ngIf="genderOption == 0 || genderOption == 1">
 		  <ion-label text-wrap >Sexo:</ion-label>
-		  <ion-select disabled okText="Ok" cancelText="Cancelar" [(ngModel)]="genderOption">
+		  <ion-select [disabled]="!isEditing" okText="Ok" cancelText="Cancelar" [(ngModel)]="genderOption">
 		    <ion-option value="0">Femenino</ion-option>
 		    <ion-option select value="1">Masculino</ion-option>
 		  </ion-select>
@@ -67,7 +67,7 @@
 
 	  <ion-item *ngIf="!birthdateEnable">
 		  <ion-label text-wrap text-wrap>Fecha de nacimiento:</ion-label>
-	      <ion-datetime disabled [max]="today" doneText="Ok" cancelText="Cancelar"  placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="birthdate.month" (ngModelChange)="onChangeBirthdate()"></ion-datetime>
+	      <ion-datetime [disabled]="!isEditing" [max]="today" doneText="Ok" cancelText="Cancelar"  placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="birthdate.month" (ngModelChange)="onChangeBirthdate()"></ion-datetime>
 	  </ion-item>
 	  <ion-item *ngIf="birthdateEnable">
 		  <ion-label text-wrap text-wrap>Fecha de nacimiento:</ion-label>
@@ -76,19 +76,28 @@
 
 	  <ion-item >
 		  <ion-label text-wrap >Edad:</ion-label>
-	  	  <ion-input disabled="true" type="text" [(ngModel)]="age"></ion-input>
+	  	  <ion-input [disabled]="!isEditing" type="text" [(ngModel)]="age"></ion-input>
 	  </ion-item>
+	  <ion-item >
+			<ion-label text-wrap >DNI:</ion-label>
+			<ion-input [disabled]="!isEditing" type="text"></ion-input>
+		</ion-item>
+		<ion-item >
+			<ion-label text-wrap >Teléfono:</ion-label>
+			<ion-input [disabled]="!isEditing" type="text"></ion-input>
+		</ion-item>
 	  <br>
 	  <button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
 		*ngIf="hideBtnRegData" (click)="postRequestRegister()">
 		  <ion-icon name="md-checkmark">  </ion-icon>
-		  Guardar mis datos
+		  Guardar mis datosdd
 		</button>
 
 		<button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
-				*ngIf="hideBtnModData" (click)="postRequestUpdate()">
-		  <ion-icon style="color: white !important;" name="md-checkmark">  </ion-icon>
-		  <div style="color: white !important;"> Guardar mis datos </div>
+				*ngIf="hideBtnModData" (click)="editFields()">
+		  <ion-icon *ngIf="isEditing" style="color: white !important;" name="md-checkmark">  </ion-icon>
+		  <div *ngIf="!isEditing" style="color: white !important;"> Editar mis datos </div>
+		  <div *ngIf="isEditing" style="color: white !important;"> Guardar mis datos </div>
 		</button>
 		<br>
   	  <!--<ion-item (click)="showSmoke()">-->
