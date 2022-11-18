@@ -24,7 +24,7 @@ import { CboGeneral } from '../../models/cbo';
   templateUrl: 'request-service.html',
 })
 export class RequestServicePage {
-
+  isForMe: boolean = true;
   dir: any;
   geoDepartamento: any;
   geoProvincia: any;
@@ -1566,6 +1566,11 @@ export class RequestServicePage {
         this.provinciasSelect.push(this.provincias[y]);
       }
     }
+  }
+
+  changeIsForMe(value) {
+    console.log(value)
+    this.isForMe = !this.isForMe
   }
 
   getListDistritos() {

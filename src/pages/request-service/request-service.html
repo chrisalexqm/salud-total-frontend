@@ -44,7 +44,7 @@
   </table>
   	<div *ngIf="!priPage">
 		<br>
-		<ion-item style="background-color: transparent;"> Eliga su lugar de atención:
+		<ion-item style="background-color: transparent;"> Elija su lugar de atención:
 		</ion-item>
 		<div >
 			<ion-row>
@@ -85,6 +85,13 @@
 			    </ion-option>
 			  </ion-select>
 		  	</ion-item>
+			<ion-item >
+			<ion-label text-wrap >Dirección:</ion-label>
+			<ion-input type="text"></ion-input>
+			</ion-item>
+			<br>
+			<br>
+			<br>
 			<ion-item style="background-color: transparent;">
 		  		<ion-label text-wrap>Aseguradora:</ion-label>
 		  		<ion-select text-right okText="Ok" cancelText="Cancelar" [(ngModel)]="insuranceSelect" (ngModelChange)="onChangeTypeRequest()" name=""  required #sssaseguradora="ngModel">
@@ -235,22 +242,48 @@
 			    <ion-input text-right type="text" disabled [(ngModel)]="priceTotal"></ion-input>
 			</ion-item>
 		</div>
-		<div>
+
+		<div style="margin-top: 20px;">
+			¿Esta cita es para usted?
+			<div style="display: flex;">
+				<div style="display: flex; align-items: center; margin-right: 5px;">
+					<ion-checkbox [(ngModel)]="isForMe" style="margin-right: 5px;" color="primary"></ion-checkbox>
+					<ion-label text-wrap>Si</ion-label>
+				</div>
+				<div style="display: flex; align-items: center">
+					<ion-checkbox [checked]="!isForMe" style="margin-right: 5px;" color="primary"></ion-checkbox>
+					<ion-label text-wrap>No es para mi</ion-label>
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="!isForMe" style="margin-bottom: 30px;">
+			<ion-item style="background-color: transparent;">
+			    <ion-label text-wrap>Nombres:</ion-label>
+			    <ion-input text-right type="text"></ion-input>
+			</ion-item>
+			<ion-item style="background-color: transparent;">
+			    <ion-label text-wrap>DNI:</ion-label>
+			    <ion-input text-right type="text"></ion-input>
+			</ion-item>
+		</div>
+
+		<!-- <div>
 			<ion-item no-lines text-wrap style="background-color: transparent;border-bottom-color: transparent !important;">
 		    Cualquier dificultad contáctenos en:
 		    <a href="mailto:soporte@saludtotalapp.com?Subject=Soporte%20Solicitud-de-servicio" target="_top"> soporte@saludtotalapp.com</a>
 		    </ion-item>
 			
 		</div>
-		
-		<button disabled *ngIf="sssdistrito.errors?.required||sssaseguradora.errors?.required||sssespecialidad.errors?.required" ion-button full class="btnSendSol" style="background-color: #FFB415;" (click)="irSecondPage()">
+		 -->
+		<button disabled *ngIf="sssdistrito.errors?.required||sssaseguradora.errors?.required||sssespecialidad.errors?.required" ion-button full class="btnSendSol" style="background-color: #71b42e; margin-top: 20px;" (click)="irSecondPage()">
 			<ion-icon style="color: white !important;" name="md-checkmark"></ion-icon>
-	  		<div style="color: white !important;margin-top: 2.5px;"> &nbsp; Aceptar </div>
+	  		<div style="color: white !important;margin-top: 2.5px;"> &nbsp; Enviar solicitud </div>
 		</button>
 		
 		<button *ngIf="!sssdistrito.errors?.required&&!sssaseguradora.errors?.required&&!sssespecialidad.errors?.required" ion-button full class="btnSendSol" style="background-color: #FFB415;" (click)="irSecondPage()">
 			<ion-icon style="color: white !important;" name="md-checkmark"></ion-icon>
-	  		<div style="color: white !important;margin-top: 2.5px;"> &nbsp; Aceptar </div>
+	  		<div style="color: white !important;margin-top: 2.5px;"> &nbsp; Aceptarzz </div>
 		</button>
 		<br>
 	</div>
