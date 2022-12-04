@@ -1,0 +1,170 @@
+page-menu {
+	.menuPortrait{
+		display: inherit;
+	}
+	.menuLandscape{
+		display: none;
+	}
+	ion-content{
+		/*background-image: url("../assets/img/background.png");
+		background-size: 100%;*/
+		background-color: #1773F9 !important;
+		align-items: center;
+	}
+	.fab[mini] {
+	    margin: 16px;
+	    width: 80px;
+	    height: 80px;
+	    line-height: 80px;
+	}
+	img {
+	    max-width: none;
+	}
+	h5{
+		color: white;
+	}
+	.cero{
+		 width: 100px;
+	}
+	.uno{
+		width: 100px;
+	}
+	.dos{
+		width: 100px;
+	}
+	.tres{
+		width: 100px;
+	}
+	.cuatro{
+		width: 100px;
+	}
+	.cinco{
+		width: 100px;
+	}
+	.ocho{
+		width: 100px;
+	}
+	.seis{
+		width: 100px;
+	}
+	.siete{
+		width: 100px;
+	}
+	@media all and (orientation: landscape) {
+		.menuPortrait{
+			display: none;
+		}
+		.menuLandscape{
+			display: inherit;
+		}
+		ion-content{
+			/*background-image: url("../assets/img/background.png");
+			background-size: 100%;*/
+			background-color: #1773F9 !important;
+			align-items: center;
+		}
+		.fab[mini] {
+		    margin: 16px;
+		    width: 80px;
+		    height: 80px;
+		    line-height: 80px;
+		}
+		img {
+		    max-width: none;
+		}
+		h5{
+			color: white;
+		}
+		.cero, .uno, .dos, .cuatro, .cinco, .ocho, .seis, .siete{
+			width: 200px;
+		}
+		.tres{
+			width: 200px;
+		}
+	}
+	@media all and (orientation: portrait) {
+		.menuPortrait{
+			display: inherit;
+		}
+		.menuLandscape{
+			display: none;
+		}
+		ion-content{
+			/*background-image: url("../assets/img/background.png");
+			background-size: 100%;*/
+			background-color: #1773F9 !important;
+			align-items: center;
+		}
+		.fab[mini] {
+		    margin: 16px;
+		    width: 80px;
+		    height: 80px;
+		    line-height: 80px;
+		}
+		img {
+		    max-width: none;
+		    width: 100px;
+		}
+		h5{
+			color: white;
+		}
+		/*
+		.cero{
+			 width: 120px;
+			 margin-top: 32.5vh;
+			 margin-left: 28vw;
+			 position: fixed;
+		}
+		.uno{
+			width: 100px;
+			margin-top: 10vh;
+			margin-left: 31vw;
+			position: fixed;
+		}
+		.dos{
+			width: 100px;
+			margin-top: 18vh;
+			margin-left: 54vw;
+			position: fixed;
+		}
+		.tres{
+			width: 100px;
+			margin-top: 34.5vh;
+			margin-left: 61vw;
+			position: fixed;
+		}
+		.cuatro{
+			width: 100px;
+			margin-top: 51vh;
+			margin-left: 54vw;
+			position: fixed;
+		}
+		.cinco{
+			width: 100px;
+			margin-top: 58.5vh;
+			margin-left: 31vw;
+			position: fixed;
+		}
+		.ocho{
+			width: 100px;
+			margin-top: 51vh;
+			margin-left: 8vw;
+			position: fixed;
+		}
+		.seis{
+			width: 100px;
+			margin-top: 34.5vh;
+			margin-left: 0.5vw;
+			position: fixed;
+		}
+		.siete{
+			width: 100px;
+			margin-top: 18vh;
+			margin-left: 8vw;
+			position: fixed;
+		}
+		*/
+	}
+	
+
+}

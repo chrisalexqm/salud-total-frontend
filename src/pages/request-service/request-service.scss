@@ -1,0 +1,64 @@
+page-request-service {
+	
+	*{
+		color: #163a5f;
+	}
+
+	ion-label{
+		color: #163a5f;
+		white-space:normal !important;
+	}
+	span{
+		color: #999999 !important;
+	}
+	select{
+		position: relative;
+	    max-width: 100%;
+	    white-space: pre-line;
+	    text-align: left;
+	}
+	ion-content, ion-grid{
+		background-image: url("../assets/img/background.png");
+		background-size: 100%;
+	}
+	.alert-ios .alert-radio-label{
+		white-space: pre-line;
+	}
+
+	.alert-md .alert-radio-label{
+		white-space: pre-line;
+	}
+
+	.alert-wp .alert-radio-label{
+		white-space: pre-line;
+	}
+	.alert-ios .alert-radio-label{
+		white-space: pre-line;
+	}
+
+	.alert-md .alert-radio-label{
+		white-space: pre-line;
+	}
+
+	.alert-wp .alert-radio-label{
+		white-space: pre-line;
+	}
+	.btnAddDependente{
+		width: 100%;		
+		background-color: #1773FA;
+		border-radius: 5px;
+		align-items: center;
+		margin: auto;
+		color: white !important;
+		font-size: 1.05em;
+	}
+	.btnSendSol{
+		width: 70%;		
+		background-color: #8DC73F;
+		border-radius: 5px;
+		align-items: center;
+		margin: auto;
+		color: white !important;
+		font-size: 1.05em;
+	}
+}

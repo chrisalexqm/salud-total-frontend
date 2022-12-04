@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar color="primary_st">
+    <ion-title align="center" style="font-size: 2rem"> Salud Total </ion-title>
+  </ion-toolbar>
+  <img
+    src="assets/img/menu/menu.png"
+    (click)="goMenu()"
+    style="position: fixed; width: 30px; top: 15px; left: 20px; z-index: 10000"
+  />
+  <img
+    src="assets/img/icon.png"
+    style="position: fixed; width: 40px; top: 5px; right: 10px; z-index: 10000"
+  />
+</ion-header>
+
+<ion-content padding>
+  <table style="width: 100%; border-color: black">
+    <tr>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+        <img src="assets/img/farmacia/icono_farmacia.png" style="width: 40px" />
+      </td>
+      <td align="left" valign="center" style="color: #1773fa">Farmacias</td>
+      <td align="right" valign="center">
+        <button
+          (click)="backHistory()"
+          ion-button
+          icon-only
+          outline
+          style="border-radius: 25px"
+        >
+          <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <br>
+  <table style="width: 100%; border-color: black">
+    <tr>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="left" valign="center" style="color: #1773fa">
+        <a (click)="goListRequestProduct()" style="padding-left: 1em;">Ver pedidos</a>
+      </td>
+      <td align="right" valign="center">
+      </td>
+    </tr>
+  </table>
+  <br />
+  <div>
+    <ion-list *ngFor="let farmacia of farmacias">
+      <ion-item style="background-color: transparent">
+        <ion-thumbnail item-start>
+          <img *ngIf="farmacia.URL!=''" [src]="farmacia.URL" style="margin-top: 0.45em;"/>
+          <img *ngIf="farmacia.URL==''" src="assets/img/farmacia.png" style="margin-top: 0.45em;"/>
+        </ion-thumbnail>
+        <div class="space-height"></div>
+        <h2 text-wrap>{{farmacia.Descripcion}}</h2>
+        <!--<p>Descripción de la clinica</p>-->
+        <table style="width: 100%;">
+          <th></th>
+          <tr>
+            <td align="center" style="width: 40%;">
+              <a
+                href="tel:{{farmacia.Telefono}}"
+                ion-button
+                icon-only
+                style="background-color: #8dc73f; width: 95%; font-size: 1.1rem"
+              >
+                <ion-icon name="call"></ion-icon>
+              </a>
+            </td>
+            <td align="center" style="width: 40%;">
+              <a
+                (click)="goPage(farmacia.Descripcion)"
+                ion-button
+                icon-only
+                style="background-color: #f8931f; width: 95%; font-size: 1.1rem"
+              >
+                <ion-icon name="map" style="color: white"></ion-icon>
+              </a>
+            </td>
+          </tr>
+        </table>
+        <table style="width: 100%;">
+          <th></th>
+          <tr>
+            <td align="center" style="width: 80%;"  (click)="goPageStore(farmacia)">
+              <button
+                ion-button
+                icon-only [disabled]="farmacia['HabilitadoVenta']==0"
+                style="background-color: #1773FA;width: 97.5%;font-size: 1.1rem;padding: 0.5em;height: auto;"
+              >
+                <ion-icon name="paper" style="color: white"></ion-icon>
+                &nbsp;
+                <span style="font-size: 1.35rem;">
+                  Pedido en linea
+                </span>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </ion-item>
+
+    </ion-list>
+  </div>
+</ion-content>
+
+
+

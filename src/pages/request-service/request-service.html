@@ -1,0 +1,302 @@
+<!--
+  Generated template for the RequestServicePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar color="primary_st" >
+    <!--<button ion-button menuToggle color="st_white">
+      <ion-icon name="menu" color="st_white"></ion-icon>
+    </button>-->
+    <ion-title align="center" style="font-size: 2rem;"> Salud Total </ion-title>
+  </ion-toolbar>
+  <img src="assets/img/menu/menu.png" (click)="goMenu()" style="position: fixed; width: 30px; top: 15px; left: 20px;z-index: 10000;">
+  <img src="assets/img/icon.png" style="position: fixed; width: 40px; top: 5px; right: 10px;z-index: 10000;">
+</ion-header>
+
+<ion-content padding>
+	<table style="width:100%; border-color: black;">
+    <tr>
+      <th align="center"></th>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+      <img src="assets/img/solservicio/icono_solicitar_servicio_general.png" style="width: 40px;">
+      </td>
+      <td align="center" valign="center" style="color: #1773FA;">
+        Solicitar servicio
+      </td>
+      <td align="right" valign="center" style="width: 150px;">
+        <button ion-button block class="btnAddDependente" style="" 
+          (click)="goListRequest()">
+          <div style="color: white !important;"> Ver solicitudes </div>
+        </button>
+      </td>
+      <td align="right" valign="center">
+    	<button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+  			<ion-icon name="ios-arrow-back"></ion-icon>
+		</button>	
+		<br>
+  	  </td>
+    </tr>
+  </table>
+  	<div *ngIf="!priPage">
+		<br>
+		<ion-item style="background-color: transparent;"> Eliga su lugar de atención:
+		</ion-item>
+		<div >
+			<ion-row>
+			    <ion-col col-6>
+			      <img (click)="onClickTypeRequest(2)" src="assets/img/solservicio/btn_serv_casa.png"
+			      [ngStyle]="{'opacity': typeRequest == '2' ? '1' : '0.4' }">
+			    </ion-col>
+			    <ion-col col-6>
+			      <img (click)="onClickTypeRequest(1)" src="assets/img/solservicio/btn_servicio_hospital.png"
+			      [ngStyle]="{'opacity': typeRequest == '1' ? '1' : '0.4' }">
+			    </ion-col>
+			</ion-row>
+		  				
+		  	<ion-item *ngIf="hideCiudad" style="background-color: transparent;">
+			  <ion-label text-wrap>Departamento:</ion-label>
+			  <ion-select text-right okText="Ok" cancelText="Cancelar" [(ngModel)]="departamentoIDSelect"  (ngModelChange)="getListProvinciasss()"  required #sssdepartamento="ngModel">
+			    <!--<ion-option select value="0">Seleccione una opción </ion-option>-->
+			    <ion-option *ngFor="let d of departamentos" value="{{ d.Codigo }}">
+			      {{ d.Departamento }}
+			    </ion-option>
+			  </ion-select>
+		  	</ion-item>
+		  	<ion-item *ngIf="hideProvincia" style="background-color: transparent;">
+			  <ion-label text-wrap>Provincia:</ion-label>
+			  <ion-select text-right okText="Ok" cancelText="Cancelar" [(ngModel)]="provinciaIDSelect"  (ngModelChange)="getListDistritos()"  required #sssprovincia="ngModel">
+			    <!--<ion-option select value="0">Seleccione una opción </ion-option>-->
+			    <ion-option *ngFor="let p of provinciasSelect" value="{{ p.CodigoProvincia }}">
+			      {{ p.Provincia }}
+			    </ion-option>
+			  </ion-select>
+		  	</ion-item>
+		  	<ion-item style="background-color: transparent;">
+			  <ion-label text-wrap>Distrito:</ion-label>
+			  <ion-select text-right okText="Ok" cancelText="Cancelar" [(ngModel)]="distritoSelect"  (ngModelChange)="onChangeTypeRequest()"  required #sssdistrito="ngModel">
+			    <!--<ion-option select value="0">Seleccione una opción </ion-option>-->
+			    <ion-option *ngFor="let d of distritoRequest" value="{{ d.ID }}">
+			      {{ d.Descripcion }}
+			    </ion-option>
+			  </ion-select>
+		  	</ion-item>
+			<ion-item style="background-color: transparent;">
+		  		<ion-label text-wrap>Aseguradora:</ion-label>
+		  		<ion-select text-right okText="Ok" cancelText="Cancelar" [(ngModel)]="insuranceSelect" (ngModelChange)="onChangeTypeRequest()" name=""  required #sssaseguradora="ngModel">
+				    <!--<ion-option select value="0">Seleccione una opción </ion-option>-->
+				    <ion-option text-wrap *ngFor="let s of insurance" value="{{ s.ID }}" >
+				    	{{ s.Descripcion }}
+				    </ion-option>
+				</ion-select>
+		  	</ion-item>	 
+		  	<ion-item style="background-color: transparent;">
+		  		<ion-label text-wrap>Especialidad:</ion-label>
+		  		<ion-select text-right okText="Ok" cancelText="Cancelar" text-wrap [(ngModel)]="specialtySelect" (ngModelChange)="onChangeTypeRequest()" name=""  required #sssespecialidad="ngModel">
+				    <ion-option *ngFor="let s of specialty" text-wrap value="{{ s.ID }}">
+				      {{ s.Descripcion }}
+				    </ion-option>
+				</ion-select>
+		  	</ion-item>				 
+		  	<!-- <ion-item style="background-color: transparent;" *ngIf="service && serviceTypeSelection =='1'">
+		  		<ion-label text-wrap>Tipo de servicio:</ion-label>
+		  		<ion-select text-right okText="Ok" cancelText="Cancelar" item-select-customizado [(ngModel)]="serviceSelect" (ngModelChange)="listProvider()" name=""  required #sssservice="ngModel">
+				    <ion-option *ngFor="let s of service" text-wrap value="{{ s.ID }}">
+				      {{ s.Des }}
+				    </ion-option>
+				</ion-select>
+		  	</ion-item>
+		  	<ion-item style="background-color: transparent;" *ngIf="service && serviceTypeSelection =='2'">
+		  		<ion-label text-wrap>Tipo de servicio:</ion-label>
+		  		<ion-select text-right okText="Ok" cancelText="Cancelar" item-select-customizado [(ngModel)]="serviceSelect" (ngModelChange)="listProvider()" name="" multiple="true"  required #sssservice="ngModel">
+				    <ion-option *ngFor="let s of service" text-wrap value="{{ s.ID }}">
+				      {{ s.Des }}
+				    </ion-option>
+				</ion-select>
+		  	</ion-item> -->
+			<ion-item *ngIf="service && serviceTypeSelection =='1'">
+				<ion-label>Tipo de Servicio</ion-label>
+				<ionic-selectable item-content [(ngModel)]="serviceSelect" [items]="service" itemValueField="ID"
+					itemTextField="Des" [canSearch]="true" (onChange)="listProvider(false)" [isMultiple]="false">
+				</ionic-selectable>
+			</ion-item>
+			<ion-item *ngIf="service && serviceTypeSelection =='2'">
+				<ion-label>Tipo de Servicio</ion-label>
+				<ionic-selectable item-content [(ngModel)]="serviceSelect" [items]="service" itemValueField="ID"
+					itemTextField="Des" [canSearch]="true" (onChange)="listProvider(true)" [isMultiple]="true">
+				</ionic-selectable>
+			</ion-item>
+		  	<ion-item style="background-color: transparent;" *ngIf="provider&&insuranceSelect=='1'&&typeRequest=='2'">
+		  		<ion-label text-wrap>Proveedor:</ion-label>
+		  		<ion-select text-right okText="Ok" cancelText="Cancelar" [(ngModel)]="providerSelect" (ngModelChange)="listPrices()" name=""  required #sssprovider="ngModel">
+				    <ion-option *ngFor="let p of provider" text-wrap value="{{ p.ID }}">
+				      {{ p.Proveedor }}
+				    </ion-option>
+				</ion-select>
+		  	</ion-item>
+		  	<ion-item style="background-color: transparent;" *ngIf="provider&&insuranceSelect=='1'&&typeRequest=='1'">
+		  		<ion-label text-wrap>Proveedor:</ion-label>
+		  		<ion-select text-right okText="Ok" cancelText="Cancelar" [(ngModel)]="providerSelect" (ngModelChange)="listPrices()" name=""  required #sssprovider="ngModel">
+				    <ion-option *ngFor="let p of provider" text-wrap value="{{ p.ID }}">
+				      {{ p.Proveedor }}
+				    </ion-option>
+				</ion-select>
+		  	</ion-item>
+		  	<ion-item style="background-color: transparent;" *ngIf="provider&&insuranceSelect!='1'&&typeRequest=='1'">
+		  		<ion-label text-wrap>Proveedor:</ion-label>
+		  		<ion-select text-right okText="Ok" cancelText="Cancelar" [(ngModel)]="providerSelect" name=""  required #sssprovider="ngModel">
+				    <ion-option *ngFor="let p of provider" text-wrap value="{{ p.ID }}">
+				      {{ p.Proveedor }}
+				    </ion-option>
+				</ion-select>
+		  	</ion-item>
+		  	
+		</div>
+		<!--
+		<ion-card>
+	  		<ion-item>
+		    	Datos del solicitante
+		    </ion-item>
+			<ion-card-content>
+			  	<ion-item>
+				    <ion-label text-wrap>Nombre:</ion-label>
+				    <ion-input type="text" [(ngModel)]="name" required #nput>
+				</ion-item>
+				<ion-item>
+				    <ion-label text-wrap>Apellidos:</ion-label>
+				    <ion-input type="text" [(ngModel)]="apePat" required #put>
+				</ion-item>
+				<ion-item>
+				  <ion-label text-wrap>Pais:</ion-label>
+				  <ion-select disabled>
+				    <ion-option selected value="m">Perú</ion-option>
+				  </ion-select>
+			  	</ion-item>
+			  	<ion-item>
+				  <ion-label text-wrap>Provincia:</ion-label>
+				  <ion-select disabled>
+				    <ion-option selected value="m">Lima</ion-option>
+				  </ion-select>
+			  	</ion-item>
+			  	<ion-item>
+				  <ion-label text-wrap>Distrito:</ion-label>
+				  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="distritoSelectPerson">
+				    <ion-option *ngFor="let d of distritoRequest" value="{{ d.ID }}">
+				      {{ d.Descripcion }}
+				    </ion-option>
+				  </ion-select>
+			  	</ion-item>		  	
+			  	<ion-item>
+				    <ion-label text-wrap>Dirección:</ion-label>
+				    <ion-input type="text" [(ngModel)]="address" required #put>
+				</ion-item>
+				<ion-item>
+				    <ion-label text-wrap>Referencia:</ion-label>
+				    <ion-input type="text" [(ngModel)]="referency" required #put>
+				</ion-item>
+				<ion-item>
+				    <ion-label text-wrap>DNI:</ion-label>
+				    <ion-input type="number" [(ngModel)]="dni" required #ssudni="ngModel"></ion-input>
+				</ion-item>
+				<ion-item>
+				    <ion-label text-wrap>Telefono:</ion-label>
+				    <ion-input type="number" [(ngModel)]="phone" required #ssutelf="ngModel"></ion-input>
+				</ion-item>
+			</ion-card-content>
+		</ion-card>
+		-->
+		<div>
+		<!--
+	  		<ion-item style="background-color: transparent;">
+		    Monto a cancelar
+		    </ion-item>-->
+		<!--</ion-card-header>-->
+			<ion-item style="background-color: transparent;">
+			    Monto a cancelar :
+			</ion-item>
+			<ion-item style="background-color: transparent;">
+			    <ion-label text-wrap>Precio del servicio:</ion-label>
+			    <ion-input text-right type="text" disabled [(ngModel)]="servicePrice"></ion-input>
+			</ion-item>
+			<!--<ion-item>
+			    <ion-label text-wrap>Igv:</ion-label>
+			    <ion-input type="text" disabled value="18%"></ion-input>
+			</ion-item>-->
+			<ion-item style="background-color: transparent;">
+			    <ion-label text-wrap>Descuento:</ion-label>
+			    <ion-input text-right type="text" disabled [(ngModel)]="descount"></ion-input>
+			</ion-item>
+			<ion-item style="background-color: transparent;">
+			    <ion-label text-wrap>Costo total:</ion-label>
+			    <ion-input text-right type="text" disabled [(ngModel)]="priceTotal"></ion-input>
+			</ion-item>
+		</div>
+		<div>
+			<ion-item no-lines text-wrap style="background-color: transparent;border-bottom-color: transparent !important;">
+		    Cualquier dificultad contáctenos en:
+		    <a href="mailto:soporte@saludtotalapp.com?Subject=Soporte%20Solicitud-de-servicio" target="_top"> soporte@saludtotalapp.com</a>
+		    </ion-item>
+			
+		</div>
+		
+		<button disabled *ngIf="sssdistrito.errors?.required||sssaseguradora.errors?.required||sssespecialidad.errors?.required" ion-button full class="btnSendSol" style="background-color: #FFB415;" (click)="irSecondPage()">
+			<ion-icon style="color: white !important;" name="md-checkmark"></ion-icon>
+	  		<div style="color: white !important;margin-top: 2.5px;"> &nbsp; Aceptar </div>
+		</button>
+		
+		<button *ngIf="!sssdistrito.errors?.required&&!sssaseguradora.errors?.required&&!sssespecialidad.errors?.required" ion-button full class="btnSendSol" style="background-color: #FFB415;" (click)="irSecondPage()">
+			<ion-icon style="color: white !important;" name="md-checkmark"></ion-icon>
+	  		<div style="color: white !important;margin-top: 2.5px;"> &nbsp; Aceptar </div>
+		</button>
+		<br>
+	</div>
+  	<div *ngIf="!segPage">
+  		<br>
+  		<table style="width:100%; border-color: black;">
+		    <tr>
+		      <td align="center" valign="center">
+		      <img src="assets/img/solservicio/gente.png" style="width: 65%;margin-top: 25px;border-radius: 5px;">
+		      </td>
+		    </tr>
+		</table>    
+		<br> 
+		<h4 align="center">Identifícate</h4>
+		<br>
+		<ion-row>
+		    <ion-col col-6>
+		      <ion-item style="background-color: transparent;">
+		        <ion-input text-center type="tel" maxlength="8" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="dni" placeholder="DNI"></ion-input>
+		      </ion-item>
+		    </ion-col>
+		    <ion-col col-6>
+		      <ion-item style="background-color: transparent;">
+		        <ion-input text-center type="tel" maxlength="9" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="phone" placeholder="Teléfono"></ion-input>
+		      </ion-item>
+		    </ion-col>
+		</ion-row>
+		<br>
+
+		<button ion-button block icon-start class="btnSendSol" style="color: white !important; margin-top: -20;" 
+				 (click)="postRequestService()">
+			  <ion-icon style="color: white !important;" name="ios-paper-plane-outline"></ion-icon>
+			  <div style="color: white !important;margin-top: 5px;"> Enviar solicitud </div>
+		</button>
+		<br>
+		<!--
+  		<ion-item style="background-color: transparent;">
+		    <ion-label text-wrap>DNI:</ion-label>
+		    <ion-input text-right type="number" [(ngModel)]="dni" required #ssudni="ngModel"></ion-input>
+		</ion-item>
+		<ion-item style="background-color: transparent;">
+		    <ion-label text-wrap>Telefono:</ion-label>
+		    <ion-input text-right type="number" [(ngModel)]="phone" required #ssutelf="ngModel"></ion-input>
+		</ion-item>
+		-->
+	</div>	
+</ion-content>
+
+

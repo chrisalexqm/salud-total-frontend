@@ -1,0 +1,19 @@
+1
+	Lugar de atencion(OK)
+	Distrito		 (OK)
+	Lista de Aseguradoras, no estoy Aseguradoras (OK)
+	Especialidades
+2.1
+	
+		2.1.1
+			 Aseguradoras
+			 Servicios
+			 	2.1.1.1
+			 		   Precios
+2.2
+	
+		2.2.1
+			 Proveedores(OK)
+			 Servicios
+			 	2.2.1.1
+			 		   Precios

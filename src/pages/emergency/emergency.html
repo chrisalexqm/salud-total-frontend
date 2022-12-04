@@ -1,0 +1,89 @@
+<!--
+  Generated template for the EmergencyPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar color="primary_st" >
+    <!--<button ion-button menuToggle color="st_white">
+      <ion-icon name="menu" color="st_white"></ion-icon>
+    </button>-->
+    <ion-title align="center" style="font-size: 2rem;"> Salud Total </ion-title>
+  </ion-toolbar>
+  <img src="assets/img/menu/menu.png" (click)="goMenu()" style="position: fixed; width: 30px; top: 15px; left: 20px;z-index: 10000;">
+  <img src="assets/img/icon.png" style="position: fixed; width: 40px; top: 5px; right: 10px;z-index: 10000;">
+</ion-header>
+
+
+<ion-content padding>
+	<table style="width:100%; border-color: black;">
+	  <tr>
+	    <th align="center"></th>
+	    <th align="center"></th>
+	  </tr>
+	  <tr>
+	    <td align="center" valign="center">
+	    <img src="assets/img/emergency/icono_emergencias.png" style="width: 40px;">
+	    </td>
+	    <td align="left" valign="center" style="color: #1773FA;">
+	    	Emergencias
+	    </td>
+	    <td align="right" valign="center">
+	    	<button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+	  			<ion-icon name="ios-arrow-back"></ion-icon>
+			</button>
+	  	</td>
+	  </tr>
+	</table>
+	<br>
+	<div style="background-color: transparent;">
+	  <ion-item style="background-color: transparent;">
+		  <ion-label stacked>Tipo de servicio:</ion-label>
+		  <ion-select [(ngModel)]="typeServiceEmergency">
+		    <ion-option value="private">Servicios privados</ion-option>
+		    <ion-option selected value="state">Servicios públicos</ion-option>
+		  </ion-select>
+	  </ion-item>
+	  <div *ngIf="typeServiceEmergency=='private'">
+		<ion-list *ngFor="let sprivate of servicesPrivate"  >
+			  <ion-item style="background-color: transparent;">
+			    <ion-thumbnail item-start>
+			      <!--<img *ngIf="sprivate.URL!=''" [src]="sprivate.URL">
+			      <img *ngIf="sprivate.URL==''" src="assets/img/emergency/icono_bomberos.png">    -->
+			      <img *ngIf="sprivate.URL==''" src="assets/img/emergency/icono_bomberos.png" style="height: auto;margin-top: 5px;">
+			      <img *ngIf="sprivate.URL!=''" [src]="sprivate.URL" style="height: auto;margin-top: 5px;">
+			    </ion-thumbnail>
+			    <div class="space-height"></div>
+			    <h2> {{sprivate.Descripcion}} </h2>
+			    <!--<p>Descripción de la clinica</p>-->
+			    <a href="tel:{{sprivate.Telefono}}" ion-button icon-only style="background-color: #8EC44A;width: 50%;font-size: 1.1rem;">
+				  <ion-icon name="ios-call-outline"></ion-icon>
+				</a>
+			  </ion-item>
+		</ion-list>
+	  </div>
+
+	  <div *ngIf="typeServiceEmergency=='state'">
+		<ion-list *ngFor="let spublic of servicesPublic" >
+			  <ion-item style="background-color: transparent;">
+			    <ion-thumbnail item-start>
+			      <!--<img *ngIf="spublic.URL!=''" [src]="spublic.URL">
+			      <img *ngIf="spublic.URL==''" src="assets/img/emergency/icono_ambulancia.png">-->
+			      <img *ngIf="spublic['URL']==''" src="assets/img/emergency/icono_ambulancia.png" style="height: auto;margin-top: 5px;">
+			      <img *ngIf="spublic['URL']!=''" [src]="spublic['URL']" style="height: auto;margin-top: 5px;">
+			    </ion-thumbnail>
+			    <div class="space-height"></div>
+			    <h2> {{spublic['Descripcion']}} </h2>
+			    <!--<p>Descripción de la hospital</p>-->
+			    <a href="tel:{{spublic['Telefono']}}" ion-button icon-only style="background-color: #8EC44A;width: 40%;">
+				  <ion-icon name="ios-call-outline"></ion-icon>
+				</a>
+			  </ion-item>
+		</ion-list>
+	  </div>
+	</div>
+</ion-content>
+<!--
+	*ngFor="let spublic of servicesPublic"
+-->

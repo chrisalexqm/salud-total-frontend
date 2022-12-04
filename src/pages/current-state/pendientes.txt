@@ -1,0 +1,6 @@
+recibir como parametro el objeto del usuario dependiente
+tipo de usuario dependiente
+id de usuario dependiente
+
+recibir data del ws
+validar mensaje funciones, clases y mensajes.

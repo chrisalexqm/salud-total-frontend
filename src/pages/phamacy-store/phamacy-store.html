@@ -1,0 +1,387 @@
+<ion-header>
+  <ion-toolbar color="primary_st">
+    <ion-title align="center" style="font-size: 2rem"> Salud Total </ion-title>
+  </ion-toolbar>
+  <img
+    src="assets/img/menu/menu.png"
+    (click)="goMenu()"
+    style="position: fixed; width: 30px; top: 15px; left: 20px; z-index: 10000"
+  />
+  <img
+    src="assets/img/icon.png"
+    style="position: fixed; width: 40px; top: 5px; right: 10px; z-index: 10000"
+  />
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="currentPage == 1">
+    <table style="width: 100%; border-color: black">
+      <tr>
+        <th align="center"></th>
+        <th align="center"></th>
+      </tr>
+      <tr>
+        <td align="center" valign="center">
+          <img src="assets/img/farmacia/icono_farmacia.png" style="width: 40px" />
+        </td>
+        <td align="left" valign="center" style="color: #1773fa">Pedido online</td>
+        <td align="right" valign="center">
+          <button
+            (click)="backHistory()"
+            ion-button
+            icon-only
+            outline
+            style="border-radius: 25px"
+          >
+            <ion-icon name="ios-arrow-back"></ion-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+    <br />
+    <div>
+      <ion-card-header style="background-color: transparent">
+        <strong>
+          Ubicación:
+        </strong>
+      </ion-card-header>
+
+      <ion-item *ngIf="hideCiudad" style="background-color: transparent">
+        <ion-label text-wrap>Departamento:</ion-label>
+        <ion-select
+          text-right
+          okText="Ok"
+          cancelText="Cancelar"
+          [(ngModel)]="departamentoIDSelect"
+          (ngModelChange)="getListProvinciasss()"
+          required
+          #sssdepartamento="ngModel"
+        >
+          <!--<ion-option select value="0">Seleccione una opción </ion-option>-->
+          <ion-option *ngFor="let d of departamentos" value="{{ d.Codigo }}">
+            {{ d.Departamento }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="hideProvincia" style="background-color: transparent">
+        <ion-label text-wrap>Provincia:</ion-label>
+        <ion-select
+          text-right
+          okText="Ok"
+          cancelText="Cancelar"
+          [(ngModel)]="provinciaIDSelect"
+          (ngModelChange)="getListDistritos()"
+          required
+          #sssprovincia="ngModel"
+        >
+          <!--<ion-option select value="0">Seleccione una opción </ion-option>-->
+          <ion-option
+            *ngFor="let p of provinciasSelect"
+            value="{{ p.CodigoProvincia }}"
+          >
+            {{ p.Provincia }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item style="background-color: transparent">
+        <ion-label text-wrap>Distrito:</ion-label>
+        <ion-select
+          text-right
+          okText="Ok"
+          cancelText="Cancelar"
+          [(ngModel)]="distritoSelect"
+          (ngModelChange)="validateCobertura()"
+          required
+          #sssdistrito="ngModel"
+        >
+          <!--<ion-option select value="0">Seleccione una opción </ion-option>-->
+          <ion-option *ngFor="let d of distritoRequest" value="{{ d.ID }}">
+            {{ d.Descripcion }}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+
+
+      <!-- <ion-item style="background-color: transparent">
+        <ion-label text-wrap>Dni :</ion-label>
+        <ion-input type="tel" maxlength="8" placeholder="" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="dni"></ion-input>
+      </ion-item>
+      <ion-item style="background-color: transparent">
+        <ion-label text-wrap>Telefono :</ion-label>
+        <ion-input type="tel" maxlength="9" placeholder="" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="phone"></ion-input>
+      </ion-item> -->
+      <ion-card-header style="background-color: transparent">
+        <strong>
+          Seleccionar Productos:
+        </strong>
+      </ion-card-header>
+      <ion-item style="background-color: transparent;">
+			  <ion-label text-wrap>Presentación:</ion-label>
+			  <ion-select text-right okText="Ok" cancelText="Cancelar" [(ngModel)]="presentationSelected"  (ngModelChange)="getListProvinciasss()"  required #sssdepartamento="ngModel">
+			    <ion-option *ngFor="let p of presentationList" value="{{ p.Codigo }}">
+			      {{ p.Descripcion }}
+			    </ion-option>
+			  </ion-select>
+      </ion-item>
+      <ion-item style="background-color: transparent">
+        <ion-label text-wrap>Producto :</ion-label>
+        <ion-input type="text" [(ngModel)]="productModel" (ngModelChange)="productChange($event)"></ion-input>
+      </ion-item>
+      <br>
+      <ion-list style="position: fixed; width: 100%; z-index: 1; padding-right: 1em;" *ngIf="showListPredictive && productList.length>0">
+        <ion-item *ngFor="let p of productList" (click)="selecProduct(p)"> {{p.FarmacoPrin}} </ion-item>
+      </ion-list>
+      <ion-list style="position: fixed; width: 100%; z-index: 1; padding-left: 1em;" *ngIf="showListPredictive && productList.length==0">
+        <ion-item> Sin resultados </ion-item>
+      </ion-list>
+
+      <!-- <ion-item style="background-color: transparent">
+        <ion-label text-wrap>Presentación :</ion-label>
+        <ion-input type="text" [(ngModel)]="presentation" disabled></ion-input>
+      </ion-item> -->
+      <ion-item style="background-color: transparent">
+        <ion-label text-wrap>Cantidad :</ion-label>
+        <ion-input placeholder="0" type="number" maxlength="3" [(ngModel)]="cantity"></ion-input>
+      </ion-item>
+      <br>
+      <button
+        [disabled]=""
+        (click)="addToCar()" ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;">
+        <ion-icon name="cart">  </ion-icon>
+        AÑADIR
+      </button>
+      <br>
+      <table style="width: 100%;" *ngIf="cartList.length>0">
+        <th align="left">
+          <strong>
+            TU PEDIDO:
+            <br>
+            <br>
+          </strong>
+
+        </th>
+        <tr *ngFor="let c of cartList">
+          <td align="left">
+            <strong>Producto:</strong> {{c.Farmaco}} <br>
+            <strong>Presentación:</strong> {{c.Presentacion}} <br>
+            <strong>Precio: </strong> S/.{{c.Precio}} <br>
+            <strong>Cantidad: </strong> {{c.Cantidad}}
+            <hr>
+          </td>
+          <td align="center">
+            <strong>
+              <ion-icon name="close-circle" style="font-size: 2.5em;" (click)="dropRequestTap(c)"></ion-icon>
+            </strong>
+          </td>
+
+        </tr>
+      </table>
+      <table style="width: 100%;" *ngIf="cartList.length>0">
+        <th align="left">
+          <strong>
+            Pedido: S/.{{priceTotal}}&nbsp;&nbsp;&nbsp;<br>
+            Delivery: S/.{{priceDelivery}}&nbsp;&nbsp;&nbsp;<br>
+            Total: S/.{{priceFull}}&nbsp;&nbsp;&nbsp;<br>
+            <br>
+          </strong>
+
+        </th>
+        </table>
+
+      <br>
+      <button *ngIf="cartList.length>0" ion-button block icon-start class="btnSendSol" style="color: white !important; margin-top: -20;"
+          (click)="changePage(1)">
+          <ion-icon style="color: white !important;" name="ios-paper-plane-outline"></ion-icon>
+          <div style="color: white !important;margin-top: 5px;"> Continuar </div>
+      </button>
+      <!-- <button (click)="addToCar()" ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;">
+        <ion-icon name="cart">  </ion-icon>
+        AÑADIR
+      </button> -->
+    </div>
+  </div>
+  <div *ngIf="currentPage == 2">
+    <table style="width: 100%; border-color: black">
+      <tr>
+        <th align="center"></th>
+        <th align="center"></th>
+      </tr>
+      <tr>
+        <td align="center" valign="center">
+          <img src="assets/img/farmacia/icono_farmacia.png" style="width: 40px" />
+        </td>
+        <td align="left" valign="center" style="color: #1773fa">Pedido online</td>
+        <td align="right" valign="center">
+          <button
+            (click)="backHistory()"
+            ion-button
+            icon-only
+            outline
+            style="border-radius: 25px"
+          >
+            <ion-icon name="ios-arrow-back"></ion-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <table style="width:100%; border-color: black;">
+      <tr>
+        <td align="center" valign="center">
+        <img src="assets/img/solservicio/delivery-bike.png" style="width: 45%;margin-top: 25px;border-radius: 5px;">
+        </td>
+      </tr>
+  </table>
+  <br>
+  <h4 align="center">Despacho</h4>
+  <br>
+  <ion-row>
+      <ion-col col-12>
+        <ion-item style="background-color: transparent">
+          <ion-label text-wrap>Dirección :</ion-label>
+          <ion-input type="text" [(ngModel)]="adress" maxlength="75"  name="adress" id="adresss"></ion-input>
+        </ion-item>
+
+        <!-- <ion-item style="background-color: transparent;">
+          <ion-input text-center type="tel" maxlength="8" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="dni" placeholder="DNI"></ion-input>
+        </ion-item> -->
+      </ion-col>
+      <ion-col col-12>
+        <ion-item style="background-color: transparent">
+          <ion-label text-wrap>Referencia :</ion-label>
+          <ion-input type="text" [(ngModel)]="reference" maxlength="75" name="reference" id="reference"></ion-input>
+        </ion-item>
+        <br>
+        <button ion-button block icon-start class="btnSendCoor" style="color: white" align="left"
+          (click)="geolocatess(true)">
+          <!-- <ion-icon style="color: white !important;" name="locate"></ion-icon> -->
+          <div style="color: white !important;margin-top: 5px;">
+            Compartir Ubicación <br>
+            (opcional)
+          </div>
+        </button>
+        <ion-item style="background-color: transparent">
+          <ion-label text-wrap>Comprobante:</ion-label>
+          <ion-select
+            text-right
+            okText="Ok"
+            cancelText="Cancelar"
+            [(ngModel)]="reciboTypeSelected"
+            required
+            #sssdistrito="ngModel"
+          >
+            <!--<ion-option select value="0">Seleccione una opción </ion-option>-->
+            <ion-option *ngFor="let d of reciboTypeList" value="{{ d.Codigo }}">
+              {{ d.Descripcion }}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="reciboTypeSelected=='2'" style="background-color: transparent">
+          <ion-label text-wrap>RUC :</ion-label>
+          <ion-input placeholder="" type="number" max="99999999999" maxlength="11" [(ngModel)]="ruc"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="reciboTypeSelected=='2'" style="background-color: transparent">
+          <ion-label text-wrap>Razon Social :</ion-label>
+          <ion-input placeholder="" type="text" maxlength="100" [(ngModel)]="razsoc"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="reciboTypeSelected=='2'" style="background-color: transparent">
+          <ion-label text-wrap>Direccion Fiscal :</ion-label>
+          <ion-input placeholder="" type="text" maxlength="100" [(ngModel)]="diruc"></ion-input>
+        </ion-item>
+
+      </ion-col>
+      <ion-col col-12>
+        <ion-item style="background-color: transparent">
+          <ion-label text-wrap>Con cuanto pago: S/. :</ion-label>
+          <ion-input placeholder="0" type="number" maxlength="5" [(ngModel)]="ammount"></ion-input>
+        </ion-item>
+      </ion-col>
+  </ion-row>
+  <br>
+
+  <button ion-button block icon-start class="btnSendSol" style="color: white !important; margin-top: -20;"
+       (click)="changePage(3)">
+      <ion-icon style="color: white !important;" name="ios-paper-plane-outline"></ion-icon>
+      <div style="color: white !important;margin-top: 5px;"> Continuar </div>
+  </button>
+  <br>
+  <!--
+    <ion-item style="background-color: transparent;">
+      <ion-label text-wrap>DNI:</ion-label>
+      <ion-input text-right type="number" [(ngModel)]="dni" required #ssudni="ngModel"></ion-input>
+  </ion-item>
+  <ion-item style="background-color: transparent;">
+      <ion-label text-wrap>Telefono:</ion-label>
+      <ion-input text-right type="number" [(ngModel)]="phone" required #ssutelf="ngModel"></ion-input>
+  </ion-item>
+  -->
+</div>
+
+  <div *ngIf="currentPage == 3">
+    <table style="width: 100%; border-color: black">
+      <tr>
+        <th align="center"></th>
+        <th align="center"></th>
+      </tr>
+      <tr>
+        <td align="center" valign="center">
+          <img src="assets/img/farmacia/icono_farmacia.png" style="width: 40px" />
+        </td>
+        <td align="left" valign="center" style="color: #1773fa">Pedido online</td>
+        <td align="right" valign="center">
+          <button
+            (click)="backHistory()"
+            ion-button
+            icon-only
+            outline
+            style="border-radius: 25px"
+          >
+            <ion-icon name="ios-arrow-back"></ion-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <table style="width:100%; border-color: black;">
+      <tr>
+        <td align="center" valign="center">
+        <img src="assets/img/solservicio/gente.png" style="width: 65%;margin-top: 25px;border-radius: 5px;">
+        </td>
+      </tr>
+  </table>
+  <br>
+  <h4 align="center">Identifícate</h4>
+  <br>
+  <ion-row>
+      <ion-col col-6>
+        <ion-item style="background-color: transparent;">
+          <ion-input text-center type="tel" maxlength="8" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="dni" placeholder="DNI"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col col-6>
+        <ion-item style="background-color: transparent;">
+          <ion-input text-center type="tel" maxlength="9" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="phone" placeholder="Teléfono"></ion-input>
+        </ion-item>
+      </ion-col>
+  </ion-row>
+  <br>
+
+  <button ion-button block icon-start class="btnSendSol" style="color: white !important; margin-top: -20;"
+       (click)="postRequestCart()">
+      <ion-icon style="color: white !important;" name="ios-paper-plane-outline"></ion-icon>
+      <div style="color: white !important;margin-top: 5px;"> Enviar Solicitud </div>
+  </button>
+  <br>
+  <!--
+    <ion-item style="background-color: transparent;">
+      <ion-label text-wrap>DNI:</ion-label>
+      <ion-input text-right type="number" [(ngModel)]="dni" required #ssudni="ngModel"></ion-input>
+  </ion-item>
+  <ion-item style="background-color: transparent;">
+      <ion-label text-wrap>Telefono:</ion-label>
+      <ion-input text-right type="number" [(ngModel)]="phone" required #ssutelf="ngModel"></ion-input>
+  </ion-item>
+  -->
+</div>
+
+</ion-content>

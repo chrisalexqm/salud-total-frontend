@@ -1,0 +1,2 @@
+PS.fprecio + (PS.fprecio * ((select vval from db_SaludTotal.Tbl_Params where ncodite=13 and icodite=1))/100) as TotalIGVSinDescuento,
+    (PS.fprecio + (PS.fprecio * ((select vval from db_SaludTotal.Tbl_Params where ncodite=13 and icodite=1))/100)) - (PS.fprecio * (PS.fdesc /100)) as TotalIGVConDescuento

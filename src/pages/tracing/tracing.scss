@@ -1,0 +1,21 @@
+page-tracing {
+	ion-content, ion-grid{
+		background-image: url("../assets/img/background.png");
+		background-size: 100%;
+	}
+
+	ion-input {
+	  input {
+	    text-align: right;
+	    /* IF YOU ALSO WANT TO PUSH PLACHEHOLDER TO THE RIGHT USE THE FOLLOWING, IF NOT JUST DELETE THE ::-webkit-input-placeholder*/
+	    ::-webkit-input-placeholder {
+	      text-align: right;
+	    }
+	  }
+	}
+
+	ion-card{
+		border-radius: 15px;
+	}
+
+}

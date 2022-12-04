@@ -1,0 +1,159 @@
+<!--
+  Generated template for the RegisterDataUDependenMinorPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar color="primary_st">
+    <!--<button ion-button menuToggle color="st_white">
+      <ion-icon name="menu"></ion-icon>
+    </button>-->
+    <ion-title align="center" style="font-size: 2rem;"> Salud Total </ion-title>
+  </ion-toolbar>
+  <img src="assets/img/menu/menu.png" (click)="goMenu()" style="position: fixed; width: 30px; top: 15px; left: 20px;z-index: 10000;">
+  <img src="assets/img/icon.png" style="position: fixed; width: 40px; top: 5px; right: 10px;z-index: 10000;">
+</ion-header>
+
+
+<ion-content padding>
+	<table style="width:100%; border-color: black;">
+	  <tr>
+	    <th align="center"></th>
+	    <th align="center"></th>
+	  </tr>
+	  <tr>
+	    <td align="center" valign="center">
+	    <img src="assets/img/misdatos/icono_mis_datos_de_salud.png" style="width: 40px;">
+	    </td>
+	    <td align="left" valign="center" style="color: #1773FA;">
+	    	Datos de salud
+	    </td>
+	    <td align="right" valign="center">
+	    	<button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+	  			<ion-icon name="ios-arrow-back"></ion-icon>
+			</button>	
+	  	 </td>
+	  </tr>
+	</table>
+	<ion-list>
+		  <div >
+		  	<ion-card-header>
+			    Datos de tu dependiente menor
+			</ion-card-header>
+			  <ion-item style="background-color: transparent">
+				    <ion-label >Nombres:</ion-label>
+				    <ion-input disabled type="text" [(ngModel)]="nameUser"></ion-input>
+			  </ion-item>
+			  <ion-item style="background-color: transparent">
+				    <ion-label >Apellido paterno:</ion-label>
+				    <ion-input disabled type="text" [(ngModel)]="paternalSurnameUser"></ion-input>
+				  </ion-item>
+			  <ion-item style="background-color: transparent">
+				    <ion-label >Apellido materno:</ion-label>
+				    <ion-input disabled type="text" [(ngModel)]="maternalSurnameUser"></ion-input>
+			  </ion-item>
+
+			  <ion-item style="background-color: transparent" *ngIf="genderOption == -1">
+				  <ion-label >Sexo:</ion-label>
+				  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="genderOption" (ngModelChange)="onChangeDataBase()">
+				    <ion-option value="0">Femenino</ion-option>
+				    <ion-option value="1">Masculino</ion-option>
+				  </ion-select>
+			  </ion-item>
+			  <ion-item style="background-color: transparent" *ngIf="genderOption == 0 || genderOption == 1">
+				  <ion-label >Sexo:</ion-label>
+				  <ion-select disabled okText="Ok" cancelText="Cancelar" [(ngModel)]="genderOption">
+				    <ion-option value="0">Femenino</ion-option>
+				    <ion-option value="1">Masculino</ion-option>
+				  </ion-select>
+			  </ion-item>
+
+			  <ion-item *ngIf="!birthdateEnable" style="background-color: transparent">
+				  <ion-label text-wrap>Fecha de nacimiento:</ion-label>
+			      <ion-datetime disabled doneText="Ok" min="2000" cancelText="Cancelar" displayFormat="DD MMM YYYY" [(ngModel)]="birthdate" (ngModelChange)="onChangeBirthdate()"></ion-datetime>
+			  </ion-item>
+			  <ion-item *ngIf="birthdateEnable" style="background-color: transparent">
+				  <ion-label text-wrap>Fecha de nacimiento:</ion-label>
+			      <ion-datetime doneText="Ok" min="2000" cancelText="Cancelar" displayFormat="DD MMM YYYY" [(ngModel)]="birthdate" (ngModelChange)="onChangeBirthdate()"></ion-datetime>
+			  </ion-item>
+
+			  <ion-item style="background-color: transparent">
+				  <ion-label >Edad(meses):</ion-label>
+			  	  <ion-input disabled="true" type="text" [(ngModel)]="age"></ion-input>
+			  </ion-item>
+		  </div>
+		    <div>
+			  	<ion-card-header>
+				    Datos de salud
+				</ion-card-header>
+				<ion-item style="background-color: transparent">
+					    <ion-label >Hemoglobina:</ion-label>
+					    <ion-input type="number" placeholder="12" [(ngModel)]="hemoglobin" (ngModelChange)="onChangeHemoglobin()"></ion-input>
+				  </ion-item>
+				  <ion-grid *ngIf="messageHemoglobin" padding style="padding-top: 0px;margin-top: 0px;">
+					  <ion-row *ngIf="messageHemoglobin=='ok'">
+					  	<ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;NORMAL</ion-col>	    
+					  </ion-row>
+					  <ion-row *ngIf="messageHemoglobin=='anemia'">
+					    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;ANEMIA</ion-col>
+					  </ion-row>
+					  <ion-row *ngIf="messageHemoglobin=='anormal'">
+					    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;ANORMAL ALTA</ion-col>
+					  </ion-row>
+				  </ion-grid>
+				  <ion-item style="background-color: transparent">
+					    <ion-label >Peso al nacer(KG):</ion-label>
+					    <ion-input type="tel" maxlength="4" inputmode="numeric" pattern="[0-9]+([\.,][0-9]+)?"  placeholder="4" [(ngModel)]="weight" ></ion-input>
+				  </ion-item>
+				  <ion-grid *ngIf="weight" padding style="padding-top: 0px;margin-top: 0px;">
+					  <ion-row *ngIf="weight>=2.5 && weight<=4">
+					  	<ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;NORMAL</ion-col>	    
+					  </ion-row>
+					  <ion-row *ngIf="weight<2.5">
+					    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;BAJO PESO <br> en riesgo de salud</ion-col>
+					  </ion-row>
+					  <ion-row *ngIf="weight>4">
+					    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;PESO EXCESIVO <br>hacer seguimiento de salud</ion-col>
+					  </ion-row>
+				  </ion-grid>
+				  <ion-item style="background-color: transparent" *ngIf="vacuns">
+						<ion-label >Vacunas:</ion-label>
+						<ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="vacunSelect" (ngModelChange)="onChangeVacuns()" multiple="true">
+							<!--<ion-option select value="0"><span>Ningún</span> antecedente</ion-option>-->
+							<ion-option *ngFor="let v of vacuns" value="{{v.Id}}">{{ v.Descripcion }}</ion-option>
+						</ion-select>
+				  </ion-item>
+				  <ion-grid *ngIf="messageVacuns" padding style="padding-top: 0px;margin-top: 0px;">
+					  <ion-row *ngIf="messageVacuns=='ok'">
+					  	<ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;PROTEGIDO CON VACUNAS</ion-col>					    
+					  </ion-row>
+					  <ion-row *ngIf="messageVacuns=='error'">
+					    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;DESPROTEGIDO, salud en riesgo!</ion-col>
+					  </ion-row>
+				  </ion-grid>	
+				  <ion-item style="background-color: transparent" *ngIf="controls">
+						<ion-label >Controles:</ion-label>
+						<ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="controlSelect" (ngModelChange)="onChangeControls()" multiple="true">
+							<!--<ion-option select value="0"><span>Ningún</span> antecedente</ion-option>-->
+							<ion-option *ngFor="let c of controls" value="{{c.Id}}">{{ c.Descripcion }}</ion-option>
+						</ion-select>
+				  </ion-item>
+				  <ion-grid *ngIf="messageControls" padding style="padding-top: 0px;margin-top: 0px;">
+					  <ion-row *ngIf="messageControls=='ok'">
+					  	<ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;CONTROLADO</ion-col>					    
+					  </ion-row>
+					  <ion-row *ngIf="messageControls=='error'">
+					    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;NO CONTROLADO <br> en riesgo de salud</ion-col>
+					  </ion-row>
+				  </ion-grid>	 
+			  </div>
+	</ion-list>
+	<!--<button ion-button block icon-start class="btnUpdateData" (click)="postRequestRegisterUDM()" style="color: white;"><h5 style="color: #ffffff;margin-top:15px;">Guardar datos</h5></button>-->
+	<button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top: -20;" 
+		(click)="postRequestRegisterUDM()">
+	  <ion-icon style="color: white !important;" name="md-checkmark">  </ion-icon>
+	  <div style="color: white !important;"> Guardar mis datos </div>
+	</button>
+
+</ion-content>

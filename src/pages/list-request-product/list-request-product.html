@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar color="primary_st">
+    <ion-title align="center" style="font-size: 2rem"> Pedidos </ion-title>
+  </ion-toolbar>
+  <img
+    src="assets/img/menu/menu.png"
+    (click)="goMenu()"
+    style="position: fixed; width: 30px; top: 15px; left: 20px; z-index: 10000"
+  />
+  <img
+    src="assets/img/icon.png"
+    style="position: fixed; width: 40px; top: 5px; right: 10px; z-index: 10000"
+  />
+</ion-header>
+
+<ion-content padding>
+  <table style="width: 100%; border-color: black">
+    <tr>
+      <th align="center"></th>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+        <img src="assets/img/farmacia/icono_farmacia.png" style="width: 40px" />
+      </td>
+      <td align="left" valign="center" style="color: #1773fa">Pedidos</td>
+      <td align="right" valign="center">
+        <button
+          (click)="backHistory()"
+          ion-button
+          icon-only
+          outline
+          style="border-radius: 25px"
+        >
+          <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <br />
+  <div>
+    <ion-card-header style="background-color: transparent">
+      <!-- <strong>
+        Pedido online
+      </strong> -->
+    </ion-card-header>
+    <ion-item style="background-color: transparent">
+      <table style="width: 100%;">
+        <th align="center">
+          <strong>
+            Farmacia
+          </strong>
+        </th>
+        <th align="center">
+          <strong>
+            Fecha
+          </strong>
+        </th>
+        <th align="center">
+          <strong>
+            Total
+          </strong>
+        </th>
+        <th align="center">
+        </th>
+        <tr *ngFor="let p of requestProductList">
+          <td align="center" (click)="detail(p)">
+            {{p.Farmacia}}
+          </td>
+          <td align="center" (click)="detail(p)">
+            {{p.FechaRegistro}}
+          </td>
+          <td align="center" (click)="detail(p)">
+            S/.{{p.Total}}
+          </td>
+          <td align="center">
+            <strong>
+              <ion-icon name="close-circle" (click)="dropTap(p)"></ion-icon>
+            </strong>
+          </td>
+        </tr>
+      </table>
+    </ion-item>
+  </div>
+</ion-content>

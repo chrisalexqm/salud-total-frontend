@@ -1,0 +1,287 @@
+<!--
+  Generated template for the NextControlsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar color="primary_st" >
+    <!--<button ion-button menuToggle color="st_white">
+      <ion-icon name="menu" color="st_white"></ion-icon>
+    </button>-->
+    <ion-title align="center" style="font-size: 2rem;"> Salud Total </ion-title>
+  </ion-toolbar>
+  <img src="assets/img/menu/menu.png" (click)="goMenu()" style="position: fixed; width: 30px; top: 15px; left: 20px;z-index: 10000;">
+  <img src="assets/img/icon.png" style="position: fixed; width: 40px; top: 5px; right: 10px;z-index: 10000;">
+</ion-header>
+  
+<ion-content padding>
+  <table style="width:100%; border-color: black;">
+    <tr>
+      <th align="center"></th>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+      <img src="assets/img/nc_logo.png" style="width: 40px;">
+      </td>
+      <td align="left" valign="center" style="color: #1773FA;">
+        Próximas alertas
+      </td>
+      <td align="right" valign="center">
+        <button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+            <ion-icon name="ios-arrow-back"></ion-icon>
+        </button> 
+      </td>
+    </tr>
+  </table>
+  <br>
+  <ion-card style="padding: 0px; margin: 0px;background-color: transparent;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0), 0 3px 1px -2px rgba(0, 0, 0, 0), 0 1px 5px 0 rgba(0, 0, 0, 0);">
+  	<ion-list *ngIf="!userDependient || userDependient == 1">
+      <!--<ion-item *ngFor="let nc of nex_controls" (click)="itemTapped($event, nc)">-->
+      <ion-item style="background-color: transparent;" *ngIf="fColesterolHDL != '' && fColesterolHDL!=undefined && agereal>35">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div  text-wrap class="item-note" item-start>
+               Colesterol LDL
+          </div>
+          <div class="item-note" item-end>
+            {{ fColesterolHDL }}
+          </div>        
+      </ion-item>
+      <ion-item style="background-color: transparent;" *ngIf="fColesteroLDL != '' && fColesteroLDL!=undefined && agereal>35">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div  text-wrap class="item-note" item-start>
+               Colesterol HDL
+          </div>
+          <div class="item-note" item-end>
+            {{ fColesteroLDL }}
+          </div>        
+      </ion-item>
+      <ion-item style="background-color: transparent;" *ngIf="fTrigliceridos != '' && fTrigliceridos!=undefined && agereal>35">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div  text-wrap class="item-note" item-start>
+               Triglicéridos
+          </div>
+          <div class="item-note" item-end>
+            {{ fTrigliceridos }}
+          </div>        
+      </ion-item>
+      <ion-item style="background-color: transparent;" *ngIf="fcontrolColon != ''  && agereal>50 && fcontrolColon!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div  text-wrap class="item-note" item-start>
+               Colonoscopía   
+          </div>
+          <div class="item-note" item-end>
+            {{ fcontrolColon }}
+          </div>        
+      </ion-item>
+      <ion-item style="background-color: transparent;" *ngIf="fcontrolPreventiva != '' && fcontrolPreventiva!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div  text-wrap class="item-note" item-start>
+               Consulta Preventiva
+          </div>
+          <div class="item-note" item-end>
+            {{ fcontrolPreventiva }}
+          </div>        
+      </ion-item>
+      <ion-item style="background-color: transparent;" *ngIf="fcontrolEmbarazo != '' && fcontrolEmbarazo!=undefined  && agereal<=48">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div  text-wrap class="item-note" item-start>
+               Control de embarazo   
+          </div>
+          <div class="item-note" item-end>
+            {{ fcontrolEmbarazo }}
+          </div>        
+      </ion-item>
+
+      <ion-item style="background-color: transparent;" *ngIf="fControlDiabetes != '' && fControlDiabetes!=undefined && agereal>35">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div  text-wrap class="item-note" item-start>
+               Diabetes
+          </div>
+          <div class="item-note" item-end>
+            {{ fControlDiabetes }}
+          </div>        
+      </ion-item>
+      <ion-item style="background-color: transparent;" *ngIf="fcontrolGastro != ''  && agereal>45 && fcontrolGastro!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div  text-wrap class="item-note" item-start>
+               Gastroscopía   
+          </div>
+          <div class="item-note" item-end>
+            {{ fcontrolGastro }}
+          </div>        
+      </ion-item>
+      <ion-item style="background-color: transparent;" *ngIf="fGlucosaAyuna != '' && fGlucosaAyuna!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div  text-wrap class="item-note" item-start>
+               Glucosa en ayunas
+          </div>
+          <div class="item-note" item-end>
+            {{ fGlucosaAyuna }}
+          </div>        
+      </ion-item>
+      <ion-item style="background-color: transparent;" *ngIf="fGlucosaDespuesAlimento != '' && fGlucosaDespuesAlimento!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div  text-wrap class="item-note" item-start>
+               Glucosa post-comida
+          </div>
+          <div class="item-note" item-end>
+            {{ fGlucosaDespuesAlimento }}
+          </div>        
+      </ion-item>  
+      <ion-item style="background-color: transparent;" *ngIf="flucosaGlicosilada != '' && flucosaGlicosilada!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div  text-wrap class="item-note" item-start>
+               Glucosa glicosilada
+          </div>
+          <div class="item-note" item-end>
+            {{ flucosaGlicosilada }}
+          </div>        
+      </ion-item>
+      <ion-item style="background-color: transparent;" *ngIf="fHemoglobina != '' && fHemoglobina!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div  text-wrap class="item-note" item-start>
+               Hemoglobina
+          </div>
+          <div class="item-note" item-end>
+            {{ fHemoglobina }}
+          </div>        
+      </ion-item> 
+      <ion-item style="background-color: transparent;" *ngIf="fIMC != '' && fIMC!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div  text-wrap class="item-note" item-start>
+               Peso
+          </div>
+          <div class="item-note" item-end>
+            {{ fIMC }}
+          </div>        
+      </ion-item> 
+      <ion-item style="background-color: transparent;" *ngIf="fMedidaAbdominal != '' && fMedidaAbdominal!=undefined && agereal>=25">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div  text-wrap class="item-note" item-start>
+               Cintura abdominal
+          </div>
+          <div class="item-note" item-end>
+            {{ fMedidaAbdominal }}
+          </div>        
+      </ion-item> 
+      <ion-item style="background-color: transparent;" *ngIf="fPresionArterial != '' && fPresionArterial!=undefined && agereal>=30">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div text-wrap class="item-note" item-start>
+               Presion arterial
+          </div>
+          <div class="item-note" item-end>
+            {{ fPresionArterial }}
+          </div>        
+      </ion-item> 
+      <ion-item style="background-color: transparent;" *ngIf="fPresionArterialControl != '' && fPresionArterialControl!=undefined  && agereal>=30">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div text-wrap class="item-note" item-start>
+               Consulta por HTA
+          </div>
+          <div class="item-note" item-end>
+            {{ fPresionArterialControl }}
+          </div>        
+      </ion-item>  
+      <ion-item style="background-color: transparent;" *ngIf="fVacunaAntineumonia != '' && fVacunaAntineumonia!=undefined && agereal>60">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div text-wrap class="item-note" item-start>
+               Vacuna antineumonía
+          </div>
+          <div class="item-note" item-end>
+            {{ fVacunaAntineumonia }}
+          </div>        
+      </ion-item>        
+      <ion-item style="background-color: transparent;" *ngIf="fMamografia != '' && agereal>=40 && gender==0 && fMamografia!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div text-wrap class="item-note" item-start>
+               Mamografía  
+          </div>
+          <div class="item-note" item-end>
+            {{ fMamografia }}
+          </div>        
+      </ion-item>   
+      <ion-item style="background-color: transparent;" *ngIf="fPapanicolao != ''  && agereal>=21 && gender==0 && fPapanicolao!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div text-wrap class="item-note" item-start>
+               Papanicolao   
+          </div>
+          <div class="item-note" item-end>
+            {{ fPapanicolao }}
+          </div>        
+      </ion-item>   
+      <ion-item style="background-color: transparent;" *ngIf="fProstata != ''  && agereal>=50 && gender==1 && fProstata!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div text-wrap class="item-note" item-start>
+               Próstata  
+          </div>
+          <div class="item-note" item-end>
+            {{ fProstata }}
+          </div>        
+      </ion-item>         
+        
+      <ion-item style="background-color: transparent;" *ngIf="fcontrolOdontologia != '' && fcontrolOdontologia!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div text-wrap class="item-note" item-start>
+               Odontología   
+          </div>
+          <div class="item-note" item-end>
+            {{ fcontrolOdontologia }}
+          </div>        
+      </ion-item>   
+      <ion-item style="background-color: transparent;" *ngIf="fcontrolOftalmo != '' && fcontrolOftalmo!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div text-wrap class="item-note" item-start>
+               Ofmaltología  
+          </div>
+          <div class="item-note" item-end>
+            {{ fcontrolOftalmo }}
+          </div>        
+      </ion-item>   
+    </ion-list>
+    <ion-list *ngIf="userDependient == 2">
+      <!--<ion-item style="background-color: transparent;" *ngFor="let nc of nex_controls" (click)="itemTapped($event, nc)">-->
+      <ion-item style="background-color: transparent;" *ngIf="fHemoglobina != '' && fHemoglobina!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div text-wrap class="item-note" item-start>
+               Hemoglobina
+          </div>
+          <div class="item-note" item-end>
+            {{ fHemoglobina }}
+          </div>        
+      </ion-item>
+      <ion-item style="background-color: transparent;" *ngIf="fControl != '' && fControl!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div text-wrap class="item-note" item-start>
+               Control
+          </div>
+          <div class="item-note" item-end>
+            {{ fControl }}
+          </div>        
+      </ion-item>
+      <ion-item style="background-color: transparent;" *ngIf="fVacuna != ''  && fVacuna!=undefined">
+        <!--<ion-icon name="md-alarm" item-start></ion-icon>-->
+          <div text-wrap class="item-note" item-start>
+               Vacuna  
+          </div>
+          <div class="item-note" item-end>
+            {{ fVacuna }}
+          </div>        
+      </ion-item>   
+    </ion-list>
+    <!--<div *ngIf="selectedControl" padding>
+      <ion-card-header>
+        <ion-item>
+        <b item-start>{{selectedControl.speciality}}</b>
+        <b item-end>{{selectedControl.date}}</b>
+        </ion-item>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{selectedControl.description}}</p>
+        <br>
+        <b item-start>{{selectedControl.address}}, {{selectedControl.district}}</b>          
+      </ion-card-content>
+    </div> -->
+  </ion-card>
+</ion-content>

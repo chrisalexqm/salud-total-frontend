@@ -1,0 +1,35 @@
+page-pre-login {
+	ion-content{
+		background-image: url("../assets/img/background.png");
+		background-size: 100%;
+		align-items: center;
+	}
+	ion-icon{
+		padding-bottom: 7.5px;
+		font-size: 1.8em;
+	}
+	.btnGoLoginn{
+		width: 70%;		
+		background-color: #1773FA;
+		border-radius: 5px;
+		align-items: center;
+		margin: auto;
+		margin-top: 250px;
+	}
+	.btnGoRegisterr{
+		width: 70%;
+		background-color: #FFB514;		
+		border-radius: 5px;
+		align-items: center;
+		margin: auto;
+		margin-top: 15px;
+	}
+	.imgLogo{
+		height: 150px;
+		align-items: center;
+		width: auto;
+		margin: auto;
+		display: block;
+		margin-top: 15vh;
+	}
+}

@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar color="primary_st">
+    <ion-title align="center" style="font-size: 2rem"> Detalle del pedido </ion-title>
+  </ion-toolbar>
+  <img
+    src="assets/img/menu/menu.png"
+    (click)="goMenu()"
+    style="position: fixed; width: 30px; top: 15px; left: 20px; z-index: 10000"
+  />
+  <img
+    src="assets/img/icon.png"
+    style="position: fixed; width: 40px; top: 5px; right: 10px; z-index: 10000"
+  />
+</ion-header>
+
+<ion-content padding>
+  <table style="width: 100%; border-color: black">
+    <tr>
+      <th align="center"></th>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+        <img src="assets/img/farmacia/icono_farmacia.png" style="width: 40px" />
+      </td>
+      <td align="left" valign="center" style="color: #1773fa">Pedido</td>
+      <td align="right" valign="center">
+        <button
+          (click)="backHistory()"
+          ion-button
+          icon-only
+          outline
+          style="border-radius: 25px"
+        >
+          <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <br />
+  <div>
+    <ion-card-header style="background-color: transparent">
+    </ion-card-header>
+    <ion-list *ngFor="let d of detailList">
+      <ion-item style="background-color: transparent">
+        <strong>Farmacia: </strong>
+        {{d.Farmacia}}
+      </ion-item>
+      <ion-item style="background-color: transparent">
+        <strong>Farmaco: </strong>
+        {{d.Farmaco}}
+      </ion-item>
+      <ion-item style="background-color: transparent">
+        <strong>Presentacion: </strong>
+        {{d.Presentacion}}
+      </ion-item>
+      <ion-item style="background-color: transparent">
+        <strong>Precio: </strong>
+        S/.{{d.Precio}}
+      </ion-item>
+      <ion-item style="background-color: transparent">
+        <strong>Cantidad: </strong>
+        {{d.Cantidad}}
+      </ion-item>
+    </ion-list>
+    <ion-item style="background-color: transparent" align="right">
+      <table style="width: 100%;" *ngIf="detailList.length>0">
+        <th align="right">
+          <strong>
+            Pedido: S/.{{priceTotal}}&nbsp;&nbsp;&nbsp;<br>
+            Delivery: S/.{{priceDelivery}}&nbsp;&nbsp;&nbsp;<br>
+            Total: S/.{{priceFull}}&nbsp;&nbsp;&nbsp;<br>
+            <br>
+          </strong>
+        </th>
+        </table>
+    </ion-item>
+  </div>
+</ion-content>

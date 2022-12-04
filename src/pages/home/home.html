@@ -1,0 +1,142 @@
+<ion-header>
+  <ion-toolbar color="primary_st" >
+    <!--<button ion-button menuToggle color="st_white">
+      <ion-icon name="menu" color="st_white"></ion-icon>
+    </button>-->
+    <ion-title align="center" style="font-size: 2rem;"> Salud Total </ion-title>
+  </ion-toolbar>
+  <img src="assets/img/menu/menu.png" (click)="goMenu()" style="position: fixed; width: 30px; top: 15px; left: 20px;z-index: 10000;">
+  <img src="assets/img/icon.png" style="position: fixed; width: 40px; top: 5px; right: 10px;z-index: 10000;">
+</ion-header>
+
+<ion-content padding *ngIf="!select_promo">
+	<table style="width:100%; border-color: black;">
+    <tr>
+      <th align="center"></th>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+      <img src="assets/img/descuentos/icono_descuento_promociones.png" style="width: 40px;" >
+      </td>
+      <td align="left" valign="center" style="color: #1773FA;">
+        Descuentos y ofertas
+      </td>
+      <td align="right" valign="center">
+        <button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+            <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+	<ion-slides  *ngIf="noticias && noticias.length" autoplay="5000" loop="true" speed="1000" pager="true" style="height: 90%;">
+		<!--
+		*ngFor="let noticia of noticias"
+    *-->
+      <br>
+		  <ion-slide  *ngFor="let noticia of noticias" style="margin-top: -35px;">
+		    <ion-card  *ngIf="noticia['Tipo']!='Noticia'" (click)="selectPromo(noticia)" style=" ">
+			  <!--<img [src]="noticia.URL"/>-->
+        <table style="width:100%; border-color: black;    margin-top: 15px;">
+          <tr>
+            <td align="center" valign="center">
+              <img align="center" style="width: 85%;margin-top: 50px;-webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);" [src]="noticia['URL']">
+            </td>
+          </tr>
+        </table>
+			  <ion-card-content>
+			    <ion-card-title style="font-size: 2rem;">
+			      {{ noticia['Titulo'] }}
+			    </ion-card-title>
+			    <p>
+			      {{ noticia['Des'] }}
+			    </p>
+			  </ion-card-content>
+			</ion-card>
+			<ion-card *ngIf="noticia['Tipo']=='Noticia'" >
+			  <!--<img [src]="noticia.URL"/>-->
+        <table style="width:100%; border-color: black;    margin-top: 15px;">
+          <tr>
+            <td align="center" valign="center">
+              <img align="center" style="width: 85%;margin-top: 50px;-webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);" [src]="noticia['URL']">
+            </td>
+          </tr>
+        </table>
+			  <ion-card-content>
+			    <ion-card-title style="font-size: 2rem;">
+			      {{ noticia['Titulo'] }}
+			    </ion-card-title>
+			    <p>
+			      {{ noticia['Des'] }}
+			    </p>
+			  </ion-card-content>
+			</ion-card>
+		  </ion-slide>
+	  <!--<ion-slide style="">
+	    <ion-card>
+		  <img src="assets/img/home/javierprado.jpg"/>
+		  <ion-card-content>
+		    <ion-card-title>
+		      Vacuna contra la influenza
+		      </ion-card-title>
+		    <p>
+		      The most popular industrial group ever, and largely
+		      responsible for bringing the music to a mass audience.
+		    </p>
+		  </ion-card-content>
+		</ion-card>
+	  </ion-slide>-->
+	</ion-slides>
+</ion-content>
+
+<ion-content padding *ngIf="select_promo">
+	<table style="width:100%; border-color: black;">
+    <tr>
+      <th align="center"></th>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+      <img src="assets/img/descuentos/icono_descuento_promociones.png" style="width: 40px;">
+      </td>
+      <td align="left" valign="center" style="color: #1773FA;">
+        Descuentos y ofertas
+      </td>
+      <td align="right" valign="center">
+        <button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+            <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+
+  <table style="width:100%; border-color: black;">
+    <tr>
+      <td align="center" valign="center">
+      <img [src]="select_promo.URL" style="width: 65%;margin-top: 25px;border-radius: 5px;">
+      </td>
+    </tr>
+  </table>
+  <h4 align="center">Identifícate</h4>
+  <ion-row>
+    <ion-col col-6>
+      <ion-item style="background-color: transparent;">
+        <ion-input text-center type="tel" maxlength="8" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="dni" placeholder="DNI"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col col-6>
+      <ion-item style="background-color: transparent;">
+        <ion-input text-center type="tel" maxlength="9" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="telf" placeholder="Teléfono"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <br>
+  <button ion-button block icon-start class="btnSendSol" style="color: white !important; margin-top: -20;"
+		 (click)="sendSol()">
+	  <ion-icon style="color: white !important;" name="ios-paper-plane-outline"></ion-icon>
+	  <div style="color: white !important;margin-top: 5px;"> SOLICITAR OFERTA </div>
+  </button>
+
+</ion-content>

@@ -1,0 +1,93 @@
+<!--
+  Generated template for the ListRequestPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar color="primary_st" >
+    <!--<button ion-button menuToggle color="st_white">
+      <ion-icon name="menu" color="st_white"></ion-icon>
+    </button>-->
+    <ion-title align="center" style="font-size: 2rem;"> Salud Total </ion-title>
+  </ion-toolbar>
+  <img src="assets/img/menu/menu.png" (click)="goMenu()" style="position: fixed; width: 30px; top: 15px; left: 20px;z-index: 10000;">
+  <img src="assets/img/icon.png" style="position: fixed; width: 40px; top: 5px; right: 10px;z-index: 10000;">
+</ion-header>
+
+
+<ion-content padding>
+	<table style="width:100%; border-color: black;">
+    <tr>
+      <th align="center"></th>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+      <img src="assets/img/solservicio/icono_solicitar_servicio_general.png" style="width: 40px;">
+      </td>
+      <td align="left" valign="center" style="color: #1773FA;">
+        Servicios solicitados
+      </td>
+      <td align="right" valign="center">
+        <button ion-button block class="btnAddDependente" style=""
+          (click)="goRequestService()">
+          <div style="color: white !important;"> + </div>
+        </button>
+      </td>
+      <td align="right" valign="center">
+    	<button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+  			<ion-icon name="ios-arrow-back"></ion-icon>
+		</button>
+  	  </td>
+    </tr>
+  </table>
+  	<br>
+	<!--<ion-card>
+		<button text-wrap ion-button block (click)="goRequestService()">HACER NUEVA SOLICITUD </button>
+	</ion-card>-->
+	<div *ngIf="!selectedRequest">
+
+		<ion-list style="background-color: transparent;">
+		  <!--
+		  <ion-item style="background-color: transparent;" text-wrap ion-item *ngFor="let lr of listRequest" style="">
+		  	<div (click)="itemSelected(lr)">
+			    <b>Especialidad:</b> {{ lr.Especialidad }} <br>
+			    <b>Solicitud para:</b> {{ lr.NomDet }} {{ lr.PaternoDet }}
+		    </div>
+		    <ion-icon (click)="dropRequestTap(lr)" name="ios-remove-circle" style="color: #f53d3d;" item-end></ion-icon>
+		  </ion-item>
+			-->
+			<ion-item style="background-color: transparent;" text-wrap ion-item *ngFor="let lr of listRequest">
+		  	<div (click)="itemSelected(lr)">
+			    <b>Especialidad:</b> {{ lr['Especialidad'] }} <br>
+			    <b>Proveedor:</b> {{ lr['Proveedor'] }}
+			</div>
+		    <ion-icon (click)="dropRequestTap(lr)" name="ios-remove-circle" style="color: #f53d3d;" item-end></ion-icon>
+		  </ion-item>
+		</ion-list>
+	</div>
+	<div *ngIf="selectedRequest" padding>
+      <ion-card-header>
+
+      </ion-card-header>
+      <ion-card-content>
+      	<p text-wrap><b>Especialidad:  </b> {{selectedRequest.Especialidad}}.</p>
+      	<p text-wrap><b>Servicio: 	   </b> {{selectedRequest.Servicio}}.</p>
+        <p text-wrap><b>Proveedor: 	   </b> {{selectedRequest.Proveedor}}.</p>
+        <p text-wrap><b>Aseguradora:   </b>
+        	<span *ngIf="selectedRequest.Aseguradora=='-'">
+        	Ninguna.</span>
+        	<span *ngIf="selectedRequest.Aseguradora!='-'">{{selectedRequest.Aseguradora}}.</span>
+        </p>
+        <!--<<p text-wrap><b>Solicitud para:</b> {{selectedRequest.NomDet}} {{selectedRequest.PaternoDet}} {{selectedRequest.MaternoDet}}.</p>
+        p text-wrap><b>Estado de la solicitud: </b> {{selectedRequest.Estado}}.</p>
+        <p text-wrap><b>Dirección: 	   </b> {{selectedRequest.DirecDet}}.</p>-->
+        <p text-wrap *ngIf="priceTotal">
+        	<b>Pago total: 	   </b> S/.{{priceTotal}}.
+        </p>
+      </ion-card-content>
+    </div>
+
+
+</ion-content>

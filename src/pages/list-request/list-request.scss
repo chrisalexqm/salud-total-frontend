@@ -1,0 +1,18 @@
+page-list-request {
+	ion-content{
+		background-image: url("../assets/img/background.png");
+		background-size: 100%;
+	}
+	ion-item{
+		color: #163a5f;
+	}
+	.btnAddDependente{
+		width: 50%;		
+		background-color: #1773FA;
+		border-radius: 5px;
+		align-items: center;
+		margin: auto;
+		color: white !important;
+		font-size: 1.05em;
+	}
+}

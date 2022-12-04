@@ -1,0 +1,15 @@
+page-next-controls {
+	ion-content, ion-grid{
+		background-image: url("../assets/img/background.png");
+		background-size: 100%;
+	}
+	.card .list .item {
+	    border-bottom: 1px solid gray;
+	}
+	ion-icon{
+		color: black;
+	}
+	menuToggle{
+		color: white;
+	}
+}

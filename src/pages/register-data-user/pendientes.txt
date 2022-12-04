@@ -1,0 +1,48 @@
+Edad - OK
+Mostrar fechas con texto - OK
+
+Hemoglobina Glicosilada, valor por defecto será 0
+Colesterol HDL, valor por defecto será 0
+Colesterol LDL, valor por defecto será 0
+trigliceridos, valor por defecto será 0
+peso, valor por defecto será 0
+talla, valor por defecto será 0
+hemoglobina, valor por defecto será 0
+Cintura abdominal, valor por defecto será 0
+
+size -OK
+weight -OK
+hemoglobin -OK
+valueBloodPressureN -OK
+valueBloodPressureD -OK
+hemoglobinGlin -OK
+glucoseY -OK
+glucoseN -OK
+glucoseMoreEat -OK
+cholesterolLdl -OK
+cholesterolHdl -OK
+triglycerides -OK
+abdominalWaist -OK
+cuantityForDaySmoke -OK
+cuantityYearOfSmoke -OK
+
+PERO CUANDO SE OBTENGA/CARGUEN DATOS DEL USUARIOS en los datos numericos si son menores o iguales a 0 se deberá colocar "" para que se muestre el placeholder - OK
+
+Último control de Laboratorio(Perfil de grasas) con tilde - OK
+Juntar los nombres  apellidos (primeros) y deshabilitar el campo. Al enviar al WS enviar los datos recibidos.
+Revisar formulas para mostrar los controles de embarazo - OK
+Que aparezca el texto "Coloque su presión arterial" al seleccionar que no sufre de hipertensión - OK
+
+CHEQUEOS Y CONTROLES - OK
+Papanicolao=F
+Mamografia=F
+Prostata=M
+Antineumonia>60
+
+Reducir el espacio entre el diagnostico y las respuestas
+Espacios entre Cuidado del hombre y Antecedentes familiares
+
+ 
+
+
+Antecedentes familiares - FILTRAR POR MASCULINO Y FEMENINO

@@ -1,0 +1,100 @@
+<!--
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>menu</ion-title>
+  </ion-navbar>
+
+</ion-header>
+-->
+
+<ion-content padding >	
+		<h5 align="center" style="font-size: 1.75rem;" style="margin-top: 15px;"> Toma el control <br> de tu salud </h5>
+		<img src="assets/img/icon.png" style="position: fixed; width: 40px; top: 35px; right: 10px;">
+		<button (click)="closeSesion()" ion-button icon-only style="position: fixed; width: 40px; top: 35px; left: 10px;z-index: 10000;border-radius: 25px;">
+  			<ion-icon name="md-close-circle"></ion-icon>
+		</button>
+		<!--<button ion-button icon-only style="position: fixed; width: 40px; bottom: 10px; left: 10px;z-index: 10000;border-radius: 25px;">
+  			<ion-icon name="ios-arrow-back"></ion-icon>
+		</button>-->
+	<div style="display: none;">		
+	<!--<div hideWhen="landscape">-->
+		<div style="position: absolute;">
+
+			<!-- Medio -->
+			<img src="assets/img/menu/btn_1.png" (click)="goPageRequestService()" class="cero">
+			<!-- Medio superior -->
+			<img src="assets/img/menu/btn_3.png" (click)="goPageMyDates()" class="uno">	
+			<!-- Medio izquierda -->
+			<img src="assets/img/menu/btn_9.png" (click)="goPageEmergency()" class="dos">	
+			<!-- Medio abajo -->
+			<img src="assets/img/menu/btn_7.png" (click)="goPageMyDependents()" class="tres">
+			<!-- Medio derecha -->
+			<img src="assets/img/menu/btn_6.png" (click)="goPageCurrentState()" class="cuatro">
+			<!-- Superior derecha -->
+			<img src="assets/img/menu/btn_4.png" (click)="goPageFarmacys()" class="cinco">
+			<!-- Superior izquierda -->
+			<img src="assets/img/menu/btn_2.png" (click)="goPageAlerts()" class="ocho">
+			<!-- Inferior izquierda -->
+			<img src="assets/img/menu/btn_5.png" (click)="goPagePromotions()" class="seis">	
+			<!-- Inferior derecha -->
+			<img src="assets/img/menu/btn_8.png" (click)="goPageTrack()" class="siete">	
+		</div>
+	</div>
+	<div>
+		<br>
+
+		<!--<ion-grid >-->
+		  	<ion-row style="margin-left: 0.015vw;">
+				<ion-col col-4>
+					<table align="center">
+				  		<img src="assets/img/menu/btn_2.png" (click)="goPageAlerts()" class="ocho">
+				  	</table>
+				</ion-col>
+				<ion-col col-4>
+					<table align="center">
+				  		<img src="assets/img/menu/btn_5.png" (click)="goPagePromotions()" class="seis">	
+				  	</table>
+				</ion-col>
+				<ion-col col-4>
+					<table align="center">
+						<img src="assets/img/menu/btn_7.png" (click)="goPageMyDependents()" class="tres">      		
+				  	</table>
+				</ion-col>
+
+				<ion-col col-4>
+					<table align="center">
+				  		<img src="assets/img/menu/btn_3.png" (click)="goPageMyDates()" class="uno">	
+				  	</table>
+				</ion-col>
+				<ion-col col-4>
+					<table align="center">
+				  		<img src="assets/img/menu/btn_6.png" (click)="goPageCurrentState()" class="cuatro">
+				  	</table>
+				</ion-col>
+				<ion-col col-4>
+						<table align="center">
+				  		<img src="assets/img/menu/btn_1.png" (click)="goPageRequestService()" class="dos">	
+				  	</table>
+				</ion-col>				
+
+				<ion-col col-4>
+					<table align="center">
+				  		<img src="assets/img/menu/btn_8.png" (click)="goPageTrack()" class="siete">	
+				  	</table>
+				</ion-col>
+				<ion-col col-4>
+					<table align="center">
+				  		<img src="assets/img/menu/btn_9.png" (click)="goPageEmergency()" class="cero">
+				  	</table>
+				</ion-col>
+					<ion-col col-4>
+					<table align="center">
+				  		<img src="assets/img/menu/btn_4.png" (click)="goPageFarmacys()" class="cinco">
+				  	</table>
+				</ion-col>
+		    
+		  	</ion-row>
+		<!--</ion-grid>-->
+	</div>
+</ion-content>

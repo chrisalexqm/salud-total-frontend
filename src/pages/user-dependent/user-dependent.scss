@@ -1,0 +1,36 @@
+page-user-dependent {
+	ion-content, ion-grid{
+		background-image: url("../assets/img/background.png");
+		background-size: 100%;
+	}
+	/*button{
+		height: 250px;
+	}*/
+	.btnUpdateData{
+		width: 70%;		
+		background-color: #8DC73F;
+		border-radius: 5px;
+		align-items: center;
+		margin: auto;
+		color: white !important;
+		font-size: 1.05em;
+	}
+	
+	.btnAddDependente{
+		width: 50%;		
+		background-color: #1773FA;
+		border-radius: 5px;
+		align-items: center;
+		margin: auto;
+		color: white !important;
+		font-size: 1.05em;
+	}
+	.btnSaveDependet{
+		width: 70%;
+		background-color: #1773FA;		
+		border-radius: 5px;
+		align-items: center;
+		margin: auto;
+		margin-top: 15px;
+	}
+}

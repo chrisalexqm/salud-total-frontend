@@ -1,0 +1,276 @@
+<!--
+  Generated template for the CurrentStatePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar color="primary_st" >
+    <!--<button ion-button menuToggle color="st_white">
+      <ion-icon name="menu" color="st_white"></ion-icon>
+    </button>-->
+    <ion-title align="center" style="font-size: 2rem;"> Salud Total </ion-title>
+  </ion-toolbar>
+  <img src="assets/img/menu/menu.png" (click)="goMenu()" style="position: fixed; width: 30px; top: 15px; left: 20px;z-index: 10000;">
+  <img src="assets/img/icon.png" style="position: fixed; width: 40px; top: 5px; right: 10px;z-index: 10000;">
+</ion-header>
+<ion-content padding *ngIf="!userDependient||userDependient=='1'||userDependient=='undefined'">
+	<table style="width:100%; border-color: black;">
+	  <tr>
+	    <th align="center"></th>
+	    <th align="center"></th>
+	  </tr>
+	  <tr>
+	    <td align="center" valign="center">
+	    <img src="assets/img/estadoactual/icono_estado_actual.png" style="width: 40px;">
+	    </td>
+	    <td align="left" valign="center" style="color: #1773FA;">
+	    	Mi estado actual
+	    </td>
+	    <td align="right" valign="center">
+	    	<button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+	  			<ion-icon name="ios-arrow-back"></ion-icon>
+			</button>	
+	  	 </td>
+	  </tr>
+	</table>
+	<ion-card style="background-color: transparent; box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0), 0 3px 1px -2px rgba(0, 0, 0, 0), 0 1px 5px 0 rgba(0, 0, 0, 0)">
+		<ion-card-header>
+	    	<img src="assets/img/estadoactual/salud_actual_icono.png" style="width: 30px;display: inline;"> Estado actual:
+	  	</ion-card-header>
+		<ion-card-content>
+			<div *ngIf="pesoIdealOK">
+				<p text-wrap> <span [ngClass]="classPesoIdeal"> {{ msgPesoIdeal }} </span></p>
+			</div>
+			<div *ngIf="hemoglobinOK">
+				<p text-wrap> <span [ngClass]="classHemoglobina"> {{ msgHemoglobina }} </span></p>
+			</div>
+			<div *ngIf="presArteriOK">
+				<p text-wrap> <span  [ngClass]="classPresionArterial"> {{ msgPresionArterial }} </span></p>
+			</div>
+			<!--<p text-wrap>Hipertensión: <span [ngClass]="ok">No hay datos registrados</span></p>-->
+			<div *ngIf="stateDiabeOK">
+				<p text-wrap> <span [ngClass]="classTieneDiabetes"> {{ msgTieneDiabetes }}</span></p>
+			</div>
+			<div *ngIf="hemogDiabeOK">
+				<p text-wrap> <span [ngClass]="classHemoglobinaDiabetes"> {{ msgHemoglobinaDiabetes }}</span></p>
+			</div>
+			<div *ngIf="colesterolOK">				
+				<p text-wrap> <span [ngClass]="classMsgColesterol">{{ msgColesterol }}</span></p>
+			</div>
+			<div *ngIf="chequeosOK">
+				<p text-wrap> <span [ngClass]="classMsgChequeos">{{ msgChequeos }}</span></p>
+			</div>
+			<div *ngIf="genderUser=='Femenino'&&pregnantOK">
+				<p text-wrap> <span [ngClass]="classMsgControlesPreg">{{ msgControlesPreg }}</span></p>
+			</div>
+			<!--<p text-wrap>Niño menor a 5 años: <span class="ok">No hay datos registrados</span></p>-->
+		</ion-card-content>
+	</ion-card>
+	<ion-card style="background-color: transparent; box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0), 0 3px 1px -2px rgba(0, 0, 0, 0), 0 1px 5px 0 rgba(0, 0, 0, 0)">
+	  <ion-card-header>
+	  	<img src="assets/img/estadoactual/icono_riesgo.png" style="width: 30px;display: inline;">
+	    En riesgo:
+	  </ion-card-header>
+	  <ion-card-content>	    
+	    <div *ngIf="pesoIdealERROR">
+			<p text-wrap> <span class="error"> {{ msgPesoIdeal }} </span></p>
+		</div>
+		<div *ngIf="hemoglobinERROR">
+			<p text-wrap> <span class="error"> {{ msgHemoglobina }} </span></p>
+		</div>
+		<div *ngIf="presArteriERROR">
+			<p text-wrap> <span class="error"> {{ msgPresionArterial }} </span></p>
+		</div>
+		<!--<p text-wrap>Hipertensión: <span class="ok">No hay datos registrados</span></p>-->
+		<div *ngIf="stateDiabeERROR && estadoDiabeticoUser==0">
+			<p text-wrap> <span class="error"> {{ msgTieneDiabetes }}</span></p>
+		</div>
+		<div *ngIf="hemogDiabeERROR">
+			<p text-wrap> <span class="error"> {{ msgHemoglobinaDiabetes }}</span></p>
+		</div>
+		<div *ngIf="colesterolERROR">				
+			<p text-wrap> <span class="error">{{ msgColesterol }}</span></p>
+		</div>
+		<div *ngIf="colesterolLDLUserMsg!=''">				
+			<p text-wrap> <span class="error">{{ colesterolLDLUserMsg }}</span></p>
+		</div>
+		<div *ngIf="colesterolHDLUserMsg!=''">				
+			<p text-wrap> <span class="error">{{ colesterolHDLUserMsg }}</span></p>
+		</div>
+		<div *ngIf="trigliceridosUserMsg!=''">				
+			<p text-wrap> <span class="error">{{ trigliceridosUserMsg }}</span></p>
+		</div>
+		<div *ngIf="medidaAbdominalMSG!=''">				
+			<p text-wrap> <span class="error">{{ medidaAbdominalMSG }}</span></p>
+		</div>
+		<div *ngIf="msgPesoMSG!=''">				
+			<p text-wrap> <span class="error">{{ msgPesoMSG }}</span></p>
+		</div>
+		<div *ngIf="msgTallaMSG!=''">				
+			<p text-wrap> <span class="error">{{ msgTallaMSG }}</span></p>
+		</div>
+		<div *ngIf="msgHemoglobinaMSG!=''">				
+			<p text-wrap> <span class="error">{{ msgHemoglobinaMSG }}</span></p>
+		</div>
+		<div *ngIf="msgPresionAnterialMSG!=''">				
+			<p text-wrap> <span class="error">{{ msgPresionAnterialMSG }}</span></p>
+		</div>
+		<div *ngIf="glucosaSDiabetesMSG!=''">				
+			<p text-wrap> <span class="error">{{ glucosaSDiabetesMSG }}</span></p>
+		</div>
+		<div *ngIf="hemoblobinaGlicUserMSG!=''">				
+			<p text-wrap> <span class="error">{{ hemoblobinaGlicUserMSG }}</span></p>
+		</div>
+		<div *ngIf="hemoglobinaAlimUserMSG!=''">				
+			<p text-wrap> <span class="error">{{ hemoglobinaAlimUserMSG }}</span></p>
+		</div>
+		<div *ngIf="hemoglobinaAyunUserMSG!=''">				
+			<p text-wrap> <span class="error">{{ hemoglobinaAyunUserMSG }}</span></p>
+		</div>
+
+
+		<div *ngIf="chequeosERROR">
+			<p text-wrap> <span class="error">{{ msgChequeos }}</span></p>
+		</div>
+		<div *ngIf="genderUser=='Femenino'&&pregnantERROR">
+			<p text-wrap> <span class="error">{{ msgControlesPreg }}</span></p>
+		</div>
+		<div *ngIf="msgDejaFumar">
+			<p text-wrap> <span class="error"> Fumador </span></p>
+		</div>
+	  </ion-card-content>
+	</ion-card>
+	<ion-card style="background-color: #FFB514;color: white;border-radius: 10px">
+	  <ion-card-header style="color: white;">
+	    Recomendaciones:
+	  </ion-card-header>
+	  <ion-card-content style="color: white;">
+	  	<table style="width:100%; border-color: black;">
+		  <tr>
+		    <th align="left" width="70%">
+		    	<p style="color: white;" text-wrap class="success">{{ msgDiagnosticoOK1 }}</p>
+			  	<p style="color: white;" text-wrap class="success">{{ msgDiagnosticoOK2 }}</p>
+			  	<p style="color: white;" text-wrap class="success">{{ msgDiagnosticoOK3 }}</p>
+			  	<p style="color: white;" text-wrap class="success">{{ msgRegCantAlimentos }}</p>
+			    <p style="color: white;" text-wrap class="success">{{ msgRedGrasAlimentos }}</p>
+			    <p style="color: white;" text-wrap class="success">{{ msgConsultXBajoPeso }}</p>
+			    <p style="color: white;" text-wrap class="success">{{ msgConsumeComHierro }}</p>
+			    <p style="color: white;" text-wrap class="success">{{ msgConsultExcHemogl }}</p>
+			    <p style="color: white;" text-wrap class="success">{{ msgLimitaConsAlcoho }}</p>
+			    <p style="color: white;" text-wrap class="success">{{ msgConsultPreBajo }}</p>
+			    <p style="color: white;" text-wrap class="success">{{ msgConsultAzuAlto }}</p>	    
+			    <p style="color: white;" text-wrap class="success">{{ msgDejaFumar }}</p>
+			    <p style="color: white;" text-wrap class="success">{{ msgCheqPendiente }}</p>
+			    <p style="color: white;" text-wrap class="success">{{ msgContEmabarazo }}</p>
+			    <p *ngIf="!FUltimoAnalisisColesterol || !FUltimoControlOdontologico || !FUltimoControlMamo || !FUltimoControlPapa || !FUltimoContrlProsta || !FUltimoControlGastro || !FUltimoControlColo || !FUltimoControlOjos || !FUltimoControlPreve"> <!--Llene los datos solicitados en la vista de "Actualizar mis datos" --></p>
+		    </th>
+		    <th align="center" style="align-items: center;" width="30%">
+		    	<img align="center" src="assets/img/estadoactual/icono_recomendaciones.png" style="width: 65px;">
+		    </th>
+		  </tr>
+		 </table>
+	  	
+	  </ion-card-content>
+	</ion-card>
+</ion-content>
+<ion-content padding *ngIf="userDependient=='2'">
+	<table style="width:100%; border-color: black;">
+	  <tr>
+	    <th align="center"></th>
+	    <th align="center"></th>
+	  </tr>
+	  <tr>
+	    <td align="center" valign="center">
+	    <img src="assets/img/estadoactual/icono_estado_actual.png" style="width: 40px;">
+	    </td>
+	    <td align="left" valign="center" style="color: #1773FA;">
+	    	Mi estado actual
+	    </td>
+	    <td align="right" valign="center">
+	    	<button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+	  			<ion-icon name="ios-arrow-back"></ion-icon>
+			</button>	
+	  	 </td>
+	  </tr>
+	</table>
+	<ion-card style="background-color: transparent; box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0), 0 3px 1px -2px rgba(0, 0, 0, 0), 0 1px 5px 0 rgba(0, 0, 0, 0)">
+		<ion-card-header>
+	    	Estado actual:
+	  	</ion-card-header>
+		<ion-card-content>
+			<!--<div *ngIf="pesoIdealOKNino">
+				<p text-wrap> <span [ngClass]="classPesoIdealNino"> {{ msgPesoIdealNino }} </span></p>
+			</div>-->
+			<div *ngIf="hemoglobinOK">
+				<p text-wrap> <span class="success"> {{ msgHemoglobina }} </span></p>
+			</div>
+			<div *ngIf="chequeosOK">
+				<p text-wrap> <span class="success">{{ msgChequeos }}</span></p>
+			</div>
+			
+			<div *ngIf="vacunasOK">
+				<p text-wrap> <span class="success">{{ msgVacunas }}</span></p>
+			</div>
+			<!--<p text-wrap>Niño menor a 5 años: <span class="ok">No hay datos registrados</span></p>-->
+		</ion-card-content>
+	</ion-card>
+	<ion-card style="background-color: transparent; box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0), 0 3px 1px -2px rgba(0, 0, 0, 0), 0 1px 5px 0 rgba(0, 0, 0, 0)">
+	  <ion-card-header>
+	    En riesgo:
+	  </ion-card-header>
+	  <ion-card-content>	
+	  	  
+	    <div *ngIf="msgPesoIdealNinoMSG!=''">
+			<p text-wrap> <span class="error"> {{ msgPesoIdealNinoMSG }} </span></p>
+		</div>
+		<div *ngIf="hemoglobinERROR">
+			<p text-wrap> <span class="error"> {{ msgHemoglobina }} </span></p>
+		</div>
+		<div *ngIf="msgHemoglobina!=''">
+			<p text-wrap> <span class="error"> {{ msgHemoglobinaMSG }} </span></p>
+		</div>
+		
+		<div *ngIf="chequeosERROR">
+			<p text-wrap> <span class="error">{{ msgChequeos }}</span></p>
+		</div>
+		<div *ngIf="vacunasERROR">
+			<p text-wrap> <span class="error">{{ msgVacunas }}</span></p>
+		</div>
+	  </ion-card-content>
+	</ion-card>
+	<ion-card style="background-color: #FFB514;color: white;border-radius: 10px">
+	  <ion-card-header>
+	    Recomendaciones:
+	  </ion-card-header>
+	  <ion-card-content>
+	  <table style="width:100%; border-color: black;">
+		  <tr>
+		    <th align="left" width="70%">
+				<p text-wrap class="success">{{ msgHemoPendiente }}</p>
+	    		<p text-wrap class="success">{{ msgCheqPendiente }}</p>
+	    		<p text-wrap class="success">{{ msgVacPendiente }}</p>
+			</th>
+		    <th align="center" style="align-items: center;" width="30%">
+		    	<img align="center" src="assets/img/estadoactual/icono_recomendaciones.png" style="width: 65px;">
+		    </th>
+		  </tr>
+		 </table>
+	  <!--
+	  	<p text-wrap class="success">{{ msgDiagnosticoOK1 }}</p>
+	  	<p text-wrap class="success">{{ msgDiagnosticoOK2 }}</p>
+	  	<p text-wrap class="success">{{ msgDiagnosticoOK3 }}</p>
+	  	<p text-wrap class="success">{{ msgRegCantAlimentos }}</p>
+	    <p text-wrap class="success">{{ msgRedGrasAlimentos }}</p>
+	    <p text-wrap class="success">{{ msgConsultXBajoPeso }}</p>
+	    <p text-wrap class="success">{{ msgConsumeComHierro }}</p>
+	    <p text-wrap class="success">{{ msgConsultExcHemogl }}</p>
+	    <p text-wrap class="success">{{ msgLimitaConsAlcoho }}</p>
+	    <p text-wrap class="success">{{ msgConsultPreBajo }}</p>
+	    <p text-wrap class="success">{{ msgConsultAzuAlto }}</p>
+	    <p text-wrap class="success">{{ msgDejaFumar }}</p>
+	    -->
+	    
+	  </ion-card-content>
+	</ion-card>
+</ion-content>

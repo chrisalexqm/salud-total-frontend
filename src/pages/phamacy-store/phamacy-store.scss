@@ -1,0 +1,48 @@
+// @import "~ionic4-auto-complete/auto-complete";
+
+page-phamacy-store {
+  ion-content, ion-grid{
+		background-image: url("../assets/img/background.png");
+		background-size: 100%;
+  }
+
+	.card .list .item {
+	    border-bottom: 1px solid gray;
+  }
+
+	.space-height{
+		height: 5px;
+  }
+
+  .btnUpdateData{
+		width: 70%;
+		background-color: #29ACE4;
+		border-radius: 5px;
+		align-items: center;
+		margin: auto;
+		color: white !important;
+		font-size: 1.05em;
+  }
+
+  .btnSendSol{
+		width: 70%;
+		background-color: #8DC73F;
+		border-radius: 5px;
+		align-items: center;
+		margin: auto;
+		color: white !important;
+		font-size: 1.05em;
+  }
+
+  .btnSendCoor{
+		width: 50%;
+		background-color: #ffb514;
+		border-radius: 5px;
+		// align-items: center;
+		margin: auto;
+		color: white !important;
+    font-size: 0.85em;
+    // margin-left: auto;
+  }
+
+}

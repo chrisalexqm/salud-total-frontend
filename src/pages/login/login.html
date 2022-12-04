@@ -1,0 +1,234 @@
+<!--
+<ion-header>
+
+  <ion-navbar color="st_title">
+    <ion-title>Salud Total</ion-title>
+  </ion-navbar>
+
+</ion-header>
+-->
+
+<ion-content padding>	
+		<table style="width:100%;" align="center">
+		  <tr>
+		    <th align="center"></th>
+		    <th align="center"></th>
+		  </tr>
+		  <tr>
+		    <td align="center" valign="center">
+		    	<img src="assets/img/icon.png" class="imgLogo">	
+		    </td>
+		  </tr>
+		</table>
+		
+		<br>
+
+		<ion-grid>
+		  <ion-row class="rowContent" *ngIf="currentPage=='login'" style="/*box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.75);*/">
+			  	<!--
+			  	<ion-segment [(ngModel)]="currentPage"  (ionChange)="currentPageChanged($event)">
+				    <ion-segment-button id="" [ngClass]="{'segmentLoginActivate': currentPageLogin }" value="login">
+				      Ingresar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				    </ion-segment-button>
+				    <ion-segment-button id="" [ngClass]="{'segmentRegisterActivate': currentPageRegister }" value="register">
+				      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Registrarme
+				    </ion-segment-button>
+				</ion-segment>
+			    <ion-col col-12>		    
+			    </ion-col>
+			    -->		    	
+			    <ion-item style="background-color: transparent" class="center"> 					    
+					<ion-input text-center type="email" [(ngModel)]="user" required minlength="4" placeholder="Correo" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" #luemail="ngModel"></ion-input>
+				</ion-item>
+				<div *ngIf="luemail.errors?.pattern" style="margin-left: 25px;margin-top: 5px;color: red;"> 
+					Ingrese un correo válido.
+				</div>
+				<ion-item style="background-color: transparent;">					    
+					<ion-input text-center type="password" [(ngModel)]="password" minlength="1" placeholder="Contraseña"  #lupassword="ngModel"></ion-input>						    
+				</ion-item>
+			    <!--<button ion-button block (click)="postRequestValidateUser()" class="btnLogin" color="st_button">
+		      		Iniciar sesión
+		      	</button>-->
+
+			     <button ion-button block (click)="postRequestValidateUser()" color="st_button" class="btnLogin" disabled
+			     		 *ngIf="luemail.errors?.pattern || user.length<1 || password.length<1" >
+			     	Iniciar sesión
+			     </button>
+			     <button ion-button block (click)="postRequestValidateUser()" class="btnLogin" color="st_button"
+						*ngIf="!luemail.errors?.pattern && !lupassword.errors?.pattern && user.length>=4 && password.length>=1" style="padding-left: 25px;padding-right: 25px;">
+					Iniciar sesión
+				</button>
+				<button ion-button block outline (click)="backHistory()" class="btnBackLogin" >
+			     	Regresar
+			     </button>
+
+		    <!--<div [ngSwitch]="currentPage" style="">
+				<ion-list *ngSwitchCase="'login'">
+					<ion-col col-12 >
+							  <ion-item style="background-color: transparent" class="center"> 					    
+							    <ion-input text-center type="email" [(ngModel)]="user" required minlength="4" placeholder="Correo" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" #luemail="ngModel"></ion-input>
+							  </ion-item>
+							  <div *ngIf="luemail.errors?.pattern" style="margin-left: 25px;margin-top: 5px;color: red;"> 
+							  	Ingrese un correo válido.
+							  </div>
+						 <ion-col col-12 >
+						  <ion-item style="background-color: transparent;">					    
+						    <ion-input text-center type="password" [(ngModel)]="password" minlength="1" placeholder="Contraseña"  #lupassword="ngModel"></ion-input>						    
+						  </ion-item>
+						  </ion-col>
+						  <div hidden></div>
+
+					</ion-col>
+				    <div *ngIf="luemail.errors?.pattern || user.length<1 || password.length<1" style="/*padding-left: 25px;padding-right: 25px;*/">
+				      	<button ion-button block (click)="postRequestValidateUser()" color="st_button" class="btnLogin" disabled>
+				      		Iniciar sesión
+				      	</button>			  
+				    </div>
+				    <div *ngIf="!luemail.errors?.pattern && !lupassword.errors?.pattern && user.length>=4 && password.length>=1" style="padding-left: 25px;padding-right: 25px;">
+				      	<button ion-button block (click)="postRequestValidateUser()" color="st_button">
+				      		
+				      		Iniciar sesión
+				      	</button>			  
+				    </div>
+				</ion-list>
+				
+				<ion-list *ngSwitchCase="'register'">
+					<ion-col col-12 >
+						<ion-list id="formRegister">
+						<ion-label class="register-label">Nombre:</ion-label>
+						<ion-item>						    
+							<ion-input type="text" pattern="[a-zA-ZÀ-ÿ\u00f1\u00d1 ]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]" required minlength="2" [(ngModel)]="nameUser" #uname="ngModel"></ion-input>
+						</ion-item>
+						<div *ngIf="uname.errors?.pattern || uname.errors?.minlength" style="margin-left: 25px;margin-top: 5px;color: red;"> 
+						   Ingrese un nombre válido.
+						</div>
+						<ion-label class="register-label">Apellido paterno:</ion-label>
+						<ion-item>							
+							<ion-input type="text" pattern="[a-zA-ZÀ-ÿ\u00f1\u00d1 ]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]" required minlength="2" [(ngModel)]="paternalSurnameUser" #upsname="ngModel"></ion-input>
+						</ion-item>
+						<div *ngIf="upsname.errors?.pattern || upsname.errors?.minlength" style="margin-left: 25px;margin-top: 5px;color: red;"> 
+						   Ingrese un apellido válido.
+						</div>
+						<ion-label class="register-label">Apellido materno:</ion-label>
+						<ion-item>							
+							<ion-input type="text" pattern="[a-zA-ZÀ-ÿ\u00f1\u00d1 ]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]" required minlength="2" [(ngModel)]="maternalSurnameUser" #umsname="ngModel"></ion-input>
+						</ion-item>
+						<div *ngIf="umsname.errors?.pattern || umsname.errors?.minlength" style="margin-left: 25px;margin-top: 5px;color: red;"> 
+						   Ingrese un apellido válido.
+						</div>
+						<ion-label class="register-label">Correo electrónico:</ion-label>
+						<ion-item>							
+							<ion-input type="email" required minlength="4" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" [(ngModel)]="emailUser" #uemail="ngModel"></ion-input>
+						</ion-item>						
+						<div *ngIf="uemail.errors?.pattern" style="margin-left: 25px;margin-top: 5px;color: red;"> 
+						   Ingrese un correo válido.
+						</div>
+						
+						<ion-label class="register-label">Contraseña:</ion-label>
+						<ion-item>							
+							<ion-input type="password" required minlength="4" [(ngModel)]="passwordUser"></ion-input>
+							<br>
+						</ion-item>
+							<ion-row>
+					        	<ion-col col-2 style="width: 100%;">
+					        		<ion-item no-lines>	
+					        			<ion-checkbox [(ngModel)]="terms"  #termos="ngModel" required (ionChange)="updateTerms()"></ion-checkbox>
+					        		</ion-item>
+								</ion-col>
+								<ion-col col-10 style="width: 100%;">					
+									
+									<ion-item (click)="showPolicies()" no-lines>
+										<ion-label [ngClass]="classTerms">&nbsp;&nbsp; Acepto los términos de uso </ion-label>
+									</ion-item>
+								</ion-col>
+							</ion-row>
+						<br>						
+						</ion-list>						
+						<div *ngIf="uname.errors?.pattern || upsname.errors?.pattern || umsname.errors?.pattern || uemail.errors?.pattern || nameUser.length<2 || paternalSurnameUser.length<2 || maternalSurnameUser.length<2 || emailUser.length<2 || passwordUser.length<2" style="padding-left: 25px;padding-right: 25px;">
+							<button ion-button block (click)="postRequestRegister()" color="st_button" disabled>Registrarme</button>
+						</div>
+						<div *ngIf="!uname.errors?.pattern && !upsname.errors?.pattern && !umsname.errors?.pattern && !uemail.errors?.pattern && nameUser.length>=2 && paternalSurnameUser.length>=2 && maternalSurnameUser.length>=2 && emailUser.length>=2 && passwordUser.length>=2" style="padding-left: 25px;padding-right: 25px;">
+							<button ion-button block (click)="postRequestRegister()" color="st_button" [disabled]="!isenabled">Registrarme</button>
+						</div>
+					</ion-col>					
+				</ion-list>
+				
+			</div>	-->	    		    
+		  </ion-row>
+		  <ion-row class="rowContent" *ngIf="currentPage=='register'" style="/*box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.75);*/">
+				<ion-item style="background-color: transparent">						    
+					<ion-input text-center type="text" pattern="[a-zA-ZÀ-ÿ\u00f1\u00d1 ]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]" required minlength="2" placeholder="Nombre" [(ngModel)]="nameUser" #uname="ngModel"></ion-input>
+				</ion-item>
+				<div *ngIf="uname.errors?.pattern || uname.errors?.minlength" style="margin-left: 25px;margin-top: 5px;color: red;"> 
+				   Ingrese un nombre válido.
+				</div>
+				<ion-item style="background-color: transparent">							
+					<ion-input text-center type="text" placeholder="Apellido Paterno" pattern="[a-zA-ZÀ-ÿ\u00f1\u00d1 ]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]" required minlength="2" [(ngModel)]="paternalSurnameUser" #upsname="ngModel"></ion-input>
+				</ion-item>
+				<div *ngIf="upsname.errors?.pattern || upsname.errors?.minlength" style="margin-left: 25px;margin-top: 5px;color: red;"> 
+				   Ingrese un apellido válido.
+				</div>
+				<ion-item style="background-color: transparent">							
+					<ion-input text-center type="text" placeholder="Apellido Materno" pattern="[a-zA-ZÀ-ÿ\u00f1\u00d1 ]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1 ]" required minlength="2" [(ngModel)]="maternalSurnameUser" #umsname="ngModel"></ion-input>
+				</ion-item>
+				<div *ngIf="umsname.errors?.pattern || umsname.errors?.minlength" style="margin-left: 25px;margin-top: 5px;color: red;"> 
+				   Ingrese un apellido válido.
+				</div>
+				<ion-item style="background-color: transparent">							
+					<ion-input text-center type="email" placeholder="Correo electrónico" required minlength="4" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" [(ngModel)]="emailUser" #uemail="ngModel"></ion-input>
+				</ion-item>						
+				<div *ngIf="uemail.errors?.pattern" style="margin-left: 25px;margin-top: 5px;color: red;"> 
+				   Ingrese un correo válido.
+				</div>
+				
+				<ion-item style="background-color: transparent">							
+					<ion-input text-center type="password" placeholder="Contraseña" required minlength="4" [(ngModel)]="passwordUser"></ion-input>
+					<br>
+				</ion-item>
+				<ion-row >
+		        	<ion-col col-2 style="width: 100%;">
+		        		<ion-item no-lines style="background-color: transparent">	
+		        			<ion-checkbox [(ngModel)]="terms"  #termos="ngModel" required (ionChange)="updateTerms()"></ion-checkbox>
+		        		</ion-item>
+					</ion-col>
+					<ion-col col-10 style="width: 100%;">					
+						
+						<ion-item (click)="showPolicies()" no-lines style="background-color: transparent">
+							<ion-label [ngClass]="classTerms">&nbsp;&nbsp; Acepto los términos de uso </ion-label>
+						</ion-item>
+					</ion-col>
+				</ion-row>
+
+				<button ion-button block (click)="postRequestRegister()" color="st_button" disabled
+						*ngIf="uname.errors?.pattern || upsname.errors?.pattern || umsname.errors?.pattern || uemail.errors?.pattern || nameUser.length<2 || paternalSurnameUser.length<2 || maternalSurnameUser.length<2 || emailUser.length<2 || passwordUser.length<2">
+						Registrarme
+				</button>
+
+				<button ion-button block (click)="postRequestRegister()" color="st_button" [disabled]="!isenabled"
+						*ngIf="!uname.errors?.pattern && !upsname.errors?.pattern && !umsname.errors?.pattern && !uemail.errors?.pattern && nameUser.length>=2 && paternalSurnameUser.length>=2 && maternalSurnameUser.length>=2 && emailUser.length>=2 && passwordUser.length>=2">			Registrarme
+				</button>
+				<button ion-button block outline (click)="backHistory()" class="btnBackRegister" >
+			     	Regresar
+			     </button>
+		  </ion-row>
+		</ion-grid>	
+</ion-content>
+
+<!--<ion-label text-wrap ></ion-label>-->
+<!-- Segment in content -->
+<!--<ion-icon ios="ios-add" md="md-add"></ion-icon>-->
+<!--<ion-icon ios="ios-add" md="md-add"></ion-icon>-->
+<!--
+<ion-label class="register-label">Usuario:</ion-label>
+<ion-item>
+	<ion-input type="text" required minlength="4" [(ngModel)]="aliasUser"></ion-input>
+</ion-item>
+-->
+<!--<ion-item >-->
+<!--</ion-item>-->
+<!--<ion-col col-6>
+	<button ion-button block (click)="goRegister()" color="st_button">Registrarme</button>
+</ion-col>
+<ion-col col-12>
+	<button ion-button block (click)="goRestorePassword()" clear color="st_link">Olvidé mi contraseña</button>
+</ion-col>-->

@@ -1,0 +1,996 @@
+<ion-header>
+  <ion-toolbar color="primary_st" >
+    <!--<button ion-button menuToggle color="st_white">
+      <ion-icon name="menu" color="st_white"></ion-icon>
+    </button>-->
+    <ion-title align="center" style="font-size: 2rem;"> Salud Total </ion-title>
+  </ion-toolbar>
+  <img src="assets/img/menu/menu.png" (click)="goMenu()" style="position: fixed; width: 30px; top: 15px; left: 20px;z-index: 10000;">
+  <img src="assets/img/icon.png" style="position: fixed; width: 40px; top: 5px; right: 10px;z-index: 10000;">
+</ion-header>
+
+<ion-content padding >
+	<table style="width:100%; border-color: black;">
+	  <tr>
+	    <th align="center"></th>
+	    <th align="center"></th>
+	  </tr>
+	  <tr>
+	    <td align="center" valign="center">
+	    <img src="assets/img/misdatos/icono_mis_datos_de_salud.png" style="width: 40px;">
+	    </td>
+	    <td align="left" valign="center" style="color: #1773FA;">
+	    	Mis datos de salud
+	    </td>
+	    <td align="right" valign="center">
+	    	<button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+	  			<ion-icon name="ios-arrow-back"></ion-icon>
+			</button>	
+      	</td>
+	  </tr>
+	</table>
+	<div *ngIf="!saludSelect">
+		<ion-card-header style="background-color: transparent">
+			Datos del usuario
+		</ion-card-header>
+
+	  <ion-item style="background-color: transparent">
+		    <ion-label text-wrap >Usuario :</ion-label>
+		    <ion-input type="text" [(ngModel)]="nameAndSurnameUser" disabled></ion-input>
+	  </ion-item>
+	  <!--<ion-item>
+		    <ion-label text-wrap >Nombres:</ion-label>
+		    <ion-input type="text" [(ngModel)]="nameUser"></ion-input>
+	  </ion-item>
+	  <ion-item>
+		    <ion-label text-wrap >Apellido paterno:</ion-label>
+		    <ion-input type="text" [(ngModel)]="paternalSurnameUser"></ion-input>
+		  </ion-item>
+	  <ion-item>
+		    <ion-label text-wrap >Apellido materno:</ion-label>
+		    <ion-input type="text" [(ngModel)]="maternalSurnameUser"></ion-input>
+	  </ion-item>-->
+	  <ion-item *ngIf="genderOption == -1">
+		  <ion-label text-wrap >Sexo:</ion-label>
+		  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="genderOption">
+		    <ion-option value="0">Femenino</ion-option>
+		    <ion-option select value="1">Masculino</ion-option>
+		  </ion-select>
+	  </ion-item>
+	  <ion-item *ngIf="genderOption == 0 || genderOption == 1">
+		  <ion-label text-wrap >Sexo:</ion-label>
+		  <ion-select disabled okText="Ok" cancelText="Cancelar" [(ngModel)]="genderOption">
+		    <ion-option value="0">Femenino</ion-option>
+		    <ion-option select value="1">Masculino</ion-option>
+		  </ion-select>
+	  </ion-item>
+
+	  <ion-item *ngIf="!birthdateEnable">
+		  <ion-label text-wrap text-wrap>Fecha de nacimiento:</ion-label>
+	      <ion-datetime disabled [max]="today" doneText="Ok" cancelText="Cancelar"  placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="birthdate.month" (ngModelChange)="onChangeBirthdate()"></ion-datetime>
+	  </ion-item>
+	  <ion-item *ngIf="birthdateEnable">
+		  <ion-label text-wrap text-wrap>Fecha de nacimiento:</ion-label>
+	      <ion-datetime [max]="today" doneText="Ok" cancelText="Cancelar"  placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="birthdate.month" (ngModelChange)="onChangeBirthdate()"></ion-datetime>
+	  </ion-item>
+
+	  <ion-item >
+		  <ion-label text-wrap >Edad:</ion-label>
+	  	  <ion-input disabled="true" type="text" [(ngModel)]="age"></ion-input>
+	  </ion-item>
+	  <br>
+	  <button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+		*ngIf="hideBtnRegData" (click)="postRequestRegister()">
+		  <ion-icon name="md-checkmark">  </ion-icon>
+		  Guardar mis datos
+		</button>
+
+		<button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+				*ngIf="hideBtnModData" (click)="postRequestUpdate()">
+		  <ion-icon style="color: white !important;" name="md-checkmark">  </ion-icon>
+		  <div style="color: white !important;"> Guardar mis datos </div>
+		</button>
+		<br>
+  	  <!--<ion-item (click)="showSmoke()">-->
+  	  
+	  <!--
+	  	
+		-->
+		<ion-grid style="margin-top: 0px;height: 100%;" *ngIf="!saludSelect">
+		  <ion-row style="">
+		    <ion-col col-4>
+		      <table align="center">
+		      	<img src="assets/img/misdatos/1.png" (click)="tapSelectSalud('antecedentes')" style="">
+		      </table>
+		    </ion-col>
+		    <ion-col col-4 
+		    		 *ngIf="genderOption==1 && age>=50 ">
+		      <table align="center">
+		      	<img src="assets/img/misdatos/2.png" (click)="tapSelectSalud('hombre')" style="">
+		      </table>
+		    </ion-col>
+		    <ion-col col-4 *ngIf="genderOption==0">
+		      <table align="center">
+		      	<img src="assets/img/misdatos/2.5.png" (click)="tapSelectSalud('mujer')" style="">
+		      </table>
+		    </ion-col>
+		    <ion-col col-4 *ngIf="age>=30 ">
+		      <table align="center">
+		      	<img src="assets/img/misdatos/3.png" (click)="tapSelectSalud('presion')" style="">
+		      </table>
+		    </ion-col>
+		    <ion-col col-4>
+		      <table align="center">
+		      	<img src="assets/img/misdatos/4.png" (click)="tapSelectSalud('nutricional')" style="">
+		      </table>
+		    </ion-col>
+		    <ion-col col-4 *ngIf="age>35">
+		      <table align="center">
+		      	<img src="assets/img/misdatos/5.png" (click)="tapSelectSalud('azucar')" style="">
+		      </table>
+		    </ion-col>
+		    <ion-col col-4 *ngIf="age>35">
+		      <table align="center">
+		      	<img src="assets/img/misdatos/6.png" (click)="tapSelectSalud('grasas')" style="">
+		      </table>
+		    </ion-col>
+		    <ion-col col-4>
+		      <table align="center">
+		      	<img src="assets/img/misdatos/7.png" (click)="tapSelectSalud('preventivo')" style="">
+		      </table>
+		    </ion-col>
+		    <ion-col col-4>
+		      <table align="center">
+		      	<img src="assets/img/misdatos/8.png" (click)="goPageRequestService()" style="">
+		      </table>
+		    </ion-col>
+		  </ion-row>
+		</ion-grid>
+		<!--<table style="width:100%; border-color: black;" align="center">
+			<td align="center" valign="center">
+				<img align="center"  src="assets/img/misdatos/btn_guardar_datos.png"
+					 (click)="postRequestUpdate()">
+			</td>
+		</table>-->
+	</div>
+
+	
+	
+
+<ion-list>
+  
+
+  <div *ngIf="saludSelect=='hombre'">	  
+	  <!--<ion-list >-->
+	  	<!--<ion-item (click)="showCareMan()">-->
+	  	<ion-item>
+		  	Cuidado del hombre <!--&nbsp;
+		  	<ion-icon  *ngIf="iconALCareMan" name="ios-arrow-forward" padding></ion-icon>
+		  	<ion-icon  *ngIf="iconADCareMan" name="ios-arrow-down" padding></ion-icon>-->
+	  	</ion-item>
+	  	<!--<ion-list *ngIf="sectionCareMan;">-->
+	  	<ion-list>
+			<ion-item>
+			  <ion-label text-wrap text-wrap><span>Último</span> chequeo de próstata:</ion-label>
+		      <ion-datetime [max]="today" doneText="Ok" cancelText="Cancelar"  placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="genderManLastTestProstata.month"  (ngModelChange)="onChangeCareMan()"></ion-datetime>
+		    </ion-item>
+		    <ion-item>
+			  <ion-label text-wrap text-wrap>Resultado del chequeo de Próstata:</ion-label>
+			  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="genderManTypeTestProstata" (ngModelChange)="onChangeCareMan()">
+			    <ion-option value="0">Normal</ion-option>
+			    <ion-option select value="1">Anormal</ion-option>
+			  </ion-select>
+		    </ion-item>
+		    <ion-grid padding style="padding-top: 0px;margin-top: 0px;">
+			  <ion-row *ngIf="resumeProstataOK;">
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;CHEQUEO PENDIENTE</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="resumeProstataFL;">
+			    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;CONTROLADO</ion-col>
+			  </ion-row>
+			</ion-grid>	  
+	  	</ion-list>
+	  	<button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+		*ngIf="hideBtnRegData" (click)="postRequestRegister()">
+		  <ion-icon name="md-checkmark">  </ion-icon>
+		  Guardar mis datos
+		</button>
+
+		<button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+				*ngIf="hideBtnModData" (click)="postRequestUpdate()">
+		  <ion-icon style="color: white !important;" name="md-checkmark">  </ion-icon>
+		  <div style="color: white !important;"> Guardar mis datos </div>
+		</button>
+	  <!--</ion-list>-->
+  </div>
+  <div *ngIf="saludSelect=='mujer'">	
+	  <!--<ion-list >-->
+	  	<!--<ion-item (click)="showCareWoman()">-->
+	  	<ion-item >
+		  	Cuidado de la mujer <!--&nbsp;
+		  	<ion-icon  *ngIf="iconALCareWoman" name="ios-arrow-forward" padding></ion-icon>
+		  	<ion-icon  *ngIf="iconADCareWoman" name="ios-arrow-down" padding></ion-icon>-->
+	  	</ion-item>
+		<!--<ion-list *ngIf="sectionCareWoman">-->
+		<ion-list>
+		  	<ion-item *ngIf="age>40 ">
+			  <ion-label text-wrap ><span>Última</span> mamografía:</ion-label>
+		      <ion-datetime [max]="today" doneText="Ok" cancelText="Cancelar"  placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="lastTestMamografia"  (ngModelChange)="onChangeCareWomanMamografia()"></ion-datetime>
+		    </ion-item>
+		    <ion-item *ngIf="age>40 ">
+			  <ion-label text-wrap text-wrap>Resultado de la mamografía:</ion-label>
+			  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="typeTestMamografia" (ngModelChange)="onChangeCareWomanMamografia()">
+			    <ion-option value="0">Normal</ion-option>
+			    <ion-option select value="1">Anormal</ion-option>
+			  </ion-select>
+		    </ion-item>
+		    <ion-grid *ngIf="resumeMamografiaFL || resumeMamografiaOK;" padding style="padding-top: 0px;margin-top: 0px;">
+			  <ion-row *ngIf="resumeMamografiaFL;">
+			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;CONTROL PENDIENTE</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="resumeMamografiaOK;">
+			    
+			    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;CONTROLADO</ion-col>
+			  </ion-row>
+			</ion-grid>
+			<ion-item *ngIf="age>=21 ">
+			  <ion-label text-wrap ><span>Último</span> papanicolaou:</ion-label>
+		      <ion-datetime [max]="today" doneText="Ok" cancelText="Cancelar"  placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="lastTestPapanicolao"  (ngModelChange)="onChangeCareWomanPapanicolao()"></ion-datetime>
+		    </ion-item>
+		    <ion-item *ngIf="age>21 ">
+			  <ion-label text-wrap >Resultado del papanicolaou:</ion-label>
+			  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="typeTestPapanicolao"  (ngModelChange)="onChangeCareWomanPapanicolao()">
+			    <ion-option value="0">Normal</ion-option>
+			    <ion-option select value="1">Anormal</ion-option>
+			  </ion-select>
+		    </ion-item>
+			<ion-grid *ngIf="resumePapanicolaoFL || resumePapanicolaoOK;" padding style="padding-top: 0px;margin-top: 0px;">
+			  <ion-row *ngIf="resumePapanicolaoFL;">
+			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;CONTROL PENDIENTE</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="resumePapanicolaoOK;">
+			    
+			    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;CONTROLADO</ion-col>
+			  </ion-row>
+			</ion-grid>
+			<ion-item *ngIf="age<=48;">
+			  <ion-label text-wrap >
+			  	¿Esta embarazada?&nbsp;
+			  	
+
+			  </ion-label>
+			  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="statePregnancy">
+			    <ion-option value="0">Si</ion-option>
+			    <ion-option select value="1">No</ion-option>
+			  </ion-select>
+		    </ion-item>
+		    <ion-list *ngIf="statePregnancy==0;">	
+
+			    <ion-item>
+				  <ion-label text-wrap text-wrap>Fecha de la <span>última</span> regla:</ion-label>
+			      <ion-datetime [max]="today" doneText="Ok" cancelText="Cancelar"  displayFormat="DD MMM YYYY" [(ngModel)]="lastRuller" (ngModelChange)="calculateFUR()"></ion-datetime>
+			    </ion-item>
+			    <ion-item>
+				  <ion-label text-wrap text-wrap>Fecha estimada del parto:</ion-label>
+			      <ion-datetime [max]="today" disabled="true"  displayFormat="DD MMM YYYY" [(ngModel)]="dateBirth"></ion-datetime>
+			    </ion-item>
+			    <ion-item>
+			 	<ion-label text-wrap >Semanas de gestación:</ion-label>
+			  	  <ion-input disabled="false" type="text" [(ngModel)]="weeksPregnancy" (ngModelChange)="validateWeeksPregnant()"></ion-input>
+			  	</ion-item>
+			  	<!--<ion-item style="color: #163a5f;">
+			  		<ion-label text-wrap>
+			  		Controles del Embarazo:
+			  		</ion-label>
+			  	</ion-item>-->
+			  	<ion-item *ngIf="weeksPregnancy">
+						<ion-label text-wrap> Controles del Embarazo: </ion-label>
+						<ion-select text-wrap okText="Ok" cancelText="Cancelar" [(ngModel)]="controlPregnantSelect" (ngModelChange)="changeControlsPregnant()" multiple="true">
+							<!--<ion-option select value="0"><span>Ningún</span> antecedente</ion-option>-->
+							<ion-option *ngFor="let c of controls" value="{{c.Id}}">{{ c.Descripcion }}</ion-option>
+						</ion-select>
+				</ion-item>
+				<ion-grid *ngIf="resumeControllerPregnantBad==true || resumeControllerPregnantOk==true" padding style="padding-top: 0px;margin-top: 0px;">
+				  <ion-row *ngIf="resumeControllerPregnantBad">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;NO CONTROLADA, en riesgo de salud</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="resumeControllerPregnantOk">				    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;GESTANTE CONTROLADA</ion-col>
+				  </ion-row>
+				</ion-grid>
+			</ion-list>
+		</ion-list>
+		<button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+		*ngIf="hideBtnRegData" (click)="postRequestRegister()">
+		  <ion-icon name="md-checkmark">  </ion-icon>
+		  Guardar mis datos
+		</button>
+
+		<button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+				*ngIf="hideBtnModData" (click)="postRequestUpdate()">
+		  <ion-icon style="color: white !important;" name="md-checkmark">  </ion-icon>
+		  <div style="color: white !important;"> Guardar mis datos </div>
+		</button>
+	  <!--</ion-list>-->
+  </div>
+
+  <div *ngIf="saludSelect=='antecedentes'">
+  	  <!--<ion-item (click)="showFamilyBackground()">-->
+  	  <ion-item >
+		  	Antecedentes Familiares &nbsp; <a class="icon-circle" (click)="helpFamilyBackground()">
+	          <ion-icon class="ion_icon" name="help"></ion-icon>
+	        </a><!--
+		  	<ion-icon  *ngIf="iconALFamilyBackground" name="ios-arrow-forward" padding></ion-icon>
+		  	<ion-icon  *ngIf="iconADFamilyBackground" name="ios-arrow-down" padding></ion-icon>-->
+	  </ion-item>
+	  <ion-list *ngIf="true" padding style="margin-top: 0px;">	  	 
+	  	  <!--<ion-item>
+				<ion-label text-wrap >¿Antecedentes Familiares?</ion-label>
+				<ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="stateFamilyBackground">
+					<ion-option value="0">Si</ion-option>
+				    <ion-option value="1">No</ion-option>	    
+				</ion-select>
+		  </ion-item>-->
+		  <ion-item>
+				<ion-label text-wrap text-wrap>Seleccione sus antecedentes:</ion-label>
+				<ion-select text-wrap okText="Ok" cancelText="Cancelar" [(ngModel)]="familyBackground"  multiple="true">
+					<!--<ion-option select value="0"><span>Ningún</span> antecedente</ion-option>-->
+					<ion-option value="1">Asma</ion-option>
+				    <ion-option value="2">Presión alta (Hipertensión)</ion-option>
+				    <ion-option value="3">Diabetes</ion-option>
+				    <ion-option value="4">Cáncer de mama</ion-option>
+				    <ion-option value="5">Cáncer de ovarios</ion-option>
+				    <ion-option value="6">Cáncer de próstata</ion-option>
+				    <ion-option value="7">Cáncer de colon</ion-option>
+				    <ion-option value="8">Cáncer de estómago</ion-option>		    		    
+				    <ion-option value="9">Infarto cardiaco</ion-option>
+				    <ion-option value="10">ACV (derrame cerebral)</ion-option>
+				</ion-select>
+		  </ion-item>
+	  </ion-list>
+	  	
+	  <ion-item style="border-color: transparent;margin-top: 0px;">
+		  	Habito de fumar <!--&nbsp;
+		  	<ion-icon  *ngIf="iconALSmoke" name="ios-arrow-forward" padding></ion-icon>
+		  	<ion-icon  *ngIf="iconADSmoke" name="ios-arrow-down" padding></ion-icon>-->
+	  </ion-item>
+	  <ion-list *ngIf="true" padding style="margin-top: 0px !important;">	  	  
+		  <ion-item>
+			    <ion-label text-wrap >¿Usted fuma?:</ion-label>
+			    <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="stateSmoke">
+					<ion-option value="0">Si</ion-option>
+					<ion-option select value="1">No</ion-option>
+				</ion-select>
+		  </ion-item>	
+		  <ion-grid *ngIf="stateSmoke" style="padding-top: 0px;margin-top: 0px;">
+		  		<ion-row *ngIf="stateSmoke">		    
+				    <ion-col *ngIf="stateSmoke==1" col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> BIEN HECHO</ion-col>
+					<ion-col *ngIf="stateSmoke==0" col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> FUMAR ES DAÑINO PARA LA SALUD </ion-col>
+				</ion-row>
+		  </ion-grid>	  
+		  <ion-item *ngIf="stateSmoke==0">
+			    <ion-label text-wrap >Tipo de fumador:</ion-label>
+			    <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="typeSmoke">
+					<ion-option value="0">Social (eventual) </ion-option>
+					<ion-option value="1">Fumador diario</ion-option>
+				</ion-select>
+		  </ion-item>
+		  <ion-row *ngIf="stateSmoke==0 && typeSmoke==1">				
+			<ion-item>
+				<ion-label text-wrap text-wrap>¿Cuántos cigarrillos fuma al día?</ion-label>
+				<ion-input type="tel" maxlength="2" placeholder="2" inputmode="numeric" pattern="^[0-9]*$"  [(ngModel)]="cuantityForDaySmoke"  (ngModelChange)="onChangeDiseaseSmoke()"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label text-wrap text-wrap>¿Cuántos años lleva fumando?</ion-label>
+				<ion-input type="tel" maxlength="2" placeholder="5" inputmode="numeric" pattern="^[0-9]*$"  [(ngModel)]="cuantityYearOfSmoke"  (ngModelChange)="onChangeDiseaseSmoke()"></ion-input>
+			</ion-item>
+			<ion-grid *ngIf="stateDiseaseSmoke" style="padding-top: 0px;margin-top: 0px;">
+		  		<ion-row *ngIf="stateDiseaseSmoke">		    
+				    <ion-col *ngIf="stateDiseaseSmoke==1" col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> Se sugiere una TAC pulmonar.</ion-col>
+					<ion-col *ngIf="stateDiseaseSmoke==2" col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> Realice chequeo médico.</ion-col>
+				</ion-row>
+		  	</ion-grid>
+		  </ion-row>
+	  	  <br>
+	  	  <button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+		*ngIf="hideBtnRegData" (click)="postRequestRegister()">
+		  	<ion-icon name="md-checkmark">  </ion-icon>
+		  Guardar mis datos
+		  </button>
+
+		<button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+				*ngIf="hideBtnModData" (click)="postRequestUpdate()">
+		  <ion-icon style="color: white !important;" name="md-checkmark">  </ion-icon>
+		  <div style="color: white !important;"> Guardar mis datos </div>
+		</button>
+	  </ion-list>
+
+
+  </div>
+
+  <div *ngIf="saludSelect=='presion'">
+	  <!--<ion-item (click)="showBloodPressure()">-->
+	  <ion-item >
+		  	Presión arterial 
+		  	<!--<ion-icon  *ngIf="iconALBloodPressure" name="ios-arrow-forward" padding></ion-icon>
+		  	<ion-icon  *ngIf="iconADBloodPressure" name="ios-arrow-down" padding></ion-icon>-->
+	  </ion-item>
+	  <ion-list *ngIf="true" padding style="margin-top: 0px;">
+	    	<ion-item class="no-margintop">
+			  <ion-label text-wrap  class="no-margintop">Hipertensión:</ion-label>
+			  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="stateHypertension">
+			    <ion-option value="0">Si</ion-option>
+			    <ion-option select value="1">No</ion-option>
+			  </ion-select>
+			</ion-item>
+			<ion-list *ngIf="stateHypertension==0;">
+				<p style="padding-left: 15px;">Coloque su presión arterial: &nbsp; <a class="icon-circle" (click)="helpBloodPressure()">
+	          <ion-icon class="ion_icon" name="help"></ion-icon>
+	        	</a> 	  	</p>
+		        <ion-row>
+		        	<ion-col col-5 style="width: 100%;">
+		        		<ion-item>	
+		        		<ion-input  placeholder="95" col-12 type="tel" maxlength="3" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="valueBloodPressureN" (ngModelChange)="calculateHypertensionYes()"></ion-input>
+		        		</ion-item>
+					</ion-col>
+					<ion-col col-1 style="width: 100%;">	
+						<div style="margin-top: 17.5px; margin-bottom: 16px;">/</div>
+					</ion-col>
+					<ion-col col-5 style="width: 100%;">					
+						<!--<ion-label text-wrap ></ion-label>-->
+						<ion-item>
+						<ion-input  placeholder="65" col-12 type="tel" maxlength="3" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="valueBloodPressureD" (ngModelChange)="calculateHypertensionYes()"></ion-input>
+						</ion-item>
+					</ion-col>
+				</ion-row>
+				
+				
+				<ion-grid *ngIf="resumeBloodPressureResult5||resumeBloodPressureResult4||resumeBloodPressureResult3||resumeBloodPressureResult2||resumeBloodPressureResult1;" padding style="padding-top: 0px;margin-top: 0px;">
+				  <ion-row *ngIf="resumeBloodPressureResult1">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;PRESIÓN BAJA, salud en riesgo</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="resumeBloodPressureResult2">				    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;NORMAL</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="resumeBloodPressureResult3">    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;LÍMITE ALTO, precaución!</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="resumeBloodPressureResult4">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;ELEVADO, salud en riesgo</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="resumeBloodPressureResult5 && age>80">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;ELEVADO, salud en riesgo</ion-col>
+				  </ion-row>
+				</ion-grid>
+				<ion-item>
+			  	  <ion-label text-wrap >¿Sigue tratamiento?</ion-label>
+				  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="stateTreatmentBloodPPressure">
+				    <ion-option value="0">Si</ion-option>
+				    <ion-option value="1">No</ion-option>
+				  </ion-select>
+			  	</ion-item>
+			  	<ion-grid *ngIf="stateTreatmentBloodPPressure" padding style="padding-top: 0px;margin-top: 0px;">
+				  <ion-row *ngIf="stateTreatmentBloodPPressure==1;">
+				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> INADECUADO, salud en riesgo</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="stateTreatmentBloodPPressure==0;">
+				    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> BIEN HECHO</ion-col>
+				  </ion-row>
+				</ion-grid>
+				<ion-item>
+				  <ion-label text-wrap text-wrap><span>Último</span> control médico:</ion-label>
+			      <ion-datetime [max]="today" doneText="Ok" cancelText="Cancelar"  placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="lastTestBloodPressure"  (ngModelChange)="onChangeCareBloodPressure()"></ion-datetime>
+			  	</ion-item>
+			  	<ion-grid padding style="padding-top: 0px;margin-top: 0px;">
+				  <ion-row *ngIf="resumeLastTestlBloodPPressureFL;">
+				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> INADECUADO</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="resumeLastTestlBloodPPressureOK;">
+				    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> BIEN HECHO</ion-col>
+				  </ion-row>
+				</ion-grid>	
+			</ion-list>
+			<ion-list *ngIf="stateHypertension==1;">
+				<!--<ion-item>					-->
+					<!--<ion-label text-wrap ></ion-label>-->
+					<p style="padding-left: 15px;">Coloque su presión arterial: &nbsp; <a class="icon-circle" (click)="helpBloodPressure()">
+	          <ion-icon class="ion_icon" name="help"></ion-icon>
+	        </a> 	  	</p>
+	        <!--</ion-item>-->
+	        	<ion-row>
+		        	<ion-col col-5 style="width: 100%;">
+		        		<ion-item>	
+						<ion-input placeholder="95" col-12 type="tel" maxlength="3" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="valueBloodPressureN" (ngModelChange)="calculateHypertensionYes()"></ion-input>
+						</ion-item>
+					</ion-col>
+		        	<ion-col col-1 style="width: 100%;">
+						<div style="margin-top: 17.5px; margin-bottom: 16px;">/</div>
+					</ion-col>	        	
+					<ion-col col-5 style="width: 100%;">
+						<ion-item>	
+						<ion-input placeholder="65" col-12 type="tel"  maxlength="3" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="valueBloodPressureD" (ngModelChange)="calculateHypertensionYes()"></ion-input>
+						</ion-item>
+					</ion-col>
+				</ion-row>
+				
+				<ion-grid *ngIf="resumeBloodPressureResult5||resumeBloodPressureResult4||resumeBloodPressureResult3||resumeBloodPressureResult2||resumeBloodPressureResult1;" padding style="padding-top: 0px;margin-top: 0px;">
+				  <ion-row *ngIf="resumeBloodPressureResult1">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;PRESIÓN BAJA, salud en riesgo</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="resumeBloodPressureResult2">				    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;NORMAL</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="resumeBloodPressureResult3">    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;LÍMITE ALTO, precaución!</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="resumeBloodPressureResult4">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;ELEVADO, salud en riesgo</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="resumeBloodPressureResult5 && age>80">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;ELEVADO, salud en riesgo</ion-col>
+				  </ion-row>
+				</ion-grid>
+			</ion-list>
+	  </ion-list>
+	  <button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+		*ngIf="hideBtnRegData" (click)="postRequestRegister()">
+		  <ion-icon name="md-checkmark">  </ion-icon>
+		  Guardar mis datos
+		</button>
+
+		<button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+				*ngIf="hideBtnModData" (click)="postRequestUpdate()">
+		  <ion-icon style="color: white !important;" name="md-checkmark">  </ion-icon>
+		  <div style="color: white !important;"> Guardar mis datos </div>
+		</button>
+  </div>
+
+  <div *ngIf="saludSelect=='nutricional'">
+	  <!--<ion-item (click)="showNutrition()">	  		
+	  <ion-item >
+		  	Antecedentes Familiares &nbsp; <a class="icon-circle" (click)="helpFamilyBackground()">
+	          <ion-icon class="ion_icon" name="help"></ion-icon>
+	        </a>
+	  </ion-item>-->
+	  <ion-item style="border-color: transparent;padding-top: 0px;">	
+	  	  <span>Estado nutricional </span>&nbsp;
+	  	  <a *ngIf="genderOption==0" class="" (click)="advertancyWeightPregnant()">
+	  	  <ion-icon class="ion_icon" style="color: #00a1e1;font-size: 1.8em;margin-top: 0px;margin-left: 1px;position: relative;display: inline-block;text-align: center;vertical-align: middle;margin-top: 0px;" name="alert">	  	  	
+	  	  </ion-icon>
+		    </a>
+	  </ion-item>
+	  <ion-list *ngIf="true" padding style="margin-top: 0px !important;border-top-color: transparent;">	  		
+			<ion-item class="no-margintop">
+				<ion-label text-wrap >Peso(kg):</ion-label>
+				<ion-input type="tel" maxlength="5" inputmode="numeric" pattern="[0-9]+([\.,][0-9]+)?" placeholder="75.5" [(ngModel)]="weight" (ngModelChange)="calculateBodyMassIndex()"></ion-input>
+			</ion-item>
+			<ion-item >
+				<ion-label text-wrap  class="no-margintop">Talla(mts):</ion-label>
+				<ion-input type="tel" maxlength="4" inputmode="numeric"  pattern="[0-9]+([\.,][0-9]+)?" placeholder="1.70" [(ngModel)]="size" (ngModelChange)="calculateBodyMassIndex()"></ion-input>
+			</ion-item>			
+			<ion-grid *ngIf="bodyMassIndex" padding style="padding-top: 0px;margin-top: 0px;">
+			  <ion-row *ngIf="bodyMassIndex<18.5">			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;BAJO PESO, salud en riesgo</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="bodyMassIndex>=18.5 && bodyMassIndex<=24.99">
+			    
+			    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;PESO IDEAL</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="bodyMassIndex>24.99 && bodyMassIndex<=29.99">
+			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;SOBREPESO</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="bodyMassIndex>29.99 && bodyMassIndex<=39.99">
+			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;OBESIDAD, salud en riesgo</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="bodyMassIndex>39.99">
+			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;MORBIDO, salud en alto riesgo</ion-col>
+			  </ion-row>
+			</ion-grid>
+			<ion-item>
+				<ion-label text-wrap >Hemoglobina(mg/dl):</ion-label>
+				<ion-input type="tel" maxlength="4" inputmode="numeric" pattern="[0-9]+([\.,][0-9]+)?"  [(ngModel)]="hemoglobin"></ion-input>
+			</ion-item>  
+			<ion-grid *ngIf="hemoglobin;" padding style="padding-top: 0px;margin-top: 0px;">
+				<ion-row *ngIf="(hemoglobin<12 && genderOption==0)||(hemoglobin<13 && genderOption==1)">
+					<ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> ANEMIA, salud en riesgo</ion-col>
+				</ion-row>
+				<ion-row *ngIf="(hemoglobin>=12 && hemoglobin<=15.3 && genderOption==0)||(hemoglobin>=13 && hemoglobin<=17.5 && genderOption==1)">
+					<ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> NORMAL</ion-col>
+				</ion-row>
+				<ion-row *ngIf="(hemoglobin>15.3 && genderOption==0)||(hemoglobin>17.5 && genderOption==1)">
+					<ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> ANORMAL ALTA</ion-col>
+				</ion-row>
+				<!--<ion-row *ngIf="hemoglobin>15.3 && genderOption==0;">
+					<ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> ANORMAL BAJA</ion-col>
+				</ion-row>-->
+			</ion-grid>
+	  </ion-list>
+	  <button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+		*ngIf="hideBtnRegData" (click)="postRequestRegister()">
+		  <ion-icon name="md-checkmark">  </ion-icon>
+		  Guardar mis datos
+		</button>
+
+		<button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+				*ngIf="hideBtnModData" (click)="postRequestUpdate()">
+		  <ion-icon style="color: white !important;" name="md-checkmark">  </ion-icon>
+		  <div style="color: white !important;"> Guardar mis datos </div>
+		</button>
+  </div>
+
+  <div *ngIf="saludSelect=='azucar'">
+	  <!--<ion-item (click)="showLevelSugar()">-->
+	  <ion-item >
+		  	Nivel de azúcar	 <!-- 	
+		  	<ion-icon  *ngIf="iconALLevelSugar" name="ios-arrow-forward" padding></ion-icon>
+		  	<ion-icon  *ngIf="iconADLevelSugar" name="ios-arrow-down" padding></ion-icon>-->
+	  </ion-item>
+	  <ion-list *ngIf="true" padding style="margin-top: 0px !important">
+		  	<ion-item class="no-margintop">
+				  <ion-label text-wrap  class="no-margintop">Tiene diabetes:</ion-label>
+				  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="stateDiabetes">
+				    <ion-option value="0">Si</ion-option>
+				    <ion-option select value="1">No</ion-option>
+				  </ion-select>
+			</ion-item>
+		    <ion-list *ngIf="stateDiabetes==0;">
+			    <ion-item>
+				  <ion-label text-wrap >¿Sigue tratamiento?</ion-label>
+				  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="stateTreatmentDiabetes">
+				    <ion-option value="0">Si</ion-option>
+				    <ion-option value="1">No</ion-option>
+				  </ion-select>
+			    </ion-item>
+			    <ion-grid *ngIf="stateTreatmentDiabetes;" padding style="padding-top: 0px;margin-top: 0px;">
+				  <ion-row *ngIf="stateTreatmentDiabetes==1;">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> INADECUADO, salud en riesgo</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="stateTreatmentDiabetes==0;">				    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> BIEN HECHO</ion-col>
+				  </ion-row>
+				</ion-grid>
+				<ion-item>
+				  <ion-label text-wrap ><span>Último</span> control médico:</ion-label>
+			      <ion-datetime [max]="today" doneText="Ok" cancelText="Cancelar"  placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="resumeLastTestDiabetes" (ngModelChange)="onChangeLastTestDiabetes()"></ion-datetime>
+			  	</ion-item>
+			  	<ion-grid *ngIf="resumeLastTestDiabetesFL||resumeLastTestDiabetesOK;" padding style="padding-top: 0px;margin-top: 0px;">
+				  <ion-row *ngIf="resumeLastTestDiabetesFL">
+				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> INADECUADO, salud en riesgo</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="resumeLastTestDiabetesOK">
+				    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> BIEN HECHO</ion-col>
+				  </ion-row>
+				</ion-grid>
+			  	<ion-item>
+			  		Hemoglobina glicosilada(%):	&nbsp; <a class="icon-circle" (click)="helpHemoglobinGlin()">
+			          <ion-icon class="ion_icon" name="help"></ion-icon>
+			        </a> 			    
+				</ion-item>
+				<ion-item>
+					<ion-input placeholder="11.00" type="tel" minlength="1" maxlength="4" inputmode="numeric" pattern="[0-9]+([\.,][0-9]+)?" [(ngModel)]="hemoglobinGlin"></ion-input>
+				</ion-item>		
+				<ion-grid *ngIf="hemoglobinGlin;" padding style="padding-top: 0px;margin-top: 0px;">
+				  <ion-row *ngIf="hemoglobinGlin<7;">
+				  	<ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;ADECUADO</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="hemoglobinGlin>6.99;">			    			    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;INADECUADO, salud en riesgo</ion-col>
+				  </ion-row>
+				</ion-grid>
+				<ion-item>
+				    <ion-label text-wrap >Glucosa en ayunas(mg/dl):</ion-label>
+				    <ion-input type="tel" maxlength="3" inputmode="numeric" pattern="^[0-9]*$"  placeholder="95" min="0" max="99" [(ngModel)]="glucoseY"></ion-input>
+				</ion-item>
+				<ion-grid *ngIf="glucoseY" padding style="padding-top: 0px;margin-top: 0px;">
+				  <ion-row *ngIf="glucoseY<60">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;BAJO, salud en riesgo</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="glucoseY>59&&glucoseY<=99">				    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;ADECUADO</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="glucoseY>=100&&glucoseY<=115">				    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;LIMITE ALTO</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="glucoseY>115">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;ELEVADO, salud en riesgo</ion-col>
+				  </ion-row>
+				</ion-grid>
+				<ion-item>
+				    <ion-label text-wrap text-wrap>Glucosa despues de alimentos(mg/dl):</ion-label>
+				    <ion-input type="tel" maxlength="3" inputmode="numeric" pattern="^[0-9]*$"  placeholder="95" [(ngModel)]="glucoseMoreEat"></ion-input>
+				</ion-item>
+				<ion-grid *ngIf="glucoseMoreEat" padding style="padding-top: 0px;margin-top: 0px;">
+				  <ion-row *ngIf="glucoseMoreEat>200">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;ELEVADO, salud en riesgo</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="glucoseMoreEat>=60 && glucoseMoreEat<=200">				    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;ADECUADO</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="glucoseMoreEat<60">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;BAJO, salud en riesgo</ion-col>
+				  </ion-row>
+				</ion-grid>
+			</ion-list>
+			<ion-list *ngIf="stateDiabetes==1;">
+				<ion-item>
+				    <ion-label text-wrap >Glucosa en ayunas(mg/dl):</ion-label>
+				    <ion-input type="tel" maxlength="3" inputmode="numeric" pattern="^[0-9]*$"  placeholder="95" min="0" max="99" [(ngModel)]="glucoseN"></ion-input>
+				</ion-item>
+				<ion-grid *ngIf="glucoseN" padding style="padding-top: 0px;margin-top: 0px;">
+				  <ion-row *ngIf="glucoseN<60">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;BAJO, salud en riesgo</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="glucoseN>59&&glucoseN<=99">				    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;ADECUADO</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="glucoseN>=100&&glucoseN<=115">				    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp;LIMITE ALTO</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="glucoseN>115">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp;ELEVADO, salud en riesgo</ion-col>
+				  </ion-row>
+				</ion-grid>
+			</ion-list>
+	  </ion-list>
+	  <button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+		*ngIf="hideBtnRegData" (click)="postRequestRegister()">
+		  <ion-icon name="md-checkmark">  </ion-icon>
+		  Guardar mis datos
+		</button>
+
+		<button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+				*ngIf="hideBtnModData" (click)="postRequestUpdate()">
+		  <ion-icon style="color: white !important;" name="md-checkmark">  </ion-icon>
+		  <div style="color: white !important;"> Guardar mis datos </div>
+		</button>
+  </div>
+
+  <div *ngIf="saludSelect=='grasas'">
+	  <!--<ion-item (click)="showFatProfile()">-->
+	  <ion-item >
+		  	Perfil de grasas &nbsp; 
+		  	<a class="icon-circle" (click)="helpProfileLipidico()">
+	          <ion-icon class="ion_icon" name="help"></ion-icon>
+	        </a><!--
+		  	<ion-icon  *ngIf="iconALFatProfile" name="ios-arrow-forward" padding></ion-icon>
+		  	<ion-icon  *ngIf="iconADFatProfile" name="ios-arrow-down" padding></ion-icon>-->
+	  </ion-item>
+	  <ion-list *ngIf="true" padding style="margin-top: 0px !important;">		  	  
+	    	<ion-item class="no-margintop"> 
+			  <ion-label text-wrap  class="no-margintop" text-wrap><span>Último</span> control de Laboratorio:</ion-label>
+		      <ion-datetime [max]="today" doneText="Ok" cancelText="Cancelar"  placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="lastTestFat" (ngModelChange)="onChangeLastTestFat()"></ion-datetime>
+		  	</ion-item>
+		  	<ion-grid *ngIf="lastTestFat" padding style="padding-top: 0px;margin-top: 0px;">
+			  <ion-row *ngIf="resumeLastTestFatFL">			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> NO CONTROLADO</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="resumeLastTestFatOK">			    
+			    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> CONTROLADO</ion-col>
+			  </ion-row>
+			</ion-grid>
+			<ion-item>
+			    <ion-label text-wrap >Colesterol LDL:</ion-label>
+			    <ion-input type="tel" maxlength="3" placeholder="40" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="cholesterolLdl" (ngModelChange)="onChangeCholesterolLdl()"></ion-input>
+			</ion-item>
+			<ion-grid *ngIf="cholesterolLdl" padding style="padding-top: 0px;margin-top: 0px;">
+			  <ion-row *ngIf="cholesterolLdl>129">			    
+			    <ion-col col-12 class="summaryBad">&nbsp;<ion-icon class="summaryBad" name="md-sad"></ion-icon> ELEVADO</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="cholesterolLdl<130">			    
+			    <ion-col col-12 class="summaryOk">&nbsp;<ion-icon class="summaryOk" name="md-happy"></ion-icon> ADECUADO</ion-col>
+			  </ion-row>
+			</ion-grid>
+			<ion-item>
+			    <ion-label text-wrap >Colesterol HDL:</ion-label>
+			    <ion-input  type="tel" maxlength="2" placeholder="13" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="cholesterolHdl" (ngModelChange)="onChangeCholesterolHdl()"></ion-input>
+			</ion-item>
+			<ion-grid *ngIf="cholesterolHdl" padding style="padding-top: 0px;margin-top: 0px;">
+			  <ion-row *ngIf="cholesterolHdl<40">			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>&nbsp; BAJO, salud en riesgo</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="cholesterolHdl>39">			    
+			    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon>&nbsp; ADECUADO</ion-col>
+			  </ion-row>
+			</ion-grid>
+			<ion-item>
+			    <ion-label text-wrap >Triglicéridos:</ion-label>
+			    <ion-input  type="tel" maxlength="3" placeholder="160" inputmode="numeric" pattern="^[0-9]*$" [(ngModel)]="triglycerides" (ngModelChange)="onChangeCholesterolTriglycerides()"></ion-input>
+			</ion-item>
+			<ion-grid *ngIf="triglycerides" padding style="padding-top: 0px;margin-top: 0px;">
+			  <ion-row *ngIf="triglycerides>160 && stateDiabetes!=0">			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> ELEVADO, salud en riesgo</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="triglycerides>150 && stateDiabetes==0">			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> ELEVADO, salud en riesgo</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="triglycerides<161 && stateDiabetes!=0">			    
+			    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> ADECUADO</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="triglycerides<151 && stateDiabetes==0">			    
+			    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> ADECUADO</ion-col>
+			  </ion-row>
+			</ion-grid>
+			<ion-list style="margin: 0;">
+			  <ion-item style="border-color:transparent;" *ngIf="age>=25" >
+			  		Mida su cintura(cm): &nbsp; <a class="icon-circle" (click)="helpAbdominalWaist()">
+			          <ion-icon class="ion_icon"  name="help"></ion-icon>
+			        </a> 				    
+			  </ion-item>
+			</ion-list>
+	  		  <ion-item *ngIf="age>=25">
+		    	<ion-input type="tel" maxlength="4" inputmode="numeric" placeholder="90" pattern="[0-9]+([\.,][0-9]+)?"  [(ngModel)]="abdominalWaist"></ion-input>
+			  </ion-item>
+			  <ion-grid *ngIf="abdominalWaist" padding style="padding-top: 0px;margin-top: 0px;">
+				  <ion-row *ngIf="abdominalWaist>88&&genderOption==0">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> INADECUADO, salud en riesgo</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="abdominalWaist<89&&genderOption==0">				    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> ADECUADO</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="abdominalWaist<91&&genderOption==1">				    
+				    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> ADECUADO</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="abdominalWaist>90&&genderOption==1">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> INADECUADO, salud en riesgo</ion-col>
+				  </ion-row>
+			  </ion-grid>
+	  </ion-list>
+	  <button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+		*ngIf="hideBtnRegData" (click)="postRequestRegister()">
+		  <ion-icon name="md-checkmark">  </ion-icon>
+		  Guardar mis datos
+		</button>
+
+		<button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+				*ngIf="hideBtnModData" (click)="postRequestUpdate()">
+		  <ion-icon style="color: white !important;" name="md-checkmark">  </ion-icon>
+		  <div style="color: white !important;"> Guardar mis datos </div>
+		</button>
+  </div>  
+
+  <div *ngIf="saludSelect=='preventivo'">
+	  <!--<ion-item (click)="showcheckAndControl()">-->
+	  <ion-item >
+		  	Chequeos y controles &nbsp;
+	  		<a class="icon-circle" (click)="helpCheckAndControl()">
+	          <ion-icon class="ion_icon" name="help"></ion-icon>
+	        </a> 		    <!--
+		  	<ion-icon  *ngIf="iconALcheckAndControl" name="ios-arrow-forward" padding></ion-icon>
+		  	<ion-icon  *ngIf="iconADcheckAndControl" name="ios-arrow-down" padding></ion-icon>-->
+	  </ion-item>
+	  <ion-list *ngIf="true" padding style="margin-top: 0px !important;">
+	  		<ion-item class="no-margintop">
+			  <ion-label text-wrap class="" text-wrap><span>Última</span> consulta médica preventiva:</ion-label>
+		      <ion-datetime [max]="today" doneText="Ok" cancelText="Cancelar" placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="lastTestCheckPrevent"  (ngModelChange)="onChangeLastTestCheckPrevent()"></ion-datetime>
+		  	</ion-item>
+			<ion-grid padding *ngIf="resumeTestCheckPreventFL || resumeTestCheckPreventOK" style="padding-top: 0px;margin-top: 0px;">
+			  <ion-row *ngIf="resumeTestCheckPreventFL;">
+			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> CHEQUEO PENDIENTE</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="resumeTestCheckPreventOK;">
+			    
+			    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> BIEN HECHO</ion-col>
+			  </ion-row>
+			</ion-grid>
+	  		<ion-item class="">
+			  <ion-label text-wrap class=""><span>Último</span> chequeo dental:</ion-label>
+		      <ion-datetime [max]="today" doneText="Ok" cancelText="Cancelar"  placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="lastTestOdontology"  (ngModelChange)="onChangeLastTestOdontology()"></ion-datetime>
+		  	</ion-item>
+			<ion-grid padding *ngIf="resumeTestOdontologyFL || resumeTestOdontologyOK" style="padding-top: 0px;margin-top: 0px;">
+			  <ion-row *ngIf="resumeTestOdontologyFL;">			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon> CHEQUEO PENDIENTE</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="resumeTestOdontologyOK;">			    
+			    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> BIEN HECHO</ion-col>
+			  </ion-row>
+			</ion-grid>
+
+			<ion-item>
+			  <ion-label text-wrap class=""><span>Último</span> chequeo de la vista:</ion-label>
+		      <ion-datetime [max]="today" doneText="Ok" cancelText="Cancelar"  placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="lastTestEye"  (ngModelChange)="onChangeLastTestEye()" ></ion-datetime>
+		  	</ion-item>
+		  	<ion-item>
+			  <ion-label text-wrap text-wrap>Resultado del chequeo de la vista:</ion-label>
+			  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="typeTestEye" (ngModelChange)="onChangeLastTestEye()">
+			    <ion-option value="0">Normal</ion-option>
+			    <ion-option select value="1">Anormal</ion-option>
+			  </ion-select>
+		    </ion-item>
+			<ion-grid padding  *ngIf="resumeTestEyeFL || resumeTestEyeOK" style="padding-top: 0px;margin-top: 0px;">
+			  <ion-row *ngIf="resumeTestEyeFL;">			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>  CONTROL PENDIENTE</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="resumeTestEyeOK;">			    
+			    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> BIEN HECHO</ion-col>
+			  </ion-row>
+			</ion-grid>
+			<ion-item *ngIf="age>45">
+			  <ion-label text-wrap text-wrap><span>Última</span> Endoscopía Gástrica:</ion-label>
+		      <ion-datetime [max]="today" doneText="Ok" cancelText="Cancelar"  placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="lastTestGastroscopy"  (ngModelChange)="onChangeLastTestGastroscopy()" ></ion-datetime>
+		  	</ion-item>
+			<ion-item *ngIf="age>45">
+			  <ion-label text-wrap text-wrap>Resultado de Endoscopía Gástrica:</ion-label>
+			  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="typeTestGastroscopy" (ngModelChange)="onChangeLastTestGastroscopy()">
+			    <ion-option value="0">Normal</ion-option>
+			    <ion-option select value="1">Anormal</ion-option>
+			  </ion-select>
+		    </ion-item>
+		    <ion-grid padding  *ngIf="resumeTestGastroscopyFL || resumeTestGastroscopyOK" style="padding-top: 0px;margin-top: 0px;">
+			  <ion-row *ngIf="resumeTestGastroscopyFL;">			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>  CONTROL PENDIENTE</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="resumeTestGastroscopyOK;">			    
+			    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> BIEN HECHO</ion-col>
+			  </ion-row>
+			</ion-grid>
+			<ion-item *ngIf="age>50">
+			  <ion-label text-wrap text-wrap><span>Último</span> examen de Colonoscopia:</ion-label>
+		      <ion-datetime [max]="today" doneText="Ok" cancelText="Cancelar"  placeholder="01 Ene 2018" displayFormat="DD MMM YYYY" [(ngModel)]="lastTestColonoscopy"  (ngModelChange)="onChangeLastTestColonoscopy()" ></ion-datetime>
+		  	</ion-item>
+		  	<ion-item *ngIf="age>50">
+			  <ion-label text-wrap text-wrap>Resultado de Colonoscopía:</ion-label>
+			  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="typeTestColonoscopy" (ngModelChange)="onChangeLastTestColonoscopy()">
+			    <ion-option value="0">Normal</ion-option>
+			    <ion-option select value="1">Anormal</ion-option>
+			  </ion-select>
+		    </ion-item>
+			<ion-grid padding *ngIf="resumeTestColonoscopyFL || resumeTestColonoscopyOK" style="padding-top: 0px;margin-top: 0px;">
+			  <ion-row *ngIf="resumeTestColonoscopyFL;">			    
+			    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>  CONTROL PENDIENTE</ion-col>
+			  </ion-row>
+			  <ion-row *ngIf="resumeTestColonoscopyOK;">			    
+			    <ion-col col-12 class="summaryOk">  <ion-icon class="summaryOk" name="md-happy"></ion-icon> BIEN HECHO</ion-col>
+			  </ion-row>
+			</ion-grid>			
+			<ion-list *ngIf="age>60;">
+				<ion-item>
+				  <ion-label text-wrap >Vacuna contra la Neumonía</ion-label>
+				  <ion-select okText="Ok" cancelText="Cancelar" [(ngModel)]="antyNeumony">
+				    <ion-option value="0">Se aplicó la vacuna</ion-option>
+				    <ion-option select value="1">No se aplicó la vacuna</ion-option>
+				  </ion-select>
+			    </ion-item>
+				<ion-grid padding style="padding-top: 0px;margin-top: 0px;">
+				  <ion-row *ngIf="antyNeumony==1;">				    
+				    <ion-col col-12 class="summaryBad">  <ion-icon class="summaryBad" name="md-sad"></ion-icon>  INADECUADO, salud en riesgo</ion-col>
+				  </ion-row>
+				  <ion-row *ngIf="antyNeumony==0;">				    
+				    <ion-col col-12 class="summaryOk"> <ion-icon class="summaryOk" name="md-happy"></ion-icon> ADECUADO</ion-col>
+				  </ion-row>
+				</ion-grid>
+			</ion-list>
+	  </ion-list>
+	  <button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+		*ngIf="hideBtnRegData" (click)="postRequestRegister()">
+		  <ion-icon name="md-checkmark">  </ion-icon>
+		  Guardar mis datos
+		</button>
+
+		<button ion-button block icon-start class="btnUpdateData" style="color: white !important; margin-top:0px;" 
+				*ngIf="hideBtnModData" (click)="postRequestUpdate()">
+		  <ion-icon style="color: white !important;" name="md-checkmark">  </ion-icon>
+		  <div style="color: white !important;"> Guardar mis datos </div>
+		</button>
+  </div>  
+
+</ion-list>
+
+<!--
+<button  ion-button block color="st_button" (click)="postRequestRegister()" style="color: white;background-color: #29ACE4;"><h5 style="color: #ffffff;margin-top:15px;">Registrar datos</h5></button>
+
+<button *ngIf="hideBtnModData" ion-button block color="st_button" (click)="postRequestUpdate()" style="color: white;background-color: #29ACE4;"><h5 style="color: #ffffff;margin-top:15px;">Guardar mis datos</h5></button>
+</ion-content>
+
+-->

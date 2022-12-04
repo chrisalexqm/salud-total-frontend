@@ -1,0 +1,36 @@
+WS > http://localhost/webserv/solicitud/listtip/
+WS > http://localhost/webserv/solicitud/listesp/
+params:
+&idprov=1
+WS > http://localhost/webserv/solicitud/listexa/
+
+URL > http://localhost/webserv/solicitud/examxval/<idprov>&<idesp>&<idtip>
+params:
+idprov > Id del proveedor seleccionado (prov 1,prov 2,etc)
+idesp > Id de la especialidad seleccionada (med. general, oncologia,etc)
+idtip > Id del tipo de examen seleccionado (laboratorio,imagen,etc)
+Ejemplo:
+&idprov=1&idesp=1&idtipex=1
+
+
+--------------------------------------------------------
+&
+tipsoli=1&
+asegurado=0&
+codasegur=0&
+codprov=1&
+codespeci=1&
+tipexamn=1&
+codexam=1&
+valpre=0&
+valimp=0&
+valtot=0&
+idusr=3&
+codpais=PE&
+nomus=Nata&
+apeus=Fig&
+matus=Be&
+ubigeo=015654&
+direc=Jr.Indenpendencia425#&
+nrodoc=2342&
+telf=+51486542657

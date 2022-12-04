@@ -1,0 +1,42 @@
+<!--
+<ion-header>
+  <ion-navbar>
+    <ion-title>preLogin</ion-title>
+  </ion-navbar>
+</ion-header>
+-->
+
+<ion-content padding >	
+	<table style="width:100%;">
+	  <tr>
+	    <th align="center"></th>
+	    <th align="center"></th>
+	  </tr>
+	  <tr>
+	    <td align="center" valign="center">
+	    	<img src="assets/img/icon.png" class="imgLogo">	
+	    </td>
+	  </tr>
+	</table>
+	
+	<br>
+	
+	<button ion-button block icon-start class="btnGoLogin" 
+			(click)="goLogin()">
+	  <ion-icon name="ios-exit-outline">  </ion-icon>
+	  Ingresar
+	</button>
+	<button ion-button block icon-start class="btnGoRegister" (click)="goRegister()">
+	  <ion-icon name="md-create">  </ion-icon>
+	  Registrarme
+	</button>
+
+	<table style="width:100%; border-color: black;">
+		<tr>
+			<td align="center" valign="center">
+				<a style="text-align: center; margin-top: 30px; display: block;" (click)="goForgottenPassword()">Olvide mi contraseña</a>
+			</td>
+		</tr>
+	</table>
+	
+</ion-content>

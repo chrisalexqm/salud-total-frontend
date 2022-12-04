@@ -1,0 +1,22 @@
+page-home {
+	ion-content, ion-grid{
+		background-image: url("../assets/img/background.png");
+		background-size: 100%;
+	}
+	.btnSendSol{
+		width: 70%;		
+		background-color: #8DC73F;
+		border-radius: 5px;
+		align-items: center;
+		margin: auto;
+		color: white !important;
+		font-size: 1.05em;
+	}
+	.swiper-pagination .swiper-pagination-clickable .swiper-pagination-bullets{
+		bottom: 0px;
+	}
+	.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets{
+		bottom: 0px;
+	}
+
+}

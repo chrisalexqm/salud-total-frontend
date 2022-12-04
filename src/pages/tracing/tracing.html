@@ -1,0 +1,501 @@
+<!--
+  Generated div for the TracingPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar color="primary_st" >
+    <!--<button ion-button menuToggle color="st_white">
+      <ion-icon name="menu" color="st_white"></ion-icon>
+    </button>-->
+    <ion-title align="center" style="font-size: 2rem;"> Salud Total </ion-title>
+  </ion-toolbar>
+  <img src="assets/img/menu/menu.png" (click)="goMenu()" style="position: fixed; width: 30px; top: 15px; left: 20px;z-index: 10000;">
+  <img src="assets/img/icon.png" style="position: fixed; width: 40px; top: 5px; right: 10px;z-index: 10000;">
+</ion-header>
+
+
+<ion-content padding>
+	<table style="width:100%; border-color: black;">
+	  <tr>
+	    <th align="center"></th>
+	    <th align="center"></th>
+	  </tr>
+	  <tr>
+	    <td align="center" valign="center">
+	    <img src="assets/img/estadonutricional/icono_seguimiento_de_salud.png" style="width: 40px;">
+	    </td>
+	    <td align="left" valign="center" style="color: #1773FA;">
+	    	Seguimiento de salud
+	    </td>
+	    <td align="right" valign="center">
+	    	<button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+	  			<ion-icon name="ios-arrow-back"></ion-icon>
+			</button>	
+	  	 </td>
+	  </tr>
+	</table>
+	<div>	
+		<ion-item style="background-color: transparent;">
+			  <ion-label stacked>Seleccione una opción:</ion-label>
+			  <ion-select [(ngModel)]="cboSeguimiento" (ngModelChange)="obtenerSeguimiento()">
+			    <ion-option value="1">Peso</ion-option>
+			    <ion-option value="2">Hemoglobina</ion-option>
+			    <ion-option value="3">Presión arterial</ion-option>
+			    <ion-option value="4">Glucosa</ion-option>
+			    <ion-option value="5">Hemoglobina Glicosilada</ion-option>
+			    <ion-option value="6">LDL Colesterol</ion-option>
+			    <ion-option value="7">HDL Colesterol</ion-option>
+			    <ion-option value="8">Triglicéridos</ion-option>
+			    <ion-option value="9">Medida de la cintura</ion-option>
+			  </ion-select>
+		</ion-item>
+	</div>
+	
+	
+	<!--<ion-list>
+	    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+	      <ion-icon [name]="item.icon" item-start></ion-icon>
+	      {{item.title}}
+	      <div class="item-note" item-end>
+	        {{item.note}}
+	      </div>
+	    </button>
+	</ion-list>
+	<div *ngIf="selectedItem" padding>
+	    You navigated here from <b>{{selectedItem.title}}</b>
+	</div>-->
+	<ion-card *ngIf="cboSeguimiento==1">	
+		<ion-list >	  
+		  <ion-item style="background-color: transparent;" text-wrap ion-item *ngFor="let ls of listaSeguimiento ">
+		  	<div *ngIf="ls.Peso!=0 || ls.Peso!=0.00">
+		  	<table style="width:70%; border-color: black;">
+			  <tr>
+			    <th align="center"></th>
+			    <th align="center"></th>
+			  </tr>
+			  <tr>
+			    <td align="left" valign="center">
+			    	Fecha:
+			    </td>
+			    <td align="left" valign="center" style="">
+			    	{{ ls.FechaHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+				<td align="left" valign="center">
+					Hora:
+				</td>
+				<td align="left" valign="center" style="">
+			    	{{ ls.HoraHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td align="left" valign="center">
+			  		Peso:
+			  	</td>
+			  	<td align="left" valign="center" style="">
+			    	{{ ls.Peso }}
+			    </td>
+			  </tr>
+			</table>
+		    </div>
+		  </ion-item>
+		</ion-list>
+	</ion-card>
+	<ion-card *ngIf="cboSeguimiento==2">	
+		<ion-list >	  
+		  <ion-item style="background-color: transparent;" text-wrap ion-item *ngFor="let ls of listaSeguimiento">
+		  	<div *ngIf="ls.Hemoglobina!=0 || ls.Hemoglobina!=0.00">
+		  	<table style="width:70%; border-color: black;">
+			  <tr>
+			    <th align="center"></th>
+			    <th align="center"></th>
+			  </tr>
+			  <tr>
+			    <td align="left" valign="center">
+			    	Fecha:
+			    </td>
+			    <td align="left" valign="center" style="">
+			    	{{ ls.FechaHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+				<td align="left" valign="center">
+					Hora:
+				</td>
+				<td align="left" valign="center" style="">
+			    	{{ ls.HoraHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td align="left" valign="center">
+			  		Hemoglobina:
+			  	</td>
+			  	<td align="left" valign="center" style="">
+			    	{{ ls.Hemoglobina }}
+			    </td>
+			  </tr>
+			</table>
+		    </div>
+		  </ion-item>
+		</ion-list>
+	</ion-card>
+	<ion-card *ngIf="cboSeguimiento==3">	
+		<ion-list >	  
+		  <ion-item style="background-color: transparent;" text-wrap ion-item *ngFor="let ls of listaSeguimiento">
+		  	<div *ngIf="ls.PresionArterialNumerador!=0 || ls.PresionArterialDenominador!=0">
+		  	<table style="width:70%; border-color: black;">
+			  <tr>
+			    <th align="center"></th>
+			    <th align="center"></th>
+			  </tr>
+			  <tr>
+			    <td align="left" valign="center">
+			    	Fecha:
+			    </td>
+			    <td align="left" valign="center" style="">
+			    	{{ ls.FechaHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+				<td align="left" valign="center">
+					Hora:
+				</td>
+				<td align="left" valign="center" style="">
+			    	{{ ls.HoraHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td align="left" valign="center">
+			  		Presión arterial:
+			  	</td>
+			  	<td align="left" valign="center" style="">
+			    	{{ ls.PresionArterialNumerador }} / {{ ls.PresionArterialDenominador }}
+			    </td>
+			  </tr>
+			</table>
+		    </div>
+		  </ion-item>
+		</ion-list>
+	</ion-card>
+	<ion-card *ngIf="cboSeguimiento==4">	
+		<ion-list >	  
+		  <ion-item style="background-color: transparent;" text-wrap ion-item *ngFor="let ls of listaSeguimiento">
+		  	<div *ngIf="ls.Glucosa!=0">
+		  	<table style="width:70%; border-color: black;">
+			  <tr>
+			    <th align="center"></th>
+			    <th align="center"></th>
+			  </tr>
+			  <tr>
+			    <td align="left" valign="center">
+			    	Fecha:
+			    </td>
+			    <td align="left" valign="center" style="">
+			    	{{ ls.FechaHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+				<td align="left" valign="center">
+					Hora:
+				</td>
+				<td align="left" valign="center" style="">
+			    	{{ ls.HoraHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td align="left" valign="center">
+			  		Glucosa:
+			  	</td>
+			  	<td align="left" valign="center" style="">
+			    	{{ ls.Glucosa }}
+			    </td>
+			  </tr>
+			</table>
+		    </div>
+		  </ion-item>
+		</ion-list>
+	</ion-card>
+	<ion-card *ngIf="cboSeguimiento==5">	
+		<ion-list >	  
+		  <ion-item style="background-color: transparent;" text-wrap ion-item *ngFor="let ls of listaSeguimiento">
+		  	<div *ngIf="ls.HemoGlucosilada!=0">
+		  	<table style="width:70%; border-color: black;">
+			  <tr>
+			    <th align="center"></th>
+			    <th align="center"></th>
+			  </tr>
+			  <tr>
+			    <td align="left" valign="center">
+			    	Fecha:
+			    </td>
+			    <td align="left" valign="center" style="">
+			    	{{ ls.FechaHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+				<td align="left" valign="center">
+					Hora:
+				</td>
+				<td align="left" valign="center" style="">
+			    	{{ ls.HoraHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td align="left" valign="center">
+			  		Hemoglobina Glicosilada:
+			  	</td>
+			  	<td align="left" valign="center" style="">
+			    	{{ ls.HemoGlucosilada }}
+			    </td>
+			  </tr>
+			</table>
+		    </div>
+		  </ion-item>
+		</ion-list>
+	</ion-card>
+	<ion-card *ngIf="cboSeguimiento==6">	
+		<ion-list >	  
+		  <ion-item style="background-color: transparent;" text-wrap ion-item *ngFor="let ls of listaSeguimiento">
+		  	<div *ngIf="ls.ColesterolLDL!=0">
+		  	<table style="width:70%; border-color: black;">
+			  <tr>
+			    <th align="center"></th>
+			    <th align="center"></th>
+			  </tr>
+			  <tr>
+			    <td align="left" valign="center">
+			    	Fecha:
+			    </td>
+			    <td align="left" valign="center" style="">
+			    	{{ ls.FechaHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+				<td align="left" valign="center">
+					Hora:
+				</td>
+				<td align="left" valign="center" style="">
+			    	{{ ls.HoraHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td align="left" valign="center">
+			  		Colesterol LDL:
+			  	</td>
+			  	<td align="left" valign="center" style="">
+			    	{{ ls.ColesterolLDL }}
+			    </td>
+			  </tr>
+			</table>
+		    </div>
+		  </ion-item>
+		</ion-list>
+	</ion-card>
+	<ion-card *ngIf="cboSeguimiento==7">	
+		<ion-list >	  
+		  <ion-item style="background-color: transparent;" text-wrap ion-item *ngFor="let ls of listaSeguimiento">
+		  	<div *ngIf="ls.ColesterolHDL!=0">
+		  	<table style="width:70%; border-color: black;">
+			  <tr>
+			    <th align="center"></th>
+			    <th align="center"></th>
+			  </tr>
+			  <tr>
+			    <td align="left" valign="center">
+			    	Fecha:
+			    </td>
+			    <td align="left" valign="center" style="">
+			    	{{ ls.FechaHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+				<td align="left" valign="center">
+					Hora:
+				</td>
+				<td align="left" valign="center" style="">
+			    	{{ ls.HoraHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td align="left" valign="center">
+			  		Colesterol HDL:
+			  	</td>
+			  	<td align="left" valign="center" style="">
+			    	{{ ls.ColesterolHDL }}
+			    </td>
+			  </tr>
+			</table>
+		    </div>
+		  </ion-item>
+		</ion-list>
+	</ion-card>
+	<ion-card *ngIf="cboSeguimiento==8">	
+		<ion-list >	  
+		  <ion-item style="background-color: transparent;" text-wrap ion-item *ngFor="let ls of listaSeguimiento">
+		  	<div *ngIf="ls.Trigliceridos!=0">
+		  	<table style="width:70%; border-color: black;">
+			  <tr>
+			    <th align="center"></th>
+			    <th align="center"></th>
+			  </tr>
+			  <tr>
+			    <td align="left" valign="center">
+			    	Fecha:
+			    </td>
+			    <td align="left" valign="center" style="">
+			    	{{ ls.FechaHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+				<td align="left" valign="center">
+					Hora:
+				</td>
+				<td align="left" valign="center" style="">
+			    	{{ ls.HoraHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td align="left" valign="center">
+			  		Triglicéridos:
+			  	</td>
+			  	<td align="left" valign="center" style="">
+			    	{{ ls.Trigliceridos }}
+			    </td>
+			  </tr>
+			</table>
+		    </div>
+		  </ion-item>
+		</ion-list>
+	</ion-card>
+	<ion-card *ngIf="cboSeguimiento==9">	
+		<ion-list >	  
+		  <ion-item style="background-color: transparent;" text-wrap ion-item *ngFor="let ls of listaSeguimiento">
+		  	<div *ngIf="ls.MedidaAbdominal!=0">
+		  	<table style="width:70%; border-color: black;">
+			  <tr>
+			    <th align="center"></th>
+			    <th align="center"></th>
+			  </tr>
+			  <tr>
+			    <td align="left" valign="center">
+			    	Fecha:
+			    </td>
+			    <td align="left" valign="center" style="">
+			    	{{ ls.FechaHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+				<td align="left" valign="center">
+					Hora:
+				</td>
+				<td align="left" valign="center" style="">
+			    	{{ ls.HoraHistorica }}
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td align="left" valign="center">
+			  		Medida de la cintura:
+			  	</td>
+			  	<td align="left" valign="center" style="">
+			    	{{ ls.MedidaAbdominal }}
+			    </td>
+			  </tr>
+			</table>
+		    </div>
+		  </ion-item>
+		</ion-list>
+	</ion-card>
+	<!--
+	<ion-card *ngIf="typeTracing=='weight'">
+	  <ion-card-header>
+	    Peso
+	  </ion-card-header>
+	  <ion-card-content>
+	    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	    consequat.
+	  </ion-card-content>
+	</ion-card>
+	<ion-card *ngIf="typeTracing=='hemoglobin'">
+	  <ion-card-header>
+	    Hemoglobina
+	  </ion-card-header>
+	  <ion-card-content>
+	    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	    consequat.
+	  </ion-card-content>
+	</ion-card>
+	<ion-card *ngIf="typeTracing=='bloodPresure'">
+	  <ion-card-header>
+	    Presión arterial
+	  </ion-card-header>
+	  <ion-card-content>
+	    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	    consequat.
+	  </ion-card-content>
+	</ion-card>
+	<ion-card *ngIf="typeTracing=='glucose'">
+	  <ion-card-header>
+	    Glucosa
+	  </ion-card-header>
+	  <ion-card-content>
+	    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	    consequat.
+	  </ion-card-content>
+	</ion-card>
+	<ion-card *ngIf="typeTracing=='hemoglobinGli'">
+	  <ion-card-header>
+	    Hemoglobina glicosilada
+	  </ion-card-header>
+	  <ion-card-content>
+	    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	    consequat.
+	  </ion-card-content>
+	</ion-card>
+	<ion-card *ngIf="typeTracing=='LDLcholesterol'">
+	  <ion-card-header>
+	    LDL - Colesterol
+	  </ion-card-header>
+	  <ion-card-content>
+	    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	    consequat.
+	  </ion-card-content>
+	</ion-card>
+	<ion-card *ngIf="typeTracing=='HDLcholesterol'">
+	  <ion-card-header>
+	    HDL - Colesterol
+	  </ion-card-header>
+	  <ion-card-content>
+	    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	    consequat.
+	  </ion-card-content>
+	</ion-card>
+	<ion-card *ngIf="typeTracing=='triglycerides'">
+	  <ion-card-header>
+	    Triglicéridos
+	  </ion-card-header>
+	  <ion-card-content>
+	    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	    consequat.
+	  </ion-card-content>
+	</ion-card>
+	-->
+</ion-content>

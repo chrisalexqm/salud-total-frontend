@@ -1,0 +1,79 @@
+DROP PROCEDURE IF EXISTS db_SaludTotal.Formulario_Registro;
+Delimiter $$
+Create Procedure db_SaludTotal.Formulario_Registro(
+IN 	_nom			varchar(250), # Nombre del usuario de registro.
+IN 	_apepat			varchar(250), # Apellido Paterno del usuario registro.
+IN 	_apemat 		varchar(250), # Apellido Materno del usuario registro.
+IN 	_gen			int, 		  # Genero del usuario registro.
+IN	_fecnac			datetime,	  # Fecha de nacimiento del usuario registro.
+IN 	_fecprostata	datetime,	  # Fecha de examen de prostata realizado, bajo condicion de edad
+IN 	_tipprostata	int,		  # Tipo resultado (Normal | Anormal).
+IN	_fecmamograf	datetime,	  # Fecha de examen de mamografia realizado.
+IN	_tipmamograf	int,		  # Tipo resultado (Normal | Anormal). 
+IN	_fecpapanico	datetime, 	  # Fecha de examen de papanicolao.
+IN	_tippapanico	int, 		  # Tipo resultado (Normal | Anormal).
+IN	_isgestante		tinyint,	  # Identifica si es gestante (1) o no (0)
+IN	_fecFUR			datetime,	  # Fecha de ultima regla conocida.
+IN	_fecEstParto	datetime,	  # Fecha estimada de parto.
+IN	_talla			int,		  # Talla expresada en cm.
+IN	_peso			int, 		  # Peso expresado en kg.
+IN	_hemoglobina	float,		  # Hemoglobina.
+IN	_hipertenso		tinyint, 	  # Identifica si es Hipertenso (1) o no (0).
+IN	_presionarter	float, 		  # Presion Arterial.
+IN	_diabetico		tinyint,	  # Identifica si es Diabetico (1) o no (0).
+IN	_tratdiabetes	tinyint,	  # Verifica si esta llevando tratamiento (1) o no (0).
+IN	_fecUCdiabet	datetime,	  # Fecha de ultimo control de diabetes realizado.
+IN	_hemogloglic	float, 		  # Hemoglobina glicosilada.
+IN	_hemogloayun	float, 		  # Hemoglobina en ayunas.
+IN	_hemglodesalim	float,		  # Hemoglobina despues de alimentos.
+IN	_fecUCgrasas	datetime,	  # Fecha ultimo control de grasas.
+IN	_colesteroLDL	float, 		  # Colesterol LDL.
+IN	_colesteroHDL	float, 		  # Colesterol HDL.
+IN	_triglicerid	float, 		  # Trigliceridos.
+IN	_mediabdomen	float, 		  # Medida Abdominal en centimetros.
+IN	_fumador		tinyint,	  # Identifica si es Fumador (1) o no (0).
+IN	_cigxdia		tinyint,	  # Cigarros por ida (1 a 20)
+IN	_aosfumando		tinyint,	  # Años fumando (1 a 20)
+IN	_fecUVodonto	datetime,	  # Fecha ultima visita odoltologica.
+IN	_fecUVgastro	datetime,	  # Fecha ultima visita gastroscopia.
+IN	_tipgrastro		tinyint,	  # Tipo (Normal | Anormal).
+IN	_fecUVcolonos	datetime,	  # Fecha ultima visita colonoscopia.
+IN	_tipcolonos		tinyint,	  # Tipo (Normal | Anormal).
+IN	_fecUVojos		datetime,	  # Fecha ultima visita ojos.
+IN	_tipojos		tinyint,	  # Tipo (Normal | Anormal).
+IN	_esdependiente	tinyint,	  # Verifica si es dependiente (1) o no (0).
+IN	_esmenoredad	tinyint,	  # Verifica si es menor de edad (1) o no (0).
+IN	_antefamiliar	tinyint,	  # indica si cuenta con antecedentes familiar (1) o no (0).
+IN	_codenfermedad	varchar(30),  # Codigos concatenados de enfermedades (1,2,3..).
+IN	_idusr			int, 		  # Codigo de Usuario.
+OUT _result			varchar(10)	  # Resultado
+)
+begin
+	#Varibales
+    declare isvalid tinyint;
+    
+    set isvalid = (select Count(idUsr_M) from db_SaludTotal.Tbl_Usuario_Movil where idUsr_M = _idusr and icodest_M = 1);
+    
+    -- Verificamos si el codigo del usuario es un codigo valido
+    
+    if(isvalid = 1 ) then
+		# Insertamos los datos
+        insert into db_SaludTotal.Tbl_Formulario(idForm,vNom,vApepat,vApemat,igen,dfecnac,dfecprostata,itipprostata,dfecmamograf,itipmamograf,
+        dfecpapanico,itippapanico,isgestante,dfecFUR,dfecEstparto,italla,ipeso,fhemoglobina,ishipertenso,fpresionarte,esdiabetico,istratdiabet,
+        dfecUCdiabet,fhemogloglic,fhemglicayun,fhemglicalim,dfecUCgrasas,fcolesterLDL,fcolesterHDL,ftriglicerid,fmedabdomen,iesfumador,icigxdia,iaosfumando,dultvisodont,
+        dultvisgastro,itipgastro,dultvicolonos,itipcolonos,dultviojos,itipojos,es_dependiente,es_menoredad,antefamiliar,codenfermed,dfecreg,idUsr)
+        values(null,_nom,_apepat,_apemat,_gen,_fecnac,_fecprostata,_tipprostata,_fecmamograf,_tipmamograf,_fecpapanico,_tippapanico,_isgestante,_fecFUR,_fecEstParto,
+        _talla,_peso,_hemoglobina,_hipertenso,_presionarter,_diabetico,_tratdiabetes,_fecUCdiabet,_hemogloglic,_hemogloayun,_hemglodesalim,_fecUCgrasas,_colesteroLDL,
+        _colesteroHDL,_triglicerid,_mediabdomen,_fumador,_cigxdia,_aosfumando,_fecUVodonto,_fecUVgastro,_tipgrastro,_fecUVcolonos,_tipcolonos,_fecUVojos,_tipojos,
+        _esdependiente,_esmenoredad,_antefamiliar,_codenfermedad,Concat(curdate(),' ',curtime()),_idusr);
+        
+        set _result = '1';
+        
+    else
+		set _result = '0';
+        
+    end if;
+    
+    select _result;
+end
+$$;

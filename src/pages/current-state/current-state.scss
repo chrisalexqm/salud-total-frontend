@@ -1,0 +1,15 @@
+page-current-state {
+	ion-content, ion-grid{
+		background-image: url("../assets/img/background.png");
+		background-size: 100%;
+	}
+	.error{
+		color:red;
+	}
+	.success{
+		color: green;
+	}
+	.ok{
+		color: blue;
+	}
+}

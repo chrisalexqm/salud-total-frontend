@@ -1,0 +1,415 @@
+<!--
+  Generated template for the UserDependentPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar color="primary_st">
+    <!--<button ion-button menuToggle color="st_white">
+      <ion-icon name="menu"></ion-icon>
+    </button>-->
+    <ion-title align="center" style="font-size: 2rem;"> Salud Total </ion-title>
+  </ion-toolbar>
+  <img src="assets/img/menu/menu.png" (click)="goMenu()" style="position: fixed; width: 30px; top: 15px; left: 20px;z-index: 10000;">
+  <img src="assets/img/icon.png" style="position: fixed; width: 40px; top: 5px; right: 10px;z-index: 10000;">
+</ion-header>
+
+
+<ion-content padding *ngIf="!typeUserReceivedPage && !detailUserReceivedPage && !detailUserDCPage && !detailUserDMPage">
+  <table style="width:100%; border-color: black;">
+    <tr>
+      <th align="center"></th>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+      <img src="assets/img/dependientes/btn_dependientes_general.png" style="width: 40px;">
+      </td>
+      <td align="left" valign="center" style="color: #1773FA;">
+        Mis dependientes
+      </td>
+      <td align="right" valign="center">
+        <button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+            <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+
+  <table style="width:100%; border-color: black;margin-top: 50px;">
+    <tr>
+      <th align="center">
+        <img src="assets/img/dependientes/btn_niños.png" style="width: 100px;">
+      </th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+        <button ion-button block class="btnUpdateData" style=""
+          (click)="goPage('userMinor')">
+          <div style="color: white !important;"> Niño menor de 5 años </div>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <!--<button ion-button icon-end style="width: 100%;" color="secondary" (click)="goPage('userMinor')">
+    NIÑO MENOR DE 5 AÑOS
+    <ion-icon style="margin-top: -5px;" name="person"></ion-icon>
+  </button>-->
+  <table style="width:100%; border-color: black;margin-top: 50px;">
+    <tr>
+      <th align="center">
+        <img src="assets/img/dependientes/btn_adulto_mayor.png" style="width: 100px;">
+      </th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+        <button ion-button block class="btnUpdateData" style=""
+          (click)="goPage('userConven')">
+          <div style="color: white !important;"> Adulto mayor </div>
+        </button>
+      </td>
+    </tr>
+  </table>
+</ion-content>
+
+<ion-content padding *ngIf="typeUserReceivedPage=='userMinor'">
+  <table style="width:100%; border-color: black;">
+    <tr>
+      <th align="center"></th>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+      <img src="assets/img/dependientes/btn_niños.png" style="width: 40px;">
+      </td>
+      <td align="left" valign="center" style="color: #1773FA;">
+        Mis dependientes <br>menores
+      </td>
+      <td align="right" valign="center" style="">
+        <button ion-button block class="btnAddDependente" style=""
+          (click)="goAddUserMinor()">
+          <div style="color: white !important;"> + </div>
+        </button>
+      </td>
+      <td align="right" valign="center">
+        <button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+          <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let um of usersMinor"  text-wrap>
+          <ion-avatar item-start>
+            <img src="assets/img/dependientes/btn_niños.png">
+          </ion-avatar>
+          <h2 (click)="userTap(um, 'esmenor')">{{ um['Nombre'] }}</h2>
+          <ion-icon (click)="dropUserTap(um, 'esmenor')" name="ios-remove-circle" style="color: #f53d3d;" item-end></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-content padding *ngIf="detailUserDMPage">
+  <table style="width:100%; border-color: black;">
+    <tr>
+      <th align="center"></th>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+      <img src="assets/img/dependientes/btn_niños.png" style="width: 40px;">
+      </td>
+      <td align="left" valign="center" style="color: #1773FA;">
+        Mis dependientes <br>Menores
+      </td>
+      <td align="right" valign="center">
+        <button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+          <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <ion-card style="background-color: transparent;box-shadow: none;border-color: transparent;">
+    <ion-card-header>
+    </ion-card-header>
+    <ion-card-content style="background-color: transparent;box-shadow: none;border-color: transparent;">
+      <ion-item style="background-color: transparent;">
+        <ion-input text-center type="text" [(ngModel)]="nameUser" placeholder="Nombre"></ion-input>
+      </ion-item>
+      <ion-item style="background-color: transparent;">
+        <ion-input text-center type="text" [(ngModel)]="maternalSurnameUser" placeholder="Apellido paterno"></ion-input>
+      </ion-item>
+      <ion-item style="background-color: transparent;">
+        <ion-input text-center type="text" [(ngModel)]="paternalSurnameUser" placeholder="Apellido Materno"></ion-input>
+      </ion-item>
+      <!--<ion-item>
+        <ion-label color="primary" stacked>Fecha de nacimiento:</ion-label>
+        <ion-datetime doneText="Ok" cancelText="Cancelar" displayFormat="MMM DD YYYY"></ion-datetime>
+      </ion-item>-->
+      <button ion-button block icon-start class="btnSaveDependet" (click)="postRequestRegisterUDM()" >
+        <ion-icon name="md-create">  </ion-icon>
+        Registrar
+      </button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-content padding *ngIf="typeUserReceivedPage=='userConven'">
+  <table style="width:100%; border-color: black;">
+    <tr>
+      <th align="center"></th>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+      <img src="assets/img/dependientes/btn_adulto_mayor.png" style="width: 40px;">
+      </td>
+      <td align="left" valign="center" style="color: #1773FA;">
+        Mis dependientes <br>mayores
+      </td>
+      <td align="right" valign="center">
+        <button ion-button block class="btnAddDependente" style=""
+          (click)="goAddUserConven()">
+          <div style="color: white !important;"> + </div>
+        </button>
+      </td>
+      <td align="right" valign="center">
+        <button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+          <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <ion-card>
+    <!--<ion-card-header>
+      <button ion-button icon-end style="width: 100%;" clear (click)="goAddUserConven()">
+        NUEVO DEPENDIENTE ADULTO
+        <ion-icon style="margin-top: -5px;color: black;" name="plus"></ion-icon>
+      </button>
+    </ion-card-header>-->
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let uc of usersConven"  text-wrap>
+          <ion-avatar item-start>
+            <img src="assets/img/dependientes/btn_adulto_mayor.png">
+          </ion-avatar>
+          <h2 (click)="userTap(uc, 'esconvencional')">{{ uc['vNom'] }}</h2>
+          <ion-icon (click)="dropUserTap(uc, 'esmayor')" name="ios-remove-circle" style="color: #f53d3d;" item-end></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-content padding *ngIf="detailUserDCPage" style="background-color: transparent;box-shadow: none;border-color: transparent;">
+  <table style="width:100%; border-color: black;">
+    <tr>
+      <th align="center"></th>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+      <img src="assets/img/dependientes/btn_adulto_mayor.png" style="width: 40px;">
+      </td>
+      <td align="left" valign="center" style="color: #1773FA;">
+        Mis dependientes <br>mayores
+      </td>
+      <td align="right" valign="center">
+        <button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+          <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <ion-card style="background-color: transparent;box-shadow: none;border-color: transparent;">
+    <ion-card-header>
+
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item style="background-color: transparent;">
+        <!--<ion-label >Nombre:</ion-label>-->
+        <ion-input text-center type="text" [(ngModel)]="nameUser"  placeholder="Nombre"></ion-input>
+      </ion-item>
+      <ion-item style="background-color: transparent;">
+        <!--<ion-label >Apellido paterno:</ion-label>-->
+        <ion-input text-center type="text" [(ngModel)]="paternalSurnameUser"  placeholder="Apellido paterno"></ion-input>
+      </ion-item>
+      <ion-item style="background-color: transparent;">
+        <!--<ion-label >Apellido Materno:</ion-label>-->
+        <ion-input text-center type="text" [(ngModel)]="maternalSurnameUser"  placeholder="Apellido Materno"></ion-input>
+      </ion-item>
+      <!--<ion-item>
+        <ion-label color="primary" stacked>Fecha de nacimiento:</ion-label>
+        <ion-datetime doneText="Ok" cancelText="Cancelar" displayFormat="MMM DD YYYY"></ion-datetime>
+      </ion-item>-->
+      <button ion-button icon-start block color="st_button" (click)="postRequestRegisterUDC()" style="color: white;">
+        <ion-icon name="md-create">  </ion-icon>
+        Registrar
+      </button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-content padding *ngIf="typeUserReceivedPage=='detailUserDMPage'">
+  <ion-card>
+    <ion-card-header>
+
+    </ion-card-header>
+    <ion-card-content>
+      Formulario UM
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-content padding *ngIf="detailUserReceivedPageEM=='esconvencional'">
+  <table style="width:100%; border-color: black;">
+    <tr>
+      <th align="center"></th>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+      <img src="assets/img/dependientes/btn_adulto_mayor.png" style="width: 40px;">
+      </td>
+      <td align="left" valign="center" style="color: #1773FA;">
+        Mis dependientes <br>mayores
+      </td>
+      <td align="right" valign="center">
+        <button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+          <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <!--
+  {{ detailUserReceivedPage.vNom }} {{ detailUserReceivedPage.vApepat }} {{ detailUserReceivedPage.vApemat }}
+  {{ detailUserReceivedPage.Nombre }} {{ detailUserReceivedPage.Paterno }} {{ detailUserReceivedPage.Materno }}-->
+  <ion-grid style="margin-top: 0px;">
+    <ion-row>
+      <ion-col col-12>
+        <table align="center">
+          <button ion-button block style="width: 250px;background-color: #1773FA;border-radius: 5px;align-items: center;margin: auto;color: white !important;font-size: 1.05em;"
+            (click)="goUpdatePage()">
+            <div style="color: white !important;"> Datos de salud </div>
+          </button>
+        </table>
+      </ion-col>
+      <ion-col col-12>
+        <table align="center">
+          <button ion-button block style="width: 250px;background-color: #FFB415;border-radius: 5px;align-items: center;margin: auto;color: white !important;font-size: 1.05em;"
+            (click)="goStateCurrentConven()">
+            <div style="color: white !important;"> Estado actual </div>
+          </button>
+        </table>
+      </ion-col>
+      <ion-col col-12>
+        <table align="center">
+          <button ion-button block style="width: 250px;background-color: #1B1464;border-radius: 5px;align-items: center;margin: auto;color: white !important;font-size: 1.05em;"
+            (click)="goNextControls()">
+            <div style="color: white !important;"> Alertas preventivas </div>
+          </button>
+        </table>
+      </ion-col>
+      <ion-col col-12>
+        <table align="center">
+          <button ion-button block style="width: 250px;background-color: #009245;border-radius: 5px;align-items: center;margin: auto;color: white !important;font-size: 1.05em;"
+            (click)="goTracing()">
+            <div style="color: white !important;"> Seguimiento de salud </div>
+          </button>
+        </table>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!--<ion-card>
+    <ion-card-header>
+      {{ detailUserReceivedPage.vNom }} {{ detailUserReceivedPage.vApepat }} {{ detailUserReceivedPage.vApemat }}
+      {{ detailUserReceivedPage.Nombre }} {{ detailUserReceivedPage.Paterno }} {{ detailUserReceivedPage.Materno }}
+    </ion-card-header>
+    <ion-card-content>
+      <button ion-button full style="width:100%;background-color: #4E6BA3;" (click)="goUpdatePage()">
+        Actualizar datos
+      </button>
+      <button ion-button full style="width:100%;background-color: #53C7EB;" (click)="goStateCurrentConven()">
+        Estado actual
+      </button>
+      <button ion-button full style="width:100%;background-color: #9DD12D;" (click)="goNextControls()">
+        Próximos controles
+      </button>
+      <button ion-button full style="width:100%;background-color: #F64C81;" (click)="goTracing()">
+        Seguimiento
+      </button>
+    </ion-card-content>
+  </ion-card>-->
+</ion-content>
+
+<ion-content padding *ngIf="detailUserReceivedPageEM=='esmenor'">
+  <table style="width:100%; border-color: black;">
+    <tr>
+      <th align="center"></th>
+      <th align="center"></th>
+    </tr>
+    <tr>
+      <td align="center" valign="center">
+      <img src="assets/img/dependientes/btn_niños.png" style="width: 40px;">
+      </td>
+      <td align="left" valign="center" style="color: #1773FA;">
+        Mis dependientes <br>menores
+      </td>
+      <td align="right" valign="center">
+        <button (click)="backHistory()" ion-button icon-only outline style="border-radius: 25px;">
+          <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+  <!--
+  {{ detailUserReceivedPage.Nombre }} {{ detailUserReceivedPage.Paterno }} {{ detailUserReceivedPage.Materno }}-->
+  <ion-grid style="margin-top: 0px;">
+    <ion-row>
+      <ion-col col-12>
+        <table align="center">
+          <button ion-button block style="width: 250px;background-color: #1773FA;border-radius: 5px;align-items: center;margin: auto;color: white !important;font-size: 1.05em;"
+            (click)="goUpdatePageMinor()">
+            <div style="color: white !important;"> Datos de salud </div>
+          </button>
+        </table>
+      </ion-col>
+      <ion-col col-12>
+        <table align="center">
+          <button ion-button block style="width: 250px;background-color: #FFB415;border-radius: 5px;align-items: center;margin: auto;color: white !important;font-size: 1.05em;"
+            (click)="goStateCurrentMinor()">
+            <div style="color: white !important;"> Estado actual </div>
+          </button>
+
+        </table>
+      </ion-col>
+      <ion-col col-12>
+        <table align="center">
+          <button ion-button block style="width: 250px;background-color: #1B1464;border-radius: 5px;align-items: center;margin: auto;color: white !important;font-size: 1.05em;"
+            (click)="goNextControlsMinor()">
+            <div style="color: white !important;"> Alertas preventivas </div>
+          </button>
+        </table>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!--<ion-card>
+    <ion-card-header>
+      {{ detailUserReceivedPage.Nombre }} {{ detailUserReceivedPage.Paterno }} {{ detailUserReceivedPage.Materno }}
+    </ion-card-header>
+    <ion-card-content>
+      <button ion-button full style="width:100%;background-color: #4E6BA3;" (click)="goUpdatePageMinor()">
+        Actualizar datos
+      </button>
+      <button ion-button full style="width:100%;background-color: #53C7EB;" (click)="goStateCurrentMinor()">
+        Estado actual
+      </button>
+      <button ion-button full style="width:100%;background-color: #9DD12D;" (click)="goNextControlsMinor()">
+        Próximos controles
+      </button>
+    </ion-card-content>
+  </ion-card>-->
+</ion-content>

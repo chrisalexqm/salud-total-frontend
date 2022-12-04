@@ -1,0 +1,45 @@
+ATENCION-DOMICILIO-NO ASEGURADO
+=======================
+LISTAR TIPO DE ATENCION
+ES ASEGURADO? - -1
+LISTA ASEGURADORA - -1
+DISTRITO
+	ESPECIALIDAD
+		SERVICIO
+			PROVEEDOR - http://localhost/webserv/solicitud/listprov/
+					    &idtipate=2&dist=150101&esasegurado=0&espe=4&tipserv=192,260
+				PRECIO - http://localhost/webserv/solicitud/listservf/
+						 &idate=2&dist=150101&idprov=28&idesp=4&tipserv=192,260
+_______________________
+ATENCION-DOMICILIO-NO ASEGURADO
+=======================
+LISTAR TIPO DE ATENCION
+ES ASEGURADO? - -1
+LISTA ASEGURADORA - -1
+DISTRITO
+	ESPECIALIDAD
+		SERVICIO
+			PROVEEDOR(NO DEVUELVE COBERTURA)
+				PRECIO
+_______________________
+ATENCION-DOMICILIO-ASEGURADO
+=======================
+LISTAR TIPO DE ATENCION
+ES ASEGURADO? - 1
+LISTA ASEGURADORA - LISTA
+DISTRITO
+	ESPECIALIDAD
+		SERVICIO
+			PROVEEDOR - 1
+				PRECIO - 
+_______________________
+ATENCION-ESTABLECIMIENTO-ASEGURADO
+=======================
+LISTAR TIPO DE ATENCION
+ES ASEGURADO? - 1
+LISTA ASEGURADORA - LISTA
+DISTRITO
+	ESPECIALIDAD
+		SERVICIO
+			PROVEEDOR
+				PRECIO

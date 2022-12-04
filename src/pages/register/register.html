@@ -1,0 +1,53 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Registrar usuario</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-list>
+		<ion-grid>
+		  <ion-row>		    
+		      <ion-item no-lines>
+		      	<img src="assets/img/logo.png">
+		      </ion-item>
+			  <ion-item id="formRegister"> 	
+			    <ion-label>Nombres:</ion-label>
+			    <ion-input type="text" required minlength="4" [(ngModel)]="nameUser"></ion-input>
+			  </ion-item>
+			  <ion-item>
+			    <ion-label>Apellidos paterno:</ion-label>
+			    <ion-input type="text" required minlength="4" [(ngModel)]="paternalSurnameUser"></ion-input>
+			    <br>
+			  </ion-item>
+			  <ion-item>
+			    <ion-label>Apellidos materno:</ion-label>
+			    <ion-input type="text" required minlength="4" [(ngModel)]="maternalSurnameUser"></ion-input>
+			    <br>
+			  </ion-item>
+			  <ion-item>
+			    <ion-label>Correo electrónico:</ion-label>
+			    <ion-input type="text" required minlength="4" [(ngModel)]="emailUser"></ion-input>
+			    <br>
+			  </ion-item>
+			  <ion-item>
+			    <ion-label>Usuario:</ion-label>
+			    <ion-input type="text" required minlength="4" [(ngModel)]="aliasUser"></ion-input>
+			    <br>
+			  </ion-item>
+			  <ion-item>
+			    <ion-label>Contraseña:</ion-label>
+			    <ion-input type="password" required minlength="4" [(ngModel)]="passwordUser"></ion-input>
+			    <br>
+			  </ion-item>
+			  	  
+			<ion-col col-12>
+		    	<button ion-button block (click)="registerUser()" color="st_button">Registrarme</button>
+			</ion-col>
+		  </ion-row>
+		</ion-grid>	  
+	</ion-list>
+</ion-content>
